@@ -52,6 +52,10 @@ namespace IdeallyConnectedWebApp
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            // Lines required to register BloggingContext as a service
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=IdeallyConnectedWebApp;Trusted_Connection=True;";
+            services.AddDbContext<BloggingContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

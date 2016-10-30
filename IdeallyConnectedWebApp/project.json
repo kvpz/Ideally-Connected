@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-IdeallyConnectedWebApp-370df2f8-4c2f-4b68-b094-0550cb44caa4",
 
   "dependencies": {
@@ -43,7 +43,8 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }
+    },
+    "angularjs": "1.5.8"
   },
 
   "tools": {
