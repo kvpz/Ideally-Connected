@@ -1,0 +1,1 @@
+﻿Type of App: ASP.NET Web Application (.NET Framework) - Single Page App template with MVC and Web API hosted on Azure and using Individual User Accounts

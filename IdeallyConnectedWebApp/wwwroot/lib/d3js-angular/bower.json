@@ -1,0 +1,8 @@
+{
+  "name": "d3js-angular",
+  "description": "D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS.",
+  "main": ["d3.module.js"],
+  "dependencies": {
+    "d3": "^3.5.17"
+  }
+}

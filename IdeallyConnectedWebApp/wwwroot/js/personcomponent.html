@@ -1,0 +1,86 @@
+﻿
+<html>
+<body ng-app="personApp">
+    <h1>Directives</h1>
+    {{2+2}}
+
+    <h1>Databinding</h1>
+    <!-- These are two types of ways of databinding -->
+    <div ng-init="firstName='John'; lastName='Doe';">
+        <strong>First name:</strong>{{firstName}}<br />
+        <strong>Last Name:</strong><span ng-bind="lastName" />
+    </div>
+
+    <h1>Templates</h1>
+    <div ng-init="personName='John Doe'">
+        <input ng-model="personName" /> {{personName}}
+    </div>
+
+    <h1>Expressions: Angularjs vs Javascript</h1>
+    <div ng-init="personName='John Doe'">
+        Person's name is: {{personName}} <br />
+        Simple Javascript calculation of 1 + 2: {{1+2}}
+    </div>
+
+    <h1>Repeaters. Saves you from writing lots of crappy code!</h1>
+    <div ng-init="namez=['John Dope', 'Mary Jane', 'Bob Barker']">
+        <ul>
+            <li ng-repeat="poop in namez">
+                {{$index + ' ' + poop}}
+            </li>
+        </ul>
+    </div>
+
+    <h1>Repeaters 2. Notice how 'names' array is redefined. Previous looses capabilities.</h1>
+    <div ng-init="names=[{firstName:'John', lastName:'Doe'},
+         {firstName:'Mary', lastName:'Jane'},
+         {firstName:'Jeeper', lastName:'Creeper'}]">
+        <ul>
+            <li ng-repeat="name in names">
+                <div ng-show="$even">
+                    {{$even + ' ' + $first + ' ' + $last + ' ' + ' ' + name.firstName + ' ' + name.lastName}}
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <h1>Example of calling $scope and using a controller defined in JS file (site.js)</h1>
+    <div>
+        <!-- ng-app="personApp" is an attribute to body element. ng-app can't be repeated within a scope. -->
+        <h1>Scope</h1>
+        <div ng-controller="personController">
+            <strong>Name:</strong>{{name}}<br />
+            <strong>Missing Property(age): </strong> {{age}} <!-- missing properties are ignored -->
+
+        </div>
+    </div>
+
+    <h1>Controllers</h1>
+    <div ng-controller="personModController">
+        <strong>First Name:</strong>{{fName}}<br />
+        <strong>Last Name:</strong>{{lName}}
+    </div>
+
+    <h1>Components</h1>
+    <person-component></person-component>
+
+    <div ng-controller="personController">
+        <ul>
+            <li ng-repeat="person in people">
+                <h2>{{person.FirstName}} {{person.LastName}}</h2>
+            </li>
+        </ul>
+    </div>
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/angular/angular.js"></script>
+</body>
+
+</html>
+
+<!--
+<div>
+    <strong>First Name:</strong>{{vm.firstName}}<br/>
+    <strong>Last Name: </strong>{{vm.lastName}}
+</div>
+
+    -->

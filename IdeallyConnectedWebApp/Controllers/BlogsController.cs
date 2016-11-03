@@ -17,6 +17,7 @@ namespace IdeallyConnectedWebApp.Controllers
         */
         {
             _context = context;
+            Blog tb = new Blog();
         }
 
         /// <summary>
