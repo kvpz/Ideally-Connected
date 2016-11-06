@@ -260,6 +260,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Customer\App.js" />
+    <Content Include="App\Customer\ViewModels\CustomerHomeViewModel.js" />
+    <Content Include="App\Customer\ViewModels\CustomerListViewModel.js" />
+    <Content Include="App\Customer\ViewModels\CustomerViewModel.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\angular-chart.min.css" />
@@ -267,6 +271,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -329,10 +334,15 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -1115,7 +1125,11 @@
     <Content Include="Scripts\app\common.js" />
     <Content Include="Scripts\app\home.viewmodel.js" />
     <Content Include="SPA\App.js" />
-    <Content Include="SPA\Controllers\MainControllers.js" />
+    <Content Include="SPA\Controllers\GridController.js" />
+    <Content Include="SPA\Controllers\MainController.js" />
+    <Content Include="SPA\Controllers\ViewProductController.js" />
+    <Content Include="SPA\Views\Grid.html" />
+    <Content Include="SPA\Views\ViewProductWindow.html" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -1158,10 +1172,11 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\knockout.validation.min.js.map" />
+    <Content Include="Views\Home\Customer.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\Customer\Views\" />
     <Folder Include="App_Data\" />
-    <Folder Include="SPA\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

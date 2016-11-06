@@ -11,7 +11,7 @@ using IdeallyConnected_SPA_template.Models;
 namespace IdeallyConnected_SPA_template.Controllers
 {
     [Authorize]
-    public class ManageController:Controller
+    public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -26,22 +26,16 @@ namespace IdeallyConnected_SPA_template.Controllers
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager {
-            get {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set {
-                _signInManager = value;
-            }
+        public ApplicationSignInManager SignInManager 
+        {
+            get         { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { _signInManager = value; }
         }
 
-        public ApplicationUserManager UserManager {
-            get {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set {
-                _userManager = value;
-            }
+        public ApplicationUserManager UserManager 
+        {
+            get         { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         //

@@ -1,7 +1,7 @@
 ﻿function HomeViewModel(app, dataModel) {
     var self = this;
 
-    self.myHometown = ko.observable("");
+    //self.myHometown = ko.observable("");
 
     Sammy(function () {
         this.get('#home', function () {

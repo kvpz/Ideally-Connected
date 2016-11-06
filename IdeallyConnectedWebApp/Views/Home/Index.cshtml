@@ -1,11 +1,125 @@
 ﻿@{
     //ViewData["Title"] = "Home Page";
-    Layout = "";
+    //Layout = "";
 }
 
 <!-- ng-app directive to bootstrap the Angular application. It cannot be repeated within a scope. -->
 <!-- personAppMod is a module. -->
+@*
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Single Element Transition</title>
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css" />
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+</head>
 
+<body>
+
+    <script type="text/javascript">
+        var body = d3.select("body");
+        var duration = 2000;
+        body.append("div") // <-A
+                .classed("box", true)
+                .style("background-color", "#e9967a") // <-B
+                .style("width", "500px")
+                .style("height", "1000px")
+                .transition() // <-C
+                .duration(duration) // <-D
+                .style("background-color", "#add8e6"); // <-E
+                //.style("margin-left", "600px") // <-F
+                //.style("width", "100px")
+                //.style("height", "100px");
+    </script>
+
+</body>
+
+</html>
+*@
+
+<div data-ng-controller="indexViewModel">
+    <div class="jumbotron">
+        <h2>This will be the main page</h2>
+        <h1>{{ topic }}</h1>
+        <h2> {{ author }} </h2>
+        <p> {{ self }} </p>
+    </div>
+</div>
+@*
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple Shapes</title>
+    <link rel="stylesheet" type="text/css" href="~/css/styles1.css" />
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+
+    <style>
+        svg line {
+            stroke: grey;
+            stroke-width: 2;
+        }
+
+        svg circle {
+            stroke: red;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        svg rect {
+            stroke: steelblue;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        svg polygon {
+            stroke: green;
+            fill: none;
+            stroke-width: 2;
+        }
+    </style>
+    
+    <script type="text/javascript">
+    var width = 600,
+        height = 500;
+
+    var svg = d3.select("body").append("svg");
+
+    svg.attr("height", height)
+        .attr("width", width);
+
+    svg.append("line") // <-A
+        .attr("x1", 0)
+        .attr("y1", 200)
+        .attr("x2", 100)
+        .attr("y2", 100);
+
+    svg.append("circle") // <-B
+        .attr("cx", 200)
+        .attr("cy", 150)
+        .attr("r", 50);
+
+    svg.append("rect")
+        .attr("x", 300) // <-C
+        .attr("y", 100)
+        .attr("width", 100) // <-D
+        .attr("height", 100)
+        .attr("rx", 5); // <-E
+
+    svg.append("polygon")
+        .attr("points", "450,200 500,100 550,200"); // <-F
+    </script>
+
+</body>
+
+</html>
+    *@
+
+@*
 <html ng-app="d3DemoApp">
 <head>
     <meta charset="utf-8" />
@@ -111,6 +225,8 @@
     </div>
 </body>
 </html>
+    *@
+
 
 @*
 <html>

@@ -18,6 +18,15 @@ namespace IdeallyConnected_SPA_template
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home",action = "Index",id = UrlParameter.Optional }
             );
+
+            /*
+                See AngularJS for ASP.NT MVC Developers video (61:00)
+                "*catchall" says that customer slash anything will get us to Home/Customer
+            */
+            routes.MapRoute(
+                name: "customer",
+                url: "customer/{*catchall}",
+                defaults: new { controller = "Home", action = "Customer" });
         }
     }
 }

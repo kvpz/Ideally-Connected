@@ -15,7 +15,7 @@ using IdeallyConnected_SPA_template.Models;
 namespace IdeallyConnected_SPA_template.Controllers
 {
     [Authorize]
-    public class MeController:ApiController
+    public class MeController : ApiController
     {
         private ApplicationUserManager _userManager;
 
