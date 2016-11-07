@@ -4,15 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdeallyConnectedWebApp.Models;
 using Microsoft.AspNetCore.Mvc;  // Controller
+using IdeallyConnectedWebApp.Data;
 
 namespace IdeallyConnectedWebApp.Controllers
 {
     public class UserController : Controller
     {
-        private IdealContext _context;
+        private IdealConnectContext _context;
 
         // ASP.NET dependency injection will pass an instance of IdealContext
-        public UserController (IdealContext context)
+        public UserController (IdealConnectContext context)
         {
             _context = context;
         }
@@ -28,9 +29,10 @@ namespace IdeallyConnectedWebApp.Controllers
             return View();
         }
 
+        /*
         [HttpPost]
         [ValidateAntiForgeryToken]
-         public IActionResult Create(Users user)
+         public IActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
@@ -41,6 +43,6 @@ namespace IdeallyConnectedWebApp.Controllers
 
             return View(user);
         }
-
+        */
     }
 }

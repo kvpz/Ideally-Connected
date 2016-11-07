@@ -8,7 +8,7 @@ namespace IdeallyConnectedWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
             //return RedirectToAction("Index", "User");
