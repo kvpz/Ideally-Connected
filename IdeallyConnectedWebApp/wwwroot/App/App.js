@@ -70,10 +70,9 @@ mainModule.controller("indexViewModel", function ($scope, $http, $q, $routeParam
             $window.history.back();
         }
 
-        // navigateTo()
         self.navigateTo = function (path, params) {
             if (params == null)
-                $location.path(MyApp.rootPath + path);
+                $location.path(MyApp.rootPath + path); // ~ + /whatever
             else
                 $location.path(MyApp.rootPath + path).search(params);
         }

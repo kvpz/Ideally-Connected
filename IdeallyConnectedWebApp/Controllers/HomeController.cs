@@ -23,7 +23,6 @@ namespace IdeallyConnectedWebApp.Controllers
 
         public IActionResult DataAnalysisOne()
         {
-            
             return View();
         }
     }

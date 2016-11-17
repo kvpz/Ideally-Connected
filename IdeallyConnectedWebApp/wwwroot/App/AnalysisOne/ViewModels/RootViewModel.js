@@ -13,8 +13,8 @@
         $scope.analysisList = function () {
             // $.get("/Home/index"), function (data) { $("p").html(data); }
             // App.js(global) -> App.js -> AnalysisViewModel.js -> AnalysisListView.html
-            viewModelHelper.navigateTo('analysis/list'); // $location.path(MyApp.rootPath + "home/index").search(params);
-
+            viewModelHelper.navigateTo('Home/DataAnalysisOne'); //visualizationPractice.html'); //analysis/list'); // $location.path(MyApp.rootPath + "home/index").search(params);
+            viewModelHelper.navigateTo('analysis/list');
         }
 
         $scope.showAnalysis = function () {

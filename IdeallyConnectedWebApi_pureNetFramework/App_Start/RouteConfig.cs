@@ -18,6 +18,14 @@ namespace IdeallyConnectedWebApi_pureNetFramework
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home",action = "Index",id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "user", 
+                url: "user/{*catch-all}",
+                defaults: new {
+                    controller = "Home", action = "User" });
+
+            routes.MapMvcAttributeRoutes();
         }
     }
 }

@@ -77,9 +77,9 @@
         <script src="~/lib/angular-route/angular-route.js"></script>
 
         @* <script src="~/js/site.js" asp-append-version="true"></script> *@
-
+        
         <script type="text/javascript">
-            window.MyApp = {};
+            window.MyApp = {}; // = new Object()
             MyApp.rootPath = '@Url.Content("~")';
         </script>
         <script src="~/App/App.js"></script>

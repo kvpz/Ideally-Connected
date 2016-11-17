@@ -6,12 +6,16 @@ analysisModule.config(function ($routeProvider, $locationProvider) {
         controller: 'analysisHomeViewModel'
     });
     $routeProvider.when('/analysis/list', {
-        templateUrl: '/App/AnalysisOne/Views/AnalysisListView.html',
-        controller: 'analysisListViewModel'
+        templateUrl: 'analysis/list'//, //'/App/AnalysisOne/Views/AnalysisListView.html',
+        //controller: 'analysisListViewModel'
     });
     $routeProvider.when('/analysis/show/:analysisID', {
         templateUrl: '/App/Analysis/Views/AnalysisView.html',
         controller: 'analysisViewModel'
+    });
+    $routeProvider.when('Home/DataAnalysisOne', {
+        templateUrl: '/Home/DataAnalysisOne',
+        controller: 'analysisListViewModel'
     });
     $routeProvider.otherwise({
         redirectTo: '/analysis'

@@ -10,9 +10,9 @@ analysisModule.controller("analysisListViewModel", function ($scope, analysisSer
         $scope.refreshAnalysis();
     }
 
-    $scope.refreshAnalysis = function () { 
-        viewModelHelper.apiGet('list/analysis', null, function (result) {
-                $scope.analysis = result.data;
+    $scope.refreshAnalysis = function () { // get 'list/analysis' 'Home/DataAnalysisOne'
+        viewModelHelper.apiGet('analysis/list', null, function () {
+                //$scope.analysis = result.data;
             });
     }
 
