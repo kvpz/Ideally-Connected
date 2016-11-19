@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace IdeallyConnectedWebApi_pureNetFramework.Controllers
 {
-    public class HomeController:Controller
+    public class HomeController : Controller
     {
         public ActionResult Index()
         {
@@ -23,6 +23,13 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult Analysis()
+        {
+            ViewBag.Message = "The analysis page.";
 
             return View();
         }

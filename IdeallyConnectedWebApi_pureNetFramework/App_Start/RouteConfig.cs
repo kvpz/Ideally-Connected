@@ -14,17 +14,18 @@ namespace IdeallyConnectedWebApi_pureNetFramework
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "analysis",
+                url: "analysis/{*catch-all}",
+                defaults: new { controller = "Home", action = "Analysis"}
+            );
+            
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home",action = "Index",id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
-                name: "user", 
-                url: "user/{*catch-all}",
-                defaults: new {
-                    controller = "Home", action = "User" });
-
+            
             routes.MapMvcAttributeRoutes();
         }
     }

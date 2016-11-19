@@ -10,7 +10,8 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Models
         {
             return new List<ApplicationUser>()
             {
-                new ApplicationUser() { UserName = "suprlifter" }
+                new ApplicationUser() { UserName = "suprlifter" },
+                new ApplicationUser() { UserName = "diddlydo" }
             };
         }
     } // class DataFactory

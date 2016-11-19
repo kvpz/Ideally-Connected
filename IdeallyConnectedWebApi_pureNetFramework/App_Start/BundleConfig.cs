@@ -1,4 +1,15 @@
-﻿using System.Web;
+﻿/*
+    For more info see: https://www.asp.net/mvc/overview/performance/bundling-and-minification
+    Summary:
+    Bundling and minification are two techniques to improve request load time by reducing the number of requests 
+    to the server and reducing the size of requested assets. Bundling makes it easy to combine multiple files into
+    a single file which translates to less HTTP requests. Minification optimizes scripts or css, such as removing
+    unnecessary white space and comments and shortening variable names to one character.
+
+    To debug javascript in a development environment set debug="true" in Web.config. The JS files will not be 
+    bundled or minified as a result.
+*/
+using System.Web;
 using System.Web.Optimization;
 
 namespace IdeallyConnectedWebApi_pureNetFramework

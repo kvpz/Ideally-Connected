@@ -17,4 +17,6 @@
             viewModelHelper.navigateTo("user/show" + userService.userId);
         }
     }
+
+    initialize();
 });
