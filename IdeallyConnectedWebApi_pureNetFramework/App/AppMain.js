@@ -15,6 +15,7 @@ mainModule.controller("indexViewModel", function ($scope, $http, $q, $routeParam
     $scope.author = "Kevin Perez";
 });
 
+
 /*
 mainModule.controller("analysisViewSelection", function ($scope, $http) {
     $scope.selection = 1;
@@ -29,6 +30,8 @@ mainModule.controller("analysisViewSelection", function ($scope, $http) {
     It is a special object that combines two things: a function and the environment in which that function was created.
     The environment consists of any local variables that were in scope at the time that the closure was created.
     http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
+
+    Note that MyApp.rootPath is defined in _layout.cshtml
 */
 (function (myApp) {
     var viewModelHelper = function ($http, $q, $window, $location) {

@@ -27,11 +27,5 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Controllers
             return View();
         }
 
-        public ActionResult Analysis()
-        {
-            ViewBag.Message = "The analysis page.";
-
-            return View();
-        }
     }
 }

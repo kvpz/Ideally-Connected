@@ -12,13 +12,13 @@ namespace IdeallyConnectedWebApi_pureNetFramework
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            
             routes.MapRoute(
                 name: "analysis",
                 url: "analysis/{*catch-all}",
-                defaults: new { controller = "Home", action = "Analysis"}
+                defaults: new { controller = "Analysis", action = "Index"}
             );
-            
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -6,7 +6,7 @@ userModule.config(function ($routeProvider, $locationProvider) {
         templateUrl: "/App/Users/Views/UserHomeView.html",
         controller: "userHomeViewModel"
     })
-    .when("user/list", {
+    .when("/user/list", {
         templateUrl: "/App/Users/Views/UserListView.html",
         controller: "userListViewModel"
     })
@@ -15,9 +15,8 @@ userModule.config(function ($routeProvider, $locationProvider) {
         controller: "userViewModel"
     })
     .otherwise({
-        redirectTo: "/home"
+        redirectTo: "/analysis"
     });
-
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false

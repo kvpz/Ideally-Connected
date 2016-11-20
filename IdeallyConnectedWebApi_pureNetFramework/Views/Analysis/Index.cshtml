@@ -3,37 +3,38 @@
 }
 
 @section scripts {
-    @* This receives the benefits of bundling*@
+    @* All this receives the benefits of bundling*@
     <script src="~/App/Users/AppUsers.js"></script>
     <script src="~/App/Users/ViewModels/RootViewModel.js"></script>
     <script src="~/App/Users/ViewModels/UserHomeViewModel.js"></script>
     <script src="~/App/Users/ViewModels/UserListViewModel.js"></script>
     <script src="~/App/Users/ViewModels/UserViewModel.js"></script>
-
 }
 
 @section jsCode {
     angular.bootstrap(document.getElementById("AnalyticsWindow"), ['user']);    
 }
+
 <div ng-non-bindable>
     <h3>Select an analysis you would like to perform</h3>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid" >
-            <div class="navbar-header">
-                <header class="navbar-brand">Select an analysis:</header>
-            </div>
-            
-            <ul class="nav navbar-nav">
-                
-                <li data-target="#AnalyticsWindow"><a href="#">Directed Graph</a></li>
-            </ul>
-
-        </div>
-    </nav>
-
-
     <div id="AnalyticsWindow" data-ng-controller="rootViewModel">
-        
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <header class="navbar-brand">Select an analysis:</header>
+                </div>
+
+                <ul class="nav navbar-nav">
+                    <li><a href="" ng-click="userList()"> Users </a></li>
+                    <li data-target="#AnalyticsWindow"><a href="#">Directed Graph</a></li>
+                </ul>
+
+            </div>
+        </nav>
+
+
+
+
         <style>
             .gist-cache iframe {
                 width: 900px;
@@ -41,7 +42,6 @@
                 border: 1px solid;
             }
         </style>
-        <button ng-click="userList()"> List Users </button>
         <div class="text-center gist-cache">
             <h2>{{ pageHeading }}</h2>
 
@@ -52,7 +52,7 @@
         <hr />
     </div>
 
-    @*
+
     <script type="text/javascript">
         var body = d3.select("div#AnalyticsWindow");
         var duration = 2000;
@@ -60,5 +60,6 @@
             .style("height", "1000px")
             .transition()
     </script>
-    *@
-</div>
+
+
+    </div>
