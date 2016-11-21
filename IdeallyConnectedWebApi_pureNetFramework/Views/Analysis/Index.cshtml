@@ -9,6 +9,7 @@
     <script src="~/App/Users/ViewModels/UserHomeViewModel.js"></script>
     <script src="~/App/Users/ViewModels/UserListViewModel.js"></script>
     <script src="~/App/Users/ViewModels/UserViewModel.js"></script>
+    <script src="~/App/Users/ViewModels/user-list.component.js"></script>
 }
 
 @section jsCode {
@@ -16,6 +17,8 @@
 }
 
 <div ng-non-bindable>
+
+
     <h3>Select an analysis you would like to perform</h3>
     <div id="AnalyticsWindow" data-ng-controller="rootViewModel">
         <nav class="navbar navbar-inverse">
@@ -33,8 +36,6 @@
         </nav>
 
 
-
-
         <style>
             .gist-cache iframe {
                 width: 900px;
@@ -44,7 +45,7 @@
         </style>
         <div class="text-center gist-cache">
             <h2>{{ pageHeading }}</h2>
-
+            <user-list></user-list>
 
         </div>
         <hr />
@@ -61,5 +62,5 @@
             .transition()
     </script>
 
-
-    </div>
+    
+</div>

@@ -3,7 +3,7 @@
         $scope.viewModelHelper = viewModelHelper;
         $scope.userService = userService;
 
-        var initializer = function () {
+        var initialize = function () {
             $scope.refreshUser($routeParams.userId);
         }
 
@@ -13,5 +13,7 @@
                 $scope.user = result.data;
             });
         }
-    });
+
+        initialize();
+});
 

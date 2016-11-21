@@ -194,8 +194,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\AppMain.js" />
+    <Content Include="App\Tests\test.js" />
     <Content Include="App\Users\AppUsers.js" />
     <Content Include="App\Users\ViewModels\RootViewModel.js" />
+    <Content Include="App\Users\ViewModels\user-list.component.js" />
     <Content Include="App\Users\ViewModels\UserHomeViewModel.js" />
     <Content Include="App\Users\ViewModels\UserListViewModel.js" />
     <Content Include="App\Users\ViewModels\UserViewModel.js" />
