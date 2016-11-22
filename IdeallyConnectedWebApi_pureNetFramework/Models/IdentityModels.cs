@@ -19,20 +19,33 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Models
         }
         
         // Extension properties
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<UserProfile> UserProfile { get; set; }
+        
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
+        
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
     }
+
+    public class UserProfile : IdentityUser
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Biography { get; set; }
+        public int Age { get; set; }
+
+    }
+
 }
