@@ -19,8 +19,6 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Models
         }
         
         // Extension properties
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
         public virtual UserProfile UserProfile { get; set; }
     }
 
@@ -37,15 +35,18 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Models
         {
             return new ApplicationDbContext();
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            // Change name of the table (to avoid AspNetUsers)
+            modelBuilder.Entity<IdentityUser>()
+                .ToTable("Users");
+            modelBuilder.Entity<ApplicationUser>()
+                .ToTable("Users");
+        }
     }
 
-    public class UserProfile : IdentityUser
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Biography { get; set; }
-        public int Age { get; set; }
 
-    }
 
 }
