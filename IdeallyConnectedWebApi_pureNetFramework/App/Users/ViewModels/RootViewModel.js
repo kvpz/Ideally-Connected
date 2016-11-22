@@ -8,7 +8,7 @@
     }
    
     $scope.userList = function () {
-        viewModelHelper.navigateTo("analysis/user/list");
+        viewModelHelper.navigateTo("analysis/userlist");
     }
 
     $scope.showUser = function () {

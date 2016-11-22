@@ -1,2 +1,8 @@
-﻿Tutorial for building a single page application with ASP.NET and AngularJS
-https://www.asp.net/web-api/overview/getting-started-with-aspnet-web-api/build-a-single-page-application-spa-with-aspnet-web-api-and-angularjs
+﻿## Folder & File Structure
+- App
+  - Common: features that will be used across more than one file.
+  - Tests: where functionality testing is to be performed.
+  - Users
+    - ViewModels: User view models
+    - Views: html template files
+  

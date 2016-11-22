@@ -46,24 +46,29 @@ mainModule.controller("analysisViewSelection", function ($scope, $http) {
 
         self.apiGet = function (uri, data, success, failure, always) {
             self.modelIsValid = true;
-            $http.get(MyApp.rootPath + uri, data).then(
-                function (result) {
+            $http.get(MyApp.rootPath + uri, data)
+                .then(function (result) {
                     success(result);
-                    if (always != null) always();
-                },
-                function (result) {
-                    if (failure != null) failure(result);
+                    if (always != null)
+                        always();
+                }, function (result) {
+                    if (failure != null) {
+                        failure(result);
+                    }
                     else {
                         var errorMessage = result.status + ':' + result.statusText;
                         if (result.data != null) {
-                            if (result.data.Message != null) errorMessage += ' - ' + result.data.Message;
-                            if (result.data.ExceptionMessage != null) errorMessage += ' - ' + result.data.ExceptionMessage;
+                            if (result.data.Message != null)
+                                errorMessage += ' - ' + result.data.Message;
+                            if (result.data.ExceptionMessage != null)
+                                errorMessage += ' - ' + result.data.ExceptionMessage;
                         }
                         self.ModelErrors = [errorMessage];
                         self.modelIsValid = false;
                     }
 
-                    if (always != null) always();
+                    if (always != null)
+                        always();
                 });
         } // self.apiGet 
 
@@ -125,5 +130,5 @@ mainModule.controller("analysisViewSelection", function ($scope, $http) {
         return this;
     };
     myApp.viewModelHelper = viewModelHelper;
-}) (window.MyApp);
+}(window.MyApp));
 

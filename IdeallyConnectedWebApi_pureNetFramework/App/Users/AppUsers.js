@@ -1,19 +1,21 @@
-﻿var userModule = angular.module("user", ["common"]);
+﻿// consider moving this to appUsers.module.js
+var userModule = angular.module("user", ["common"]);
 
-// User routes
+// User routes (consider moving to a file named appUsers.config.js
 userModule.config(function ($routeProvider, $locationProvider) {
-    $routeProvider.when("/analysis", { 
+    //$locationProvider.hashPrefix("!"); // appears on client-side routes
+    $routeProvider.when("/analysis", {
         templateUrl: "/App/Users/Views/UserHomeView.html",
         controller: "userHomeViewModel"
-    })
-    $routeProvider.when("/analysis/user/list", {
+    });
+    $routeProvider.when("/analysis/userlist", {
         templateUrl: "/App/Users/Views/UserListView.html",
         controller: "userListViewModel"
-    })
+    });
     $routeProvider.when("analysis/user/show/:userId", {
         templateUrl: "/App/Users/Views/UserView.html",
         controller: "userViewModel"
-    })
+    });
     $routeProvider.otherwise({
         redirectTo: "/analysis"
     });
@@ -33,6 +35,6 @@ userModule.factory("userService",
         var self = this;
         self.userId = 0;
         return this;
-    }
+    };
     myApp.userService = userService;
 }(window.MyApp));

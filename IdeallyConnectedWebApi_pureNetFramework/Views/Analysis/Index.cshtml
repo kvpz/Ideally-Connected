@@ -10,6 +10,11 @@
     <script src="~/App/Users/ViewModels/UserListViewModel.js"></script>
     <script src="~/App/Users/ViewModels/UserViewModel.js"></script>
     <script src="~/App/Users/ViewModels/user-list.component.js"></script>
+
+    <script src="~/App/app.module.js"></script>
+    <script src="~/App/app.config.js"></script>
+    <script src="~/App/Users/user-detail/user-detail.module.js"></script>
+    <script src="~/App/Users/user-detail/user-detail.component.js"></script>
 }
 
 @section jsCode {
@@ -17,8 +22,6 @@
 }
 
 <div ng-non-bindable>
-
-
     <h3>Select an analysis you would like to perform</h3>
     <div id="AnalyticsWindow" data-ng-controller="rootViewModel">
         <nav class="navbar navbar-inverse">
@@ -28,13 +31,12 @@
                 </div>
 
                 <ul class="nav navbar-nav">
-                    <li><a href="" ng-click="userList()"> Users </a></li>
+                    <li><button class="btn btn-primary" ng-click="userList()"> Users </button></li>
                     <li data-target="#AnalyticsWindow"><a href="#">Directed Graph</a></li>
                 </ul>
 
             </div>
         </nav>
-
 
         <style>
             .gist-cache iframe {
@@ -45,8 +47,9 @@
         </style>
         <div class="text-center gist-cache">
             <h2>{{ pageHeading }}</h2>
+            @*
             <user-list></user-list>
-
+            *@
         </div>
         <hr />
         <div ng-view></div>

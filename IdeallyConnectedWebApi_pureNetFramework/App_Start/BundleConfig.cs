@@ -8,6 +8,14 @@
 
     To debug javascript in a development environment set debug="true" in Web.config. The JS files will not be 
     bundled or minified as a result.
+
+    Concerning AngularJS code and minification: https://docs.angularjs.org/tutorial/step_07 "A Note on Minification"
+    Since Angular infers the controller's dependencies from the names of arguments to the controller's constructor 
+    function, if you were to minify the JavaScript code for a controller, all of its function arguments would be minified 
+    as well, and the dependency injector would not be able to identify services correctly.
+    Workaround 1 example: SomeController.$inject = ['$http'];
+    Workaround 2 example: .component("userList", {..., controller: ["$http", function UserListController($http){..}]});
+        or .component(... ... ["$http", UserListController]}); where UserListController is defined elsewhere.
 */
 using System.Web;
 using System.Web.Optimization;
