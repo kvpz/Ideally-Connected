@@ -12,9 +12,11 @@
             </tr>
         </thead>
         <tbody ng-repeat="u in users">
+            
             <tr>
                 <td><a href="#" ng-click="showUser(u)">show</a></td>
-                <td>{{ u.name }}</td>
+                <td>{{ u }}</td>
+                <td>{{ u.UserName }}</td>
                 <td>{{ u.age }}</td>
             </tr>
         </tbody>

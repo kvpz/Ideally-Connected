@@ -14,7 +14,6 @@
             });
         }
 
-
         $scope.showUser = function (user) {
             $scope.flags.shownFromList = true;
             viewModelHelper.navigateTo("user/show/" + user.UserId);

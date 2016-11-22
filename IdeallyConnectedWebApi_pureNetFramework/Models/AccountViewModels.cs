@@ -64,7 +64,12 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Models
 
     public class RegisterViewModel
     {
-    
+        [Display(Name = "Firstname")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Lastname")]
+        public string LastName { get; set; }    
+
         [Required]
         [Display(Name = "UserName")]
         public string UserName { get; set; }

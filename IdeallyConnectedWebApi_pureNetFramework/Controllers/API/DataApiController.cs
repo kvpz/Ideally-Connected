@@ -21,8 +21,8 @@ namespace IdeallyConnectedWebApi_pureNetFramework.API
         public HttpResponseMessage GetUsers(HttpRequestMessage request)
         {
             var users = DataFactory.GetUsers();
-
-            return request.CreateResponse<ApplicationUser[]>(HttpStatusCode.OK, users.ToArray());
+            var context = new ApplicationDbContext();
+            return request.CreateResponse<ApplicationUser[]>(HttpStatusCode.OK, context.Users.ToArray());
         }
 
         /*
