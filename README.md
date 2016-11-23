@@ -1,21 +1,16 @@
-### Ideally Connected
-Goal: create an application in which users can compare and analyze each other based on they're provided data (initially limited to the attributes in the database). Basically a manifestation of 
-All in all, I intend this to be a learning experience for myself and others also venturing in the world of ASP.NET web development and computer networking.
+## Ideally Connected
+Goal: create an application in which users can compare and analyze each other based on they're provided data (which would initially consist of programming languages they know and software that they use). 
 
-### Tech used
-C#, .NET Framework, Entity Framework 6.x, Javascript, AngularJS, jsD3
+### Frameworks and API usage
+- ASP.NET (Framework 4.6.1) Web API with Entity Framework 6.1.3
+- AngularJS 1.5.8
+- D3.js (latest hosted version)
 
 ### Checklist *(ordered in descending priority)*
 - [ ] Create appealing user interface for *Home* and *Analysis 1*
 - [ ] Create DB schema: *Users, Programming Languages, Skills, Software*
 - [ ] Chat/ messenger
 - [ ] Local network topology visualization
-
-#### update 11/17/16
-Development is now taking place within the folder **IdeallyConntectedWebApi_purNetFramework**. Restarting from scratch. Further refactoring will come soon.
-
-#### previous update
-The project files are within **IdeallyConnectedWebApp** and **MyCollabLib**. 
 
 ### Resources
 [Performance Tips for .NET](https://msdn.microsoft.com/en-us/library/ms973839.aspx)
