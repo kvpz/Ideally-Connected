@@ -10,7 +10,6 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "IdeallyConnectedWebApi_pureNetFramework.Models.ApplicationDbContext";
         }
 
         protected override void Seed(IdeallyConnectedWebApi_pureNetFramework.Models.ApplicationDbContext context)

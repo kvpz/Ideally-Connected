@@ -40,10 +40,18 @@ namespace IdeallyConnectedWebApi_pureNetFramework.Models
         {
             base.OnModelCreating(modelBuilder);
             // Change name of the table (to avoid AspNetUsers)
+            /*
             modelBuilder.Entity<IdentityUser>()
                 .ToTable("Users");
             modelBuilder.Entity<ApplicationUser>()
                 .ToTable("Users");
+                */
+                
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOptional(t => t.UserProfile)
+                .WithRequired(t => t.ApplicationUser)
+                .Map(p => p.MapKey("UserId"));
+                
         }
     }
 
