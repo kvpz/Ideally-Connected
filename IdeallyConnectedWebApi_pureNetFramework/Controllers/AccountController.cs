@@ -8,9 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using IdeallyConnectedWebApi_pureNetFramework.Models;
+using IdeallyConnected.Models;
 
-namespace IdeallyConnectedWebApi_pureNetFramework.Controllers
+namespace IdeallyConnected.Controllers
 {
     [Authorize]
     public class AccountController : Controller

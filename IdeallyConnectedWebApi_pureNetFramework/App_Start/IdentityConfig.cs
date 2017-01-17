@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using IdeallyConnectedWebApi_pureNetFramework.Models;
+using IdeallyConnected.Models;
 
-namespace IdeallyConnectedWebApi_pureNetFramework
+namespace IdeallyConnected
 {
     public class EmailService : IIdentityMessageService
     {

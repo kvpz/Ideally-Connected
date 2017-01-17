@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(IdeallyConnectedWebApi_pureNetFramework.Startup))]
-namespace IdeallyConnectedWebApi_pureNetFramework
+[assembly: OwinStartupAttribute(typeof(IdeallyConnected.Startup))]
+namespace IdeallyConnected
 {
     public partial class Startup
     {

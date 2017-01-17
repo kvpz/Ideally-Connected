@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http; // RoutePrefixAttribute(), ApiController
-using IdeallyConnectedWebApi_pureNetFramework.Models;
+using IdeallyConnected.Models;
 //using System.Web.Mvc;  // Controller
 using System.Collections.Generic;
 
-namespace IdeallyConnectedWebApi_pureNetFramework.API
+namespace IdeallyConnected.API
 {
     [RoutePrefix("api")]
     public class DataApiController : ApiController 

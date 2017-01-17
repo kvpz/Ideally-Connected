@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace IdeallyConnectedWebApi_pureNetFramework.Controllers
+namespace IdeallyConnected.Controllers
 {
     public class HomeController : Controller
     {

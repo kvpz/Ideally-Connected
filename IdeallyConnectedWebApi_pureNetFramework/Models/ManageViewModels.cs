@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace IdeallyConnectedWebApi_pureNetFramework.Models
+namespace IdeallyConnected.Models
 {
     public class IndexViewModel
     {
