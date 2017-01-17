@@ -1,4 +1,4 @@
-namespace IdeallyConnectedWebApi_pureNetFramework.Migrations
+namespace IdeallyConnected.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

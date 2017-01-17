@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace IdeallyConnectedWebApi_pureNetFramework.Models
+namespace IdeallyConnected.Models
 {
     public static class DataFactory
     {

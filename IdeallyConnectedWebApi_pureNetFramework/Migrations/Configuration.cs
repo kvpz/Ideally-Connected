@@ -1,18 +1,18 @@
-namespace IdeallyConnectedWebApi_pureNetFramework.Migrations
+namespace IdeallyConnected.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnectedWebApi_pureNetFramework.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnected.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(IdeallyConnectedWebApi_pureNetFramework.Models.ApplicationDbContext context)
+        protected override void Seed(IdeallyConnected.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

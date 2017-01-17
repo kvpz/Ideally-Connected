@@ -20,7 +20,7 @@
 using System.Web;
 using System.Web.Optimization;
 
-namespace IdeallyConnectedWebApi_pureNetFramework
+namespace IdeallyConnected
 {
     public class BundleConfig
     {
