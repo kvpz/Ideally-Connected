@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data; // DataSet, etc. Represents ADO.NET
+using System;
+using System.Collections.Generic;
 
 namespace IdeallyConnected.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser
+    public partial class ApplicationUser : IdentityUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -18,14 +20,13 @@ namespace IdeallyConnected.Models
             return userIdentity;            
         }
         
-        // Extension properties
-        public virtual UserProfile UserProfile { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<UserProfile> UserProfile { get; set; }
-        
+        //public DbSet<UserProfile> UserProfile { get; set; }
+        //public DbSet<ApplicationUser> AppUser { get; set; }
+                
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -36,23 +37,30 @@ namespace IdeallyConnected.Models
             return new ApplicationDbContext();
         }
 
+        /*
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            
             // Change name of the table (to avoid AspNetUsers)
-            /*
+            ///*
             modelBuilder.Entity<IdentityUser>()
                 .ToTable("Users");
             modelBuilder.Entity<ApplicationUser>()
                 .ToTable("Users");
-                */
+            
                 
             modelBuilder.Entity<ApplicationUser>()
                 .HasOptional(t => t.UserProfile)
-                .WithRequired(t => t.ApplicationUser)
-                .Map(p => p.MapKey("UserId"));
-                
+                .WithRequired(t => t.ApplicationUser);
+                //.Map(p => p.MapKey("UserId"));
+            base.OnModelCreating(modelBuilder);
         }
+
+        internal object Entity<T>(T entity)
+        {
+            throw new NotImplementedException();
+        }
+    */
     }
 
 
