@@ -10,6 +10,7 @@ namespace IdeallyConnected.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "IdeallyConnected.Models.ApplicationUser";
         }
 
         protected override void Seed(IdeallyConnected.Models.ApplicationDbContext context)
