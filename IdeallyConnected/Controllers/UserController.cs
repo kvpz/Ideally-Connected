@@ -13,7 +13,6 @@ namespace IdeallyConnected.Controllers
         // GET: User
         public ActionResult Index()
         {
-            //return View(context.UserProfile.ToList());
             return View(context.Users.ToList());
         }
 

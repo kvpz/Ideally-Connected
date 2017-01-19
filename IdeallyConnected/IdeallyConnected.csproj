@@ -48,6 +48,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.4.0.0.1\lib\net40\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Glimpse.Ado, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
       <Private>True</Private>
@@ -68,6 +72,10 @@
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -81,9 +89,18 @@
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ScrapySharp.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScrapySharp.2.6.2\lib\net45\ScrapySharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ScrapySharpAsync, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScrapySharp.2.6.2\lib\net45\ScrapySharpAsync.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -208,35 +225,31 @@
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201611271924262_Initial.cs" />
-    <Compile Include="Migrations\201611271924262_Initial.Designer.cs">
-      <DependentUpon>201611271924262_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201701181823166_first.cs" />
+    <Compile Include="Migrations\201701181823166_first.Designer.cs">
+      <DependentUpon>201701181823166_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\DataFactory.cs" />
+    <Compile Include="Models\ApplicationDataContextInitializer.cs" />
+    <Compile Include="Models\DataGenerators\SoftwareGenerator.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ProgrammingLanguage.cs" />
-    <Compile Include="Models\Skill.cs" />
+    <Compile Include="Models\ProgrammingLanguages.cs" />
+    <Compile Include="Models\Repositories\Repository.cs" />
+    <Compile Include="Models\Repositories\UserRepository.cs" />
+    <Compile Include="Models\Software.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\AppMain.js" />
-    <Content Include="App\Tests\test.js" />
-    <Content Include="App\Users\AppUsers.js" />
-    <Content Include="App\Users\professionalSelfie.jpg" />
-    <Content Include="App\Users\ViewModels\RootViewModel.js" />
-    <Content Include="App\Users\ViewModels\user-list.component.js" />
-    <Content Include="App\Users\ViewModels\UserHomeViewModel.js" />
-    <Content Include="App\Users\ViewModels\UserListViewModel.js" />
-    <Content Include="App\Users\ViewModels\UserViewModel.js" />
     <Content Include="App\Users\Views\user-list.template.html" />
     <Content Include="App\Users\Views\UserHomeView.html" />
     <Content Include="App\Users\Views\UserListView.html" />
@@ -313,12 +326,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Analysis\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Common\" />
     <Folder Include="App\Users\user-detail\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Repositories\" />
     <Folder Include="Scripts\lib\" />
   </ItemGroup>
   <ItemGroup>
@@ -328,8 +342,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611271924262_Initial.resx">
-      <DependentUpon>201611271924262_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701181823166_first.resx">
+      <DependentUpon>201701181823166_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
