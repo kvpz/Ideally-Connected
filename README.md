@@ -7,8 +7,8 @@ Goal: create an application in which users can compare and analyze each other ba
 - D3.js (latest hosted version)
 
 ### Checklist *(ordered in descending priority)*
-- [ ] Create appealing user interface for *Home* and *Analysis 1*
-- [ ] Create DB schema: *Users, Programming Languages, Skills, Software*
+- [x] Create DB schema: *Users, Programming Languages, Skills, Software*
+- [ ] View with drop down list of Users and their relevant information
 - [ ] Chat/ messenger
 - [ ] Local network topology visualization
 

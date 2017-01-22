@@ -4,11 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+        
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 </head>
-<body data-ng-app="main">
+<body> @* data-ng-app="main"> *@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,7 +26,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Analysis", "Index", "Analysis")</li>
+                    <li>@Html.ActionLink("DataView", "Index", "DataView")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -42,20 +44,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script src="~/Scripts/bootstrap.js"></script>
     </environment>
-    @Scripts.Render("~/bundles/angular")
+    
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <script type="text/javascript">
-        window.MyApp = {};
-        MyApp.rootPath = '@Url.Content("~")';
-    </script>
-   
-    <script src="~/App/Validator.js"></script>
-    <script src="~/App/AppMain.js"></script>
-    @RenderSection("scripts", required: false)
-    <script type="text/javascript">
-        @RenderSection("jsCode", required: false);
-    </script>
-        
+
 </body>
 </html>

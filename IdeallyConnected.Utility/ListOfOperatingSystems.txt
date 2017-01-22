@@ -1,5 +1,3 @@
-Operating Systems (610)
-
 2K
 86-DOS
 A/UX
@@ -610,12 +608,6 @@ zeVenOS
 ZMOS
 ZotOS
 ZRTS 8000 
-
-
-
-
-Linux Distributions (651)
-
 3Anoppix
 64 Studio
 Absolute Linux
