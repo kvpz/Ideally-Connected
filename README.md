@@ -12,5 +12,8 @@ Goal: create an application in which users can compare and analyze each other ba
 - [ ] Chat/ messenger
 - [ ] Local network topology visualization
 
+Latest development can be seen in 'Develop' branch. 'RestartDevelopment' branch has now withered.
+
 ### Resources
 [Performance Tips for .NET](https://msdn.microsoft.com/en-us/library/ms973839.aspx)
+[Angular-seed: an application skeleton](https://github.com/angular/angular-seed)
