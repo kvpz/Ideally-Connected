@@ -1,0 +1,11 @@
+﻿{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 26,
+  "Skills": [
+    "Programming", "Reading"
+  ],
+  "ProgrammingLanguages": [
+    "C++", "Javascript", "C#"
+  ]
+}

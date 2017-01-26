@@ -15,14 +15,12 @@ namespace IdeallyConnected
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            
             routes.MapRoute(
                 name: "user",
-                url:  "user/{*catch-all}",
-                defaults: new {
-                    controller = "Home", action = "User"
-                });
-
+                url:  "App/#!/users/{*catch-all}"
+               );
+            
             routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(

@@ -27,10 +27,5 @@ namespace IdeallyConnected.Controllers
             return View();
         }
 
-        public ActionResult User()
-        {
-            ViewBag.Message = "View of all users section";
-            return View();
-        }
     }
 }

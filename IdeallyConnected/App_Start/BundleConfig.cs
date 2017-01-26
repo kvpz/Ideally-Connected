@@ -48,9 +48,9 @@ namespace IdeallyConnected
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
         
-            //bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-            //            "~/Scripts/angular.js",
-            //            "~/Scripts/angular-route.js"));
+            //bundles.Add(new ScriptBundle("~/bower_components/angular").Include(
+            //            "~/bower_components/angular/angular.js",
+            //            "~/bower_components/angular/angular-route.js"));
 
             BundleTable.EnableOptimizations = true;
             
