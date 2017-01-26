@@ -10,13 +10,14 @@ namespace IdeallyConnected.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.directory = System.IO.Directory.GetCurrentDirectory();
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
+            
             return View();
         }
 

@@ -16,11 +16,7 @@ namespace IdeallyConnected
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             
-            routes.MapRoute(
-                name: "user",
-                url:  "App/#!/users/{*catch-all}"
-               );
-            
+
             routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
@@ -30,6 +26,12 @@ namespace IdeallyConnected
             );
             //routes.RouteExistingFiles = true;
             //routes.MapMvcAttributeRoutes();
+
+                        routes.MapRoute(
+                name: "user",
+                url:  "App/#!/users/{*catch-all}"
+               );
+            
         }
     }
 }
