@@ -9,6 +9,7 @@ angular.module('ICApp')
             $routeProvider
                 .when('/users', {
                     template: '<user-list></user-list>'
+                    //controller: 
                 })
                 .when('/users/:userId', {
                     template: '<user-detail></user-detail>'

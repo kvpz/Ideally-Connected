@@ -8,10 +8,14 @@
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ideally Connected</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" data-ng-app="ICApp">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -19,21 +23,36 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Ideally Connected", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Ideally Connected","Index","Home",new { area = "" },new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Home","Index","Home")</li>
+                    <li>@Html.ActionLink("About","About","Home")</li>
+                    <li>@Html.ActionLink("Contact","Contact","Home")</li>
+                    <li>@Html.ActionLink("AllUsers","AllUsers","Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
+
     </div>
+    
     <div class="container body-content">
         @RenderBody()
         <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <!-- a href="~/App/" class="btn btn-primary btn-block">View all users</!--a -->
+                @Html.ActionLink("List of Users", "ListUsers", "Home", null, new { @class="btn btn-primary btn-block" })
+            </div>
+            <div class="col-md-4">
+                <a href="~/Home/LocalNetUsers" class="btn btn-primary btn-block"> users in network </a>
+            </div>
+            <div class="col-md-4">
+                @Html.ActionLink("All Users","AllUsers","Home", null, new { @class = "btn btn-primary btn-block" })
+            </div>
+        </div>
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
@@ -46,9 +65,19 @@
     
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript">
+        window.ICApp = {};
+        ICApp.rootPath = '@Url.Content("~")';
+    </script>
+
     <script src="~/App/bower_components/angular/angular.min.js"></script>
     <script src="~/App/app.module.js"></script>
     <script src="~/App/app.config.js"></script>
+    @RenderSection("supportingScripts", required: false)
+    <script type="text/javascript">
+        @RenderSection("jsCode", required: false)
+    </script>
 
 </body>
 </html>
