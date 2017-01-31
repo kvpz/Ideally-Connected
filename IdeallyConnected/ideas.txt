@@ -1,0 +1,3 @@
+﻿To run my machine as database server and have other computers communicate with my PC's database, I can use
+my IP address in the connection string found in Web.config.
+

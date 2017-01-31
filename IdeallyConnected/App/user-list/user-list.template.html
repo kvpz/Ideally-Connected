@@ -1,0 +1,81 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <!--Sidebar content-->
+
+            <p>
+                Search:
+                <input ng-model="$ctrl.query" />
+            </p>
+            <p>
+                Sort by:
+                <select ng-model="$ctrl.orderProp">
+                    <option value="name">Alphabetical</option>
+                    <option value="age">Youngest</option>
+                </select>
+            </p>
+
+        </div>
+
+        <div class="col-md-10">
+            <!--Table Content-->
+
+            <div class="container">
+                <h2>User Listing</h2>
+                <table class="table  table-hover">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="user in $ctrl.users | filter: $ctrl.query | orderBy: $ctrl.orderProp">
+                        <tr>
+                            <td><a href="#!/users/{{user.id}}">{{user.firstName}}</a></td>
+                            <td>{{ user.lastName }}</td>
+                            <td>{{ user.username }}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            
+            <script ng-controller="$ctrl as ctrl">
+                var columns = [
+                    { head: 'First name', cl: 'center', html: function(row){ return r.name; } },
+                    { head: 'Last name', cl: 'center', html: function (row) { return r.title; } },
+                    { head: 'Username', cl: 'center', html: function (row) { return r.title; } }
+                ];
+                var table = d3.select('body').append('table');
+                table.append('thead').append('tr')
+                    .selectAll('th')
+                    .data(columns).enter()
+                    .append('th');
+
+                table.append('tbody')
+                    .selectAll('tr')
+                    .data({{ ctrl.users }}).enter()
+                    .append('tr')
+                    .selectAll('td')
+                    .data(function (row, i) {
+                        return columns.map(function (c) {
+                            var cell = {};
+                            d3.keys(c).forEach(function (k) {
+                                cell[k] = typeof c[k] == 'function' ? c[k](row, i) : c[k];
+                            });
+                            return cell;
+                        });
+                    }).enter()
+                    .append('td')
+                    .attr('class', f('cl'));
+
+                function length() {
+                    var fmt = d3.format('02d');
+                    return function (l) { return Math.floor(l / 60) + ':' + fmt(1 % 60) + ''; };
+                }
+            </script>
+            
+        </div>
+    </div>
+</div>

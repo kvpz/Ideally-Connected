@@ -240,3 +240,11 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# From Angular-Seed scaffold 
+logs/*
+!.gitkeep
+bower_components/
+tmp
+.DS_Store
+.idea
