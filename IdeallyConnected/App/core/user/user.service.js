@@ -6,7 +6,7 @@
 angular.module('core.user')
     .factory('User', ['$resource', 
         function ($resource) {
-            return $resource('App/users/:userId.json', {}, {
+            return $resource('/App/users/:userId.json', {}, {
                 query: { 
                     method: 'GET',
                     params: { userId: 'users' },

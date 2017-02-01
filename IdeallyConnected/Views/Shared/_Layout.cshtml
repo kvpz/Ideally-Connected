@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - IdeallyConnected</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
@@ -13,9 +13,26 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script src="~/App/bower_components/jquery/dist/jquery.js"></script>
+    <script src="~/App/bower_components/angular/angular.min.js"></script>
+    <script src="~/App/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="~/App/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="~/App/app.module.js"></script>
+    <script src="~/App/app.config.js"></script>
+    <script src="~/App/core/core.module.js"></script>
+    <script src="~/App/core/checkmark/checkmark.filter.js"></script>
+    <script src="~/App/core/user/user.module.js"></script>
+    <script src="~/App/core/user/user.service.js"></script>
+    <script src="~/App/user-list/user-list.module.js"></script>
+    <script src="~/App/user-list/user-list.component.js"></script>
+    <script src="~/App/user-detail/user-detail.module.js"></script>
+    <script src="~/App/user-detail/user-detail.component.js"></script>
+    <script src="~/App/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+
+
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top" data-ng-app="ICApp">
+<body ng-app="ICApp">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -42,19 +59,15 @@
         @RenderBody()
         <hr />
         <div class="row">
-            <div class="col-md-4">
-                <!-- a href="~/App/" class="btn btn-primary btn-block">View all users</!--a -->
+            <div class="col-md-6">
                 @Html.ActionLink("List of Users", "ListUsers", "Home", null, new { @class="btn btn-primary btn-block" })
             </div>
-            <div class="col-md-4">
-                <a href="~/Home/LocalNetUsers" class="btn btn-primary btn-block"> users in network </a>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 @Html.ActionLink("All Users","AllUsers","Home", null, new { @class = "btn btn-primary btn-block" })
             </div>
         </div>
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Ideally Connected</p>
         </footer>
     </div>
 
@@ -65,15 +78,9 @@
     
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    
 
-    <script type="text/javascript">
-        window.ICApp = {};
-        ICApp.rootPath = '@Url.Content("~")';
-    </script>
 
-    <script src="~/App/bower_components/angular/angular.min.js"></script>
-    <script src="~/App/app.module.js"></script>
-    <script src="~/App/app.config.js"></script>
     @RenderSection("supportingScripts", required: false)
     <script type="text/javascript">
         @RenderSection("jsCode", required: false)

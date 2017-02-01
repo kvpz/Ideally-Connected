@@ -47,11 +47,11 @@ namespace IdeallyConnected
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
-        
-            //bundles.Add(new ScriptBundle("~/bower_components/angular").Include(
-            //            "~/bower_components/angular/angular.js",
-            //            "~/bower_components/angular/angular-route.js"));
-
+        /*
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                        "~/bower_components/angular/angular.js",
+                        "~/bower_components/angular-route/angular-route.js"));
+                        */
             BundleTable.EnableOptimizations = true;
             
         }

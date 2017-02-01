@@ -1,5 +1,12 @@
 ﻿'use strict';
 
+angular.module('ICApp')
+    .controller('IndexViewModel',
+        function ($scope, $http, $q, $routeParams, $window, $location) {
+            var self = this;
+            self.author = "Created by Kevin Perez";
+});
+
 // Configure existing services & providers. The function is executed upon loading the module. 
 angular.module('ICApp')
     .config(['$locationProvider', '$routeProvider',
@@ -9,7 +16,6 @@ angular.module('ICApp')
             $routeProvider
                 .when('/users', {
                     template: '<user-list></user-list>'
-                    //controller: 
                 })
                 .when('/users/:userId', {
                     template: '<user-detail></user-detail>'

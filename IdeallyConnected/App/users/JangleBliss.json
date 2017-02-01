@@ -1,0 +1,12 @@
+﻿{
+  "firstName": "Jangle",
+  "lastName": "Bliss",
+  "username": "jubilee3",
+  "age": 14,
+  "Skills": [
+    "Type fast", "Read well"
+  ],
+  "ProgrammingLanguages": [
+    "Java", "HTML"
+  ]
+}

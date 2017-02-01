@@ -36,11 +36,6 @@ namespace IdeallyConnected.Controllers
             return View();
         }
 
-        public ActionResult LocalNetUsers()
-        {
-            ViewBag.Message = "All users in your local area network";
-            return View();
-        }
 
     }
 }

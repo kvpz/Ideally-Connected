@@ -32,7 +32,8 @@
                     </thead>
                     <tbody ng-repeat="user in $ctrl.users | filter: $ctrl.query | orderBy: $ctrl.orderProp">
                         <tr>
-                            <td><a href="#!/users/{{user.id}}">{{user.firstName}}</a></td>
+                            <td><a href="/App/#!/users/{{user.firstName + user.lastName}}">{{user.username}}</a></td>
+                            <td>{{ user.firstName }}</td>
                             <td>{{ user.lastName }}</td>
                             <td>{{ user.username }}</td>
                         </tr>
@@ -40,7 +41,7 @@
 
                 </table>
             </div>
-            
+            <!--
             <script ng-controller="$ctrl as ctrl">
                 var columns = [
                     { head: 'First name', cl: 'center', html: function(row){ return r.name; } },
@@ -75,7 +76,7 @@
                     return function (l) { return Math.floor(l / 60) + ':' + fmt(1 % 60) + ''; };
                 }
             </script>
-            
+            -->
         </div>
     </div>
 </div>
