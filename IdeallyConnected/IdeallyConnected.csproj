@@ -450,6 +450,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="e2e-tests\protractor.conf.js" />
     <Content Include="e2e-tests\scenarios.js" />
     <Content Include="favicon.ico" />
@@ -466,6 +467,10 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App\bower_components\angular\.bower.json" />
@@ -635,6 +640,7 @@
     <Content Include="App\bower_components\angular-resource\package.json" />
     <Content Include="App\bower_components\angular-resource\README.md" />
     <Content Include="App\users\users.json" />
+    <Content Include="App\users\JangleBliss.json" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -685,7 +691,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\AllUsers.cshtml" />
-    <Content Include="Views\Home\LocalNetUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

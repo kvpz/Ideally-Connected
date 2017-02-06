@@ -1,6 +1,6 @@
-﻿<div class="container-fluid">
+﻿<div>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-sm-2">
             <!--Sidebar content-->
 
             <p>
@@ -17,7 +17,7 @@
 
         </div>
 
-        <div class="col-md-10">
+        <div id="ulistid" class="col-sm-10 col">
             <!--Table Content-->
 
             <div class="container">
@@ -35,7 +35,6 @@
                             <td><a href="/App/#!/users/{{user.firstName + user.lastName}}">{{user.username}}</a></td>
                             <td>{{ user.firstName }}</td>
                             <td>{{ user.lastName }}</td>
-                            <td>{{ user.username }}</td>
                         </tr>
                     </tbody>
 
