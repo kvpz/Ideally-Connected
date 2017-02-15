@@ -1,20 +1,23 @@
 ﻿'use strict';
+var module = angular.module('userDetail');
 
-angular.module('userDetail')
-    .component('userDetail', {
-        templateUrl: 'user-detail/user-detail.template.html',
-        controller: ['$routeParams', 'User',
-            function UserDetailController($routeParams, User) {
-                var self = this;
-                self.checkrp = $routeParams;
+module.component('userDetail', {
+    templateUrl: 'App/user-detail/user-detail.template.html',
+    controller: ['$routeParams', 'User',
+        function UserDetailController($routeParams, User) {
+            var self = this;
+            self.checkrp = $routeParams;
                 
-                self.user = User.get({ userId: $routeParams.userId }, function(user) {
-                    self.stuff = user.Skills;
-                });
-                self.checkUser = User.toString();
-            }
-        ]
-    });
+            self.user = User.get({
+                userId: $routeParams.userId
+            }, function (user) {
+                self.stuff = user.Skills;
+            });
+
+            self.checkUser = User.toString();
+        }
+    ]
+ });
 
 /*
     NOTES
