@@ -1,15 +1,14 @@
 ﻿'use strict';
 
-angular.module('userList')
-    .component('userList', {
-        templateUrl: 'App/user-list/user-list.template.html',
-        controller: ['User', 
-            function UserListController(User) {
-                this.users = User.query();
-                this.orderProp = 'age';
-            }           
-        ]
-    });
+angular.module('userList').component('userList', {
+    templateUrl: 'App/user-list/user-list.template.html',
+    controller: ['User', 
+        function UserListController(User) {
+            this.users = User.query();
+            this.orderProp = 'age';
+        }           
+    ]
+});
 
 /*
     NOTES

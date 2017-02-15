@@ -14,9 +14,17 @@ Goal: create an application in which users can compare and analyze each other ba
 
 Latest development can be seen in 'Develop' branch. 'RestartDevelopment' branch has now withered.
 
+### Development Protocols
+I prefer clear, self-documenting code than code that just works. It's better to write clear and less
+performant code first and then focus on improving performance.
+[Javascript/ AngularJS guidelines](http://www.codestyle.co/Guidelines/angularjs)
+
 ### Resources
 [Performance Tips for .NET](https://msdn.microsoft.com/en-us/library/ms973839.aspx)
 [Angular-seed: an application skeleton](https://github.com/angular/angular-seed)
+
+
+
 
 The MIT License
 

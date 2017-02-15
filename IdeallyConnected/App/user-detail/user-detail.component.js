@@ -1,7 +1,6 @@
 ﻿'use strict';
-var module = angular.module('userDetail');
 
-module.component('userDetail', {
+angular.module('userDetail').component('userDetail', {
     templateUrl: 'App/user-detail/user-detail.template.html',
     controller: ['$routeParams', 'User',
         function UserDetailController($routeParams, User) {
@@ -11,10 +10,9 @@ module.component('userDetail', {
             self.user = User.get({
                 userId: $routeParams.userId
             }, function (user) {
-                self.stuff = user.Skills;
+                self.skills = user.Skills;
+                self.bio = [user.firstName, user.lastName, user.age];
             });
-
-            self.checkUser = User.toString();
         }
     ]
  });
