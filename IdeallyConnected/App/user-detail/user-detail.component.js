@@ -1,22 +1,27 @@
 ﻿'use strict';
 
-angular.module('userDetail').component('userDetail', {
-    templateUrl: 'App/user-detail/user-detail.template.html',
-    controller: ['$routeParams', 'User',
-        function UserDetailController($routeParams, User) {
-            var self = this;
-            self.checkrp = $routeParams;
-                
-            self.user = User.get({
-                userId: $routeParams.userId
-            }, function (user) {
-                self.skills = user.Skills;
-                self.bio = [user.firstName, user.lastName, user.age];
-            });
-        }
-    ]
- });
+(function () {
 
+    function UserDetailController($routeParams, User) {
+        var self = this;
+        self.checkrp = $routeParams;
+
+        self.user = User.get({
+            userId: $routeParams.userId
+        }, function (user) {
+            self.skills = user.Skills;
+            self.bio = [user.firstName, user.lastName, user.age];
+        });
+    }
+
+    angular
+        .module('userDetail')
+        .component('userDetail', {
+            templateUrl: 'App/user-detail/user-detail.template.html',
+            controller: ['$routeParams', 'User', UserDetailController]
+        });
+
+})();
 /*
     NOTES
     Components are referenced in HTML in kebab case, ex: userDetail become user-detail.

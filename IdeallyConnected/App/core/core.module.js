@@ -1,3 +1,5 @@
 ﻿'use strict';
 
-angular.module('core', ['core.user']);
+
+    angular.module('core', ['core.user']);
+

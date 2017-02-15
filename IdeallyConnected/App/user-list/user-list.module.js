@@ -1,3 +1,4 @@
 ﻿'use strict';
 
-angular.module('userList', ['core.user']);
+
+    angular.module('userList', ['core.user']);
