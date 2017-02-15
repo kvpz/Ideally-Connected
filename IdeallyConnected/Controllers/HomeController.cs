@@ -1,8 +1,12 @@
-﻿using System;
+﻿//using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using WebGrease.Css.Extensions;
 
 namespace IdeallyConnected.Controllers
 {
@@ -10,13 +14,12 @@ namespace IdeallyConnected.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.directory = System.IO.Directory.GetCurrentDirectory();
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Connect with the right people!";
             
             return View();
         }
@@ -28,14 +31,5 @@ namespace IdeallyConnected.Controllers
             return View();
         }
         
-        public ActionResult AllUsers()
-        {
-            ViewBag.Message = "This is the user list";
-
-            
-            return View();
-        }
-
-
     }
 }
