@@ -1,12 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@{ 
-   var dir = Directory.GetCurrentDirectory();
-   var directory = ViewBag.directory;
-}
+
 <div class="jumbotron" ng-controller="IndexViewModel as ivm">
     <h1>Ideally Connected</h1>
     <p class="lead">Bringing people together.</p>
     <p><cite>{{ ivm.author }}</cite></p>
 </div>
+<div ng-view></div>
+

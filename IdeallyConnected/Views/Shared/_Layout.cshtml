@@ -3,35 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - IdeallyConnected</title>
+    <title>IdeallyConnected - @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ideally Connected</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <script src="~/App/bower_components/jquery/dist/jquery.js"></script>
-    <script src="~/App/bower_components/angular/angular.min.js"></script>
-    <script src="~/App/bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="~/App/bower_components/angular-route/angular-route.min.js"></script>
-    <script src="~/App/app.module.js"></script>
-    <script src="~/App/app.config.js"></script>
-    <script src="~/App/core/core.module.js"></script>
-    <script src="~/App/core/checkmark/checkmark.filter.js"></script>
-    <script src="~/App/core/user/user.module.js"></script>
-    <script src="~/App/core/user/user.service.js"></script>
-    <script src="~/App/user-list/user-list.module.js"></script>
-    <script src="~/App/user-list/user-list.component.js"></script>
-    <script src="~/App/user-detail/user-detail.module.js"></script>
-    <script src="~/App/user-detail/user-detail.component.js"></script>
-    <script src="~/App/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-
 
 </head>
-<body ng-app="ICApp">
+<body ng-app="ICApp" ng-strict-di>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -47,39 +28,41 @@
                     <li>@Html.ActionLink("Home","Index","Home")</li>
                     <li>@Html.ActionLink("About","About","Home")</li>
                     <li>@Html.ActionLink("Contact","Contact","Home")</li>
-                    <li>@Html.ActionLink("AllUsers","AllUsers","Home")</li>
+                    <li><a href="#!/users">Userlist</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
 
     </div>
-    
+
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/App/app.module.js"></script>
+    <script src="~/App/app.config.js"></script>
+    <script src="~/App/core/core.module.js"></script>
+    <script src="~/App/core/checkmark/checkmark.filter.js"></script>
+    <script src="~/App/core/user/user.module.js"></script>
+    <script src="~/App/core/user/user.service.js"></script>
+    <script src="~/App/user-list/user-list.module.js"></script>
+    <script src="~/App/user-list/user-list.component.js"></script>
+    <script src="~/App/user-detail/user-detail.module.js"></script>
+    <script src="~/App/user-detail/user-detail.component.js"></script>
+    <script src="~/App/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <div class="row">
             <div class="col-md-6">
-                @Html.ActionLink("List of Users", "ListUsers", "Home", null, new { @class="btn btn-primary btn-block" })
-            </div>
-            <div class="col-md-6">
-                @Html.ActionLink("All Users","AllUsers","Home", null, new { @class = "btn btn-primary btn-block" })
+                <a href="/#!/users" class="btn btn-primary btn-block">AllUsers</a>
             </div>
         </div>
         <footer>
             <p>&copy; @DateTime.Now.Year - Ideally Connected</p>
         </footer>
     </div>
-
-    <environment names="Development">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <script src="~/Scripts/bootstrap.js"></script>
-    </environment>
-    
-    @Scripts.Render("~/bundles/jquery")
+   
     @Scripts.Render("~/bundles/bootstrap")
-    
-
 
     @RenderSection("supportingScripts", required: false)
     <script type="text/javascript">
