@@ -17,7 +17,7 @@ Latest development can be seen in 'Develop' branch. 'RestartDevelopment' branch 
 ### Development Protocols
 I prefer clear, self-documenting code than code that just works. It's better to write clear and less
 performant code first and then focus on improving performance.
-[Javascript/ AngularJS guidelines](http://www.codestyle.co/Guidelines/angularjs)
+[Javascript/ AngularJS guidelines](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#iife)
 
 ### Resources
 [Performance Tips for .NET](https://msdn.microsoft.com/en-us/library/ms973839.aspx)

@@ -15,7 +15,7 @@ namespace IdeallyConnected
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            /*
             // appends only /AllUsers instead of /Home/AllUsers to url
             routes.MapRoute(
                 name: "allusers",
@@ -24,26 +24,23 @@ namespace IdeallyConnected
                     controller = "Home", action = "AllUsers"
                 }
             );
-                        
+            */            
             routes.MapMvcAttributeRoutes();
-
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = "" }
             );
-
             
-            routes.RouteExistingFiles = false;      
-            routes.AppendTrailingSlash = false; 
-            
+            //routes.RouteExistingFiles = false;      
+            //routes.AppendTrailingSlash = false; 
+        /*    
             routes.MapRoute(
-              name: "user",
+              name: "ICAppUsers",
               url:  "App/#!/users/{*catch-all}"
             );
-            
-            
+            */
         }
     }
 }

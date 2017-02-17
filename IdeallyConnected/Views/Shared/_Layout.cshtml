@@ -22,14 +22,12 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Ideally Connected","Index","Home",new { area = "" },new { @class = "navbar-brand" })
+                @if(User.Identity.IsAuthenticated) {
+                    Html.Partial("LayoutNavBar");
+                }
+
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home","Index","Home")</li>
-                    <li>@Html.ActionLink("About","About","Home")</li>
-                    <li>@Html.ActionLink("Contact","Contact","Home")</li>
-                    <li><a href="#!/users">Userlist</a></li>
-                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -52,22 +50,30 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <div class="row">
-            <div class="col-md-6">
-                <a href="/#!/users" class="btn btn-primary btn-block">AllUsers</a>
-            </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("About","About","Home")</li>
+                <li>@Html.ActionLink("Contact","Contact","Home")</li>
+
+            </ul>
         </div>
         <footer>
             <p>&copy; @DateTime.Now.Year - Ideally Connected</p>
         </footer>
     </div>
-   
+
     @Scripts.Render("~/bundles/bootstrap")
-
-    @RenderSection("supportingScripts", required: false)
-    <script type="text/javascript">
-        @RenderSection("jsCode", required: false)
-    </script>
-
+    @if(IsSectionDefined("Scripts")) {
+    @RenderSection("Scripts",required: false)
+        <script type="text/javascript">
+            @RenderSection("jsCode", required: false)
+        </script>
+    }
 </body>
+
+
+
+
+
+
 </html>

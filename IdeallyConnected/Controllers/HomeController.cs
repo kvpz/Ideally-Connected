@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebGrease.Css.Extensions;
+using IdeallyConnected.Components;
 
 namespace IdeallyConnected.Controllers
 {
@@ -14,7 +15,10 @@ namespace IdeallyConnected.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            LayoutMenuItemManager viewComponentManager = new LayoutMenuItemManager();
+            viewComponentManager.Load(Server.MapPath("/XML/LayoutMenuItems.xml"));
+
+            return View(viewComponentManager);
         }
 
         public ActionResult About()
@@ -30,6 +34,10 @@ namespace IdeallyConnected.Controllers
 
             return View();
         }
-        
+
+        public ActionResult FindPeople()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menus>
+  <Menu>
+    <MenuId>1</MenuId>
+    <ParentId>0</ParentId>
+    <Title>Find People By</Title>
+    <DisplayOrder>50</DisplayOrder>
+    <Action></Action>
+  </Menu>
+  <Menu>
+    <MenuId>2</MenuId>
+    <ParentId>1</ParentId>
+    <Title>Username</Title>
+    <DisplayOrder>10</DisplayOrder>
+    <Action>/Home/FindBy?=Username</Action>
+  </Menu>
+  <Menu>
+    <MenuId>3</MenuId>
+    <ParentId>1</ParentId>
+    <Title>Interests</Title>
+    <DisplayOrder>20</DisplayOrder>
+    <Action>/Home/FindBy?=Interests</Action>
+  </Menu>
+    <Menu>
+    <MenuId>4</MenuId>
+    <ParentId>1</ParentId>
+    <Title>Location</Title>
+    <DisplayOrder>30</DisplayOrder>
+    <Action>/Home/FindBy?=Location</Action>
+  </Menu>
+  <Menu>
+    <MenuId>5</MenuId>
+    <ParentId>1</ParentId>
+    <Title>Algorithms</Title>
+    <DisplayOrder>40</DisplayOrder>
+    <Action>/Home/FindBy?=Algorithms</Action>
+  </Menu>
+  <Menu>
+    <MenuId>5</MenuId>
+    <ParentId>0</ParentId>
+    <Title>Cast yourself!</Title>
+    <DisplayOrder>10</DisplayOrder>
+    <Action>/Home/CastUser</Action>
+  </Menu>
+</Menus>
