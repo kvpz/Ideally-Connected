@@ -1,30 +1,36 @@
 ﻿@{
     ViewBag.Title = "Partial Nav bar";
+    
 }
 @using IdeallyConnected.Components;
-@model LayoutMenuItemManager
+
+@if(Request.IsAuthenticated) {
+
+    LayoutMenuItemManager viewModel = new LayoutMenuItemManager();
+    viewModel.Load(Server.MapPath("/XML/LayoutMenuItems.xml"));
 
     <ul class="nav navbar-nav">
-        @foreach(LayoutMenuItem item in Model.Menus) {
-                <li>
-                    @if(item.Menus.Count == 0) {
-                <a href="@item.Action">@item.Title</a>
-                    }
-                    else {
-                    <a href="@item.Action"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown">
-                        @item.Title&nbsp;
-                        <span class="caret"></span>
-                    </a>
+        @foreach(LayoutMenuItem item in viewModel.Menus) {
+        <li>
+            @if(item.Menus.Count == 0) {
+                    <a href="@item.Action">@item.Title</a>
+            }
+            else {
+            <a href="@item.Action"
+               class="dropdown-toggle"
+               data-toggle="dropdown">
+                @item.Title&nbsp;
+                <span class="caret"></span>
+            </a>
                     <ul class="dropdown-menu">
                         @foreach(LayoutMenuItem subitem in item.Menus) {
-                    <li>
-                        <a href="@subitem.Action">@subitem.Title</a>
-                    </li>
+                        <li>
+                            <a href="@subitem.Action">@subitem.Title</a>
+                        </li>
                         }
                     </ul>
-                    }
-                </li>
+            }
+        </li>
         }
     </ul>
+}
