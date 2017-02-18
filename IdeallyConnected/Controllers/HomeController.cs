@@ -15,10 +15,7 @@ namespace IdeallyConnected.Controllers
     {
         public ActionResult Index()
         {
-            LayoutMenuItemManager viewComponentManager = new LayoutMenuItemManager();
-            viewComponentManager.Load(Server.MapPath("/XML/LayoutMenuItems.xml"));
-
-            return View(viewComponentManager);
+            return View();
         }
 
         public ActionResult About()
