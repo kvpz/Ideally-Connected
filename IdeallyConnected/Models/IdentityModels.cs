@@ -24,7 +24,7 @@ namespace IdeallyConnected.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<ApplicationUser> AppUser { get; set; }
+        //public DbSet<ApplicationUser> AppUser { get; set; }
         public DbSet<ProgrammingLanguages> ProgLanguages { get; set; }
         public DbSet<Software> Software { get; set; }
 
