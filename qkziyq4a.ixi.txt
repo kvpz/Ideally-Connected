@@ -1,0 +1,53 @@
+﻿user-list is currently displaying mock data stored in users/users.json.
+Further design and route handling is required.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch Develop
+# Your branch is up-to-date with 'origin/Develop'.
+#
+# Changes to be committed:
+#	new file:   .travis.yml
+#	new file:   App/app.config.js
+#	deleted:    App/app.js
+#	new file:   App/app.module.js
+#	new file:   App/core/checkmark/checkmark.filter.js
+#	new file:   App/core/core.module.js
+#	new file:   App/core/user/user.module.js
+#	new file:   App/core/user/user.service.js
+#	modified:   App/index-async.html
+#	modified:   App/index.html
+#	new file:   App/user-detail/user-detail.component.js
+#	new file:   App/user-detail/user-detail.module.js
+#	new file:   App/user-detail/user-detail.template.html
+#	new file:   App/user-list/user-list.component.js
+#	new file:   App/user-list/user-list.module.js
+#	new file:   App/user-list/user-list.template.html
+#	new file:   App/users/JohnSmith.json
+#	new file:   App/users/users.json
+#	deleted:    App/view1/view1.html
+#	deleted:    App/view1/view1.js
+#	deleted:    App/view1/view1_test.js
+#	deleted:    App/view2/view2.html
+#	deleted:    App/view2/view2.js
+#	deleted:    App/view2/view2_test.js
+#	modified:   App_Start/BundleConfig.cs
+#	modified:   App_Start/RouteConfig.cs
+#	modified:   Controllers/HomeController.cs
+#	new file:   LICENSE
+#	modified:   Views/Shared/_Layout.cshtml
+#	new file:   bower.json
+#	new file:   package.json
+#	modified:   ../README.md
+#
+# Changes not staged for commit:
+#	modified:   ../.gitignore
+#	modified:   Content/bootstrap.min.css.map
+#	modified:   IdeallyConnected.csproj
+#
+# Untracked files:
+#	.bowerrc
+#	.jshintrc
+#	e2e-tests/
+#
+

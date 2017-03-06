@@ -14,6 +14,7 @@ namespace IdeallyConnected
     {
         protected void Application_Start()
         {
+            
             //Database.SetInitializer<ApplicationUserDbContext>(new AppDataContextInitializer());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
