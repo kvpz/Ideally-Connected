@@ -79,7 +79,7 @@ namespace IdeallyConnected.Controllers
             string user = "";
             if(usersWithMatchingEmail.Any())
             {
-                user = usersWithMatchingEmail.First().ToString();
+                user = usersWithMatchingEmail.First().UserName;
             }
             var result = await SignInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
