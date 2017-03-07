@@ -1,0 +1,22 @@
+﻿[
+  {
+    "firstName": "John",
+    "lastName": "Smith",
+    "username": "jsmithy"
+  },
+  {
+    "firstName": "Jangle",
+    "lastName": "Bliss",
+    "username": "jubilee3"
+  },
+  {
+    "firstName": "Christopher",
+    "lastName": "Linguini",
+    "username": "bigbossMan"
+  },
+  {
+    "firstName": "Jimmy",
+    "lastName": "Smith",
+    "username": "notjohnsmithy"
+  }
+]
