@@ -1,0 +1,21 @@
+﻿@*model IdeallyConnected.Models.Repositories.Repository<IdeallyConnected.Models.Software>
+*@
+@using IdeallyConnected.Models;
+@model List<Software>
+@{
+    ViewBag.Title = "Pinglocation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Model.Add(new Software { Id = "Micosoft",Type = SoftwareTypes.OperatingSystem });
+    var usersMod = new IdeallyConnected.Models.Repositories.UserRepository();
+}
+
+<h2>Pinglocation</h2>
+<h6>@Model</h6>
+
+    @foreach(var i in Model) {
+    <li>
+        @i.Id
+        @i.Type
+    </li>
+
+    }
