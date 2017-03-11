@@ -26,6 +26,16 @@ namespace IdeallyConnected.Experiments
                 .ToList()
                 .ForEach(instance => dbSet.AddOrUpdate(instance));
 
+        public static void printSkill(this Skill s)
+        {
+            Console.WriteLine($"Skills\nID: {s.ID} \nDescription: {s.Description} \nType: {s.Type}\n");
+        }
+
+        public static void printUser(this User u)
+        {
+            Console.WriteLine($"\nUsername: {u.username} \nlocationName: {u.locationName} \nlocationsIP: {u.locationsIP}");
+            u.Skill.printSkill(); 
+        }
     }
 
     // EF automatically creates 'IdeallyCo...ted.Exp...ts.AppICDbContext' database. No ConnectionString required.
@@ -55,17 +65,19 @@ namespace IdeallyConnected.Experiments
 
     public class Skill
     {
+        // Called implicitly when assigning a skill object with a SkillEnum.
         private Skill(SkillEnum @enum)
         {
             ID = (int)@enum;
+            Type = (int)@enum;
             Description = @enum.GetEnumDescription();
-            Console.WriteLine("In Skill private constructor");
         }
 
         protected Skill() { }
 
-        public int ID { get; set; }
-        public string Description { get; set; }
+        public int      ID          { get; set; } 
+        public int      Type        { get; set; }
+        public string   Description { get; set; }
         public static implicit operator Skill(SkillEnum @enum) => new Skill(@enum);
         public static implicit operator SkillEnum(Skill skill) => (SkillEnum)skill.ID;
     }

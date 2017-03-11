@@ -8,11 +8,37 @@ namespace IdeallyConnected.Experiments
 {
     public class Program
     {
-        private static List<User> GenerateUsers()
+        private static List<string> progLangs = new List<string> { "C","C++", "C#", "Objective-C", "Ruby", "Javascript", "Python", "Bash", "MIPS", "LISP", "R", "F#", "PHP" };
+        delegate string randomString(int i);
+
+        /// <summary>
+        /// Generate a string with random, space-separated programming languages. 
+        /// </summary>
+        /// <param name="totalRequested"> The total amount of programming languages to be returned. </param>
+        /// <param name="randomly"> If true, totalRequest is used as the seed value for System.Random </param>
+        /// <returns></returns>
+        private static string GenerateProgrammingLanguages(int totalRequested, bool randomly = false)
+        {
+            StringBuilder result = new StringBuilder();
+            Random random;
+            if(randomly)
+                random = new Random();
+            else
+                random = new Random(totalRequested);
+            // This may produce duplicate values, but it's okay for testing.
+            var randomIndexes = Enumerable.Range(0, progLangs.Count - 1).OrderBy(x => random.Next()).Take(totalRequested - 1).ToList();
+            randomString f = (index) => progLangs[index];
+            var randEnum = randomIndexes.GetEnumerator();
+
+            string testresult = randomIndexes.Aggregate<int, string>(f(randEnum.Current), (@string, element) => @string + ' ' + f(element));
+            return testresult;
+        }
+
+        public static List<User> GenerateUsers()
         {
             return new List<User> {
                 new User()
-                };
+            };
         }
 
         public static class EqualityComparerFactory<T>
@@ -80,20 +106,19 @@ namespace IdeallyConnected.Experiments
             */
             
             var db = new AppICDbContext();
+
             Skill s = SkillEnum.Programming;
-            // Implicitly gets the Id of s to determine the Enum value
             SkillEnum sDescription = s;
-            s.Description = "C++ C C#";
-            Console.WriteLine("Skill Description: {0} {1}    Getting Description: {2} {3}", s.Description, s.ID, sDescription, SkillEnum.Programming);
+            s.Description = GenerateProgrammingLanguages(5);
             User user = new User { 
-                username = "johnsmith3",
+                username = "johnsmith5",
                 Skill = s
             };
-            
-            //Console.WriteLine("User Skill description #{0}", user.Skill.GetEnumDescription());
+
+            s.printSkill();
+            user.printUser();
             //db.Users.Add(user);
            
-            //db.Skills.Add(user.Skill.D
             //db.SaveChanges();
         }
     }
