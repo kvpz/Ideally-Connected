@@ -29,7 +29,7 @@ namespace IdeallyConnected.Models
         public DbSet<Software> Software { get; set; }
 
         public ApplicationDbContext()
-            : base("DevelopmentConnection", throwIfV1Schema: false)
+            : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
         

@@ -10,7 +10,7 @@ namespace IdeallyConnected.Models
         
         private static ApplicationUser 
         NewApplicationUser(String UserName, String Biography, 
-                           Dictionary<String, SoftwareTypes> SoftwareDictionary, String Email)
+        Dictionary<String, SoftwareTypes> SoftwareDictionary, String Email)
         {
             return new ApplicationUser {
                 UserName = UserName,

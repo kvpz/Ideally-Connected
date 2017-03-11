@@ -34,11 +34,6 @@ namespace IdeallyConnected.Models.Repositories
             return DbSet.Find(id);
         }
 
-        public T Get(string id)
-        {
-            return DbSet.Find(id);
-        }
-
         public void Add(T entity)
         {
             DbSet.Add(entity);
