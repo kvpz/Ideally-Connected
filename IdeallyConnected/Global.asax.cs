@@ -14,8 +14,8 @@ namespace IdeallyConnected
     {
         protected void Application_Start()
         {
-            
-            //Database.SetInitializer<ApplicationUserDbContext>(new AppDataContextInitializer());
+            //Database.Delete("DevelopmentConnection");
+            //Database.SetInitializer<ApplicationDbContext>(new ApplicationDataContextInitializer());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
