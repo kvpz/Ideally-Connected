@@ -19,6 +19,13 @@ namespace IdeallyConnected.Experiments
                 .Cast<DescriptionAttribute>()
                 .FirstOrDefault()?.Description ?? string.Empty;
         
+        /// <summary>
+        /// Writes Enumeration's values to database context.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="dbSet"></param>
+        /// <param name="converter"> Lambda function that converts an enum type to a value of another type. </param>
         public static void SeedEnumValues<T,TEnum>(this IDbSet<T> dbSet, Func<TEnum, T> converter) where T : class
             => Enum.GetValues(typeof(TEnum))
                 .Cast<object>()
@@ -28,7 +35,7 @@ namespace IdeallyConnected.Experiments
 
         public static void printSkill(this Skill s)
         {
-            Console.WriteLine($"Skills\nID: {s.ID} \nDescription: {s.Description} \nType: {s.Type}\n");
+            Console.WriteLine($"Skills\nID: {s.ID} \nDescription: {s.Description} \nType: {(SkillEnum)s.Type}\n");
         }
 
         public static void printUser(this User u)
@@ -36,7 +43,25 @@ namespace IdeallyConnected.Experiments
             Console.WriteLine($"\nUsername: {u.username} \nlocationName: {u.locationName} \nlocationsIP: {u.locationsIP}");
             u.Skill.printSkill(); 
         }
+
+        public static void printDbSkills(this DbSet<Skill> dbskills)
+        {
+            foreach(var record in dbskills)
+            {
+                record.printSkill();
+            }
+        }
+
+        public static void printDbUsers(this DbSet<User> dbusers)
+        {
+            foreach(var record in dbusers)
+            {
+                record.printUser();
+            }
+        }
     }
+
+
 
     // EF automatically creates 'IdeallyCo...ted.Exp...ts.AppICDbContext' database. No ConnectionString required.
     public class AppICDbContext : DbContext 
@@ -47,18 +72,25 @@ namespace IdeallyConnected.Experiments
 
     public class User
     {
+        #region fields
+        private bool             _visitor = true;
+        private int?             _locationIP;
+        // Name of the physical hosting location (use proximity beacon)
+        public string           locationName;
+        #endregion
+        #region properties
         [Key]
         public string           username { get; set; }
         // Foreign Key
         public virtual Skill    Skill    { get; set; }
-        // Are they visitors to the website or registered users?
-        private bool            visitor;
+
         // The IP address of the nearby beacons. 
-        public int              locationsIP;
-        // Name of the physical hosting location (use proximity beacon)
-        public string           locationName;
-        //public Skill skills;
-        
+        public int?             locationsIP 
+                                { 
+                                    get { return _locationIP; } 
+                                    set { _locationIP = value == 0 ? null : value; } 
+                                }
+        #endregion
     }
 
     public enum SkillEnum { Programming, Design, Speaking, Writing, Other };

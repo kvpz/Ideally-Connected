@@ -6,20 +6,18 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.Experiments
 {
-    public class Program
+    public class Utility
     {
         private static List<string> progLangs = new List<string> { "C","C++", "C#", "Objective-C", "Ruby", "Javascript", "Python", "Bash", "MIPS", "LISP", "R", "F#", "PHP" };
         delegate string randomString(int i);
-
         /// <summary>
         /// Generate a string with random, space-separated programming languages. 
         /// </summary>
         /// <param name="totalRequested"> The total amount of programming languages to be returned. </param>
         /// <param name="randomly"> If true, totalRequest is used as the seed value for System.Random </param>
         /// <returns></returns>
-        private static string GenerateProgrammingLanguages(int totalRequested, bool randomly = false)
+        public static string GenerateProgrammingLanguages(int totalRequested, bool randomly = false)
         {
-            StringBuilder result = new StringBuilder();
             Random random;
             if(randomly)
                 random = new Random();
@@ -33,46 +31,50 @@ namespace IdeallyConnected.Experiments
             string testresult = randomIndexes.Aggregate<int, string>(f(randEnum.Current), (@string, element) => @string + ' ' + f(element));
             return testresult;
         }
+    }
 
+    public static class EqualityComparerFactory<T>
+    {
+        private class DerivedComparer:IEqualityComparer<T>
+        {
+            private readonly Func<T,T,bool> _equals;
+            private readonly Func<T,int> _getHashCode;
+
+            public DerivedComparer(Func<T,T,bool> equalityFunc,Func<T,int> hashCodeFunc)
+            {
+                _equals = equalityFunc;
+                _getHashCode = hashCodeFunc;
+            }
+
+            public bool Equals(T a,T b)
+            {
+                return _equals(a,b);
+            }
+
+            public int GetHashCode(T obj)
+            {
+                return _getHashCode(obj);
+            }
+        }
+
+        public static IEqualityComparer<T> Create(Func<T,T,bool> equalityFunc,Func<T,int> hashCodeFunc)
+        {
+            if(hashCodeFunc == null)
+                throw new ArgumentNullException("getHashCodeFunc");
+            if(equalityFunc == null)
+                throw new ArgumentNullException("equalsFunc");
+            return new DerivedComparer(equalityFunc,hashCodeFunc);
+        }
+    }
+
+    public class Program
+    {
+        
         public static List<User> GenerateUsers()
         {
             return new List<User> {
                 new User()
             };
-        }
-
-        public static class EqualityComparerFactory<T>
-        {
-            private class SkillComparer : IEqualityComparer<T>
-            {
-                private readonly Func<T,T,bool>    _equals;
-                private readonly Func<T,int>       _getHashCode;
-
-                public SkillComparer(Func<T,T,bool> equalityFunc, Func<T,int> hashCodeFunc)
-                {
-                    _equals = equalityFunc;
-                    _getHashCode = hashCodeFunc;
-                }
-
-                public bool Equals(T a, T b)
-                {
-                    return _equals(a, b);    
-                }
-
-                public int GetHashCode(T obj)
-                {
-                    return _getHashCode(obj);
-                }
-            }
-
-            public static IEqualityComparer<T> Create(Func<T,T,bool> equalityFunc, Func<T,int> hashCodeFunc)
-            {
-                if (hashCodeFunc == null)
-                    throw new ArgumentNullException("getHashCodeFunc");
-                if (equalityFunc == null)
-                    throw new ArgumentNullException("equalsFunc");
-                return new SkillComparer(equalityFunc, hashCodeFunc);
-            }
         }
 
         public static void PerformDatabaseOperations()
@@ -98,28 +100,8 @@ namespace IdeallyConnected.Experiments
 
         public static void Main(string[] args)
         {
-            /*
-            //List<User> users = GenerateUsers();
-            PerformDatabaseOperations();
-            Console.WriteLine("Skill saved");
-            Console.ReadLine();
-            */
-            
             var db = new AppICDbContext();
-
-            Skill s = SkillEnum.Programming;
-            SkillEnum sDescription = s;
-            s.Description = GenerateProgrammingLanguages(5);
-            User user = new User { 
-                username = "johnsmith5",
-                Skill = s
-            };
-
-            s.printSkill();
-            user.printUser();
-            //db.Users.Add(user);
-           
-            //db.SaveChanges();
+            
         }
     }
 }
