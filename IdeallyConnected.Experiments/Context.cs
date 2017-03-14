@@ -40,13 +40,13 @@ namespace IdeallyConnected.Experiments
 
         public static void printUser(this User u)
         {
-            Console.WriteLine($"\nUsername: {u.username} \nlocationName: {u.locationName} \nlocationsIP: {u.locationsIP}");
-            u.Skill.printSkill(); 
+            Console.WriteLine($"\nUsername: {u.Id} \nlocationName: {u.locationName} \nlocationsIP: {u.locationsIP}");
+            u.Skill.ToList().ForEach(printSkill);
         }
 
         public static void printDbSkills(this DbSet<Skill> dbskills)
         {
-            foreach(var record in dbskills)
+            foreach(Skill record in dbskills)
             {
                 record.printSkill();
             }
@@ -54,7 +54,7 @@ namespace IdeallyConnected.Experiments
 
         public static void printDbUsers(this DbSet<User> dbusers)
         {
-            foreach(var record in dbusers)
+            foreach(User record in dbusers)
             {
                 record.printUser();
             }
@@ -66,51 +66,160 @@ namespace IdeallyConnected.Experiments
     // EF automatically creates 'IdeallyCo...ted.Exp...ts.AppICDbContext' database. No ConnectionString required.
     public class AppICDbContext : DbContext 
     {
-        public DbSet<User>  Users   { get; set; }
-        public DbSet<Skill> Skills  { get; set; }    
+        public DbSet<User>                  Users   { get; set; }
+        public DbSet<Skill>                 Skills  { get; set; }    
+        public DbSet<Programming>           Programmings  { get; set; }
+        public DbSet<ProgrammingLanguage>   ProgrammingLanguages { get; set; }
+
     }
 
     public class User
     {
         #region fields
-        private bool             _visitor = true;
+        //private bool             _visitor = true;
         private int?             _locationIP;
         // Name of the physical hosting location (use proximity beacon)
-        public string           locationName;
+        public string            locationName;
         #endregion
         #region properties
         [Key]
-        public string           username { get; set; }
+        [MaxLength(36)]
+        public string           Id { get; set; }
         // Foreign Key
-        public virtual Skill    Skill    { get; set; }
+        public virtual ICollection<Skill>    Skill    { get; set; }
 
         // The IP address of the nearby beacons. 
         public int?             locationsIP 
-                                { 
-                                    get { return _locationIP; } 
-                                    set { _locationIP = value == 0 ? null : value; } 
-                                }
+        {
+            get { return _locationIP; }
+            set { _locationIP = value == 0 ? null : value; }
+        }
         #endregion
     }
 
     public enum SkillEnum { Programming, Design, Speaking, Writing, Other };
+    public enum ExpertiseEnum :byte { None = 0x00, Novice = 0x01, Intermediate, Advanced, Expert };
 
-    public class Skill
+    public class Programming : Skill
     {
-        // Called implicitly when assigning a skill object with a SkillEnum.
-        private Skill(SkillEnum @enum)
+        private static char[] delimiters = { ' ', ',' };
+
+        public Programming () : base(SkillEnum.Programming, 0x00)       
         {
-            ID = (int)@enum;
-            Type = (int)@enum;
-            Description = @enum.GetEnumDescription();
+            //Console.WriteLine("In Programming default constructor");
         }
 
-        protected Skill() { }
+        public Programming(ExpertiseEnum expertise, string description, string languages) 
+        : base(SkillEnum.Programming, (byte)expertise)
+        {
+            //Console.WriteLine("SUPER PROGRAMMING CONSTRUCTOR");
+            this.Description = description; 
 
+            if(this.ProgrammingLanguages == null)
+            {   
+                //Console.WriteLine("ProgrammingLanguages is null");
+                this.ProgrammingLanguages = new SortedSet<ProgrammingLanguage>();
+            }
+            foreach(string lang in languages.Split(delimiters))
+            {
+                //Console.WriteLine($"FOR EACH PROGRAMMING LANGUAGE { lang }");
+                if(!this.ProgrammingLanguages.Contains(lang)) {}
+                    this.ProgrammingLanguages.Add(lang); // Add uses implicit operator (explicitly) of ProgrammingLanguage.
+                
+            }
+
+        }
+
+        //public static implicit operator Programming(Programming p) => new Programming();
+        // This should not be initialized in here.
+        public virtual ISet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+    }
+
+
+
+    public class ProgrammingLanguage : IComparable<ProgrammingLanguage>
+    {
+        public ProgrammingLanguage() {} 
+
+        private ProgrammingLanguage(string language)
+        {
+            //Console.WriteLine("**** IN PROGRAMMINGLANGUAGE private Constructor ****");
+            this.language = language;
+        }
+        
+        public static implicit operator ProgrammingLanguage(string language) => new ProgrammingLanguage(language); 
+        
+        [Key]
+        [MaxLength(12)]
+        public string language { get; set; }
+
+        public int CompareTo(ProgrammingLanguage obj)
+        {
+            if(obj == null)
+                throw new NotImplementedException();
+            Console.WriteLine($"Language CompareTO(): { this.language } vs { obj.language }");
+            if(this.language == obj.language)
+                return 0;
+            else
+                return 1;
+        }
+    }
+
+    /*
+    public class Design : Skill
+    {
+        public Design() : base(SkillEnum.Design)
+        {
+
+        }
+    }
+
+    public class MiscellaneousSkill : Skill
+    {
+        public MiscellaneousSkill() : base() {}
+    }
+    */
+
+    public abstract class Skill
+    {
+        private Skill(SkillEnum @enum)
+        {
+            //Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 1 ~~~");
+            ID = (int)@enum;
+            Type = (int)@enum;
+            _expertise = 0x00;
+        }
+
+        protected Skill(SkillEnum @enum, byte expertise) 
+        { 
+            //Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 2 ~~~");
+            ID = (int)@enum;
+            Type = (int)@enum; 
+            Expertise = expertise;
+        }
+        
+        protected Skill() 
+        {
+            //Console.WriteLine("~~~ In SKILL PROTECTED CONSTRUCTOR ~~~");
+            ID = 1;
+        }
+
+        private void SetExpertise(byte? value)
+        {
+            if(value != null && Enum.IsDefined(typeof(ExpertiseEnum), value))
+                _expertise = (ExpertiseEnum)value;
+        }
+
+        private ExpertiseEnum    _expertise = 0x00;
+        
         public int      ID          { get; set; } 
         public int      Type        { get; set; }
         public string   Description { get; set; }
-        public static implicit operator Skill(SkillEnum @enum) => new Skill(@enum);
+        public byte?     Expertise   { get { return _expertise != 0x00 ? (byte?)_expertise : 0x00; } set { SetExpertise(value); } }
+        public virtual User User { get; set; }
+        //abstract public Func<SkillEnum, Skill> implicitConstructor { get; set; } // = (x) => new Skill(x);
+        //public static implicit operator Skill(SkillEnum @enum);// => new Skill(@enum);
         public static implicit operator SkillEnum(Skill skill) => (SkillEnum)skill.ID;
     }
+
 }
