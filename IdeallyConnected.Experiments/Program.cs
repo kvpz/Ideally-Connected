@@ -116,8 +116,9 @@ namespace IdeallyConnected.Experiments
             if(db.Database.Exists())
             {
                 Console.WriteLine("Database exists");
+                //db.Database.Delete(); 
             }
-            //db.Database.Delete(); 
+
             Random randomInteger = new Random();
             Array expertiseEnumValues = Enum.GetValues(typeof(ExpertiseEnum));
             var users = new List<User> {
@@ -126,9 +127,7 @@ namespace IdeallyConnected.Experiments
                 new User { Id = "johninit3", locationsIP = 124235 },
                 new User { Id = "johninit4", locationsIP = 213421 } 
             };
-            //db.Users.RemoveRange(users);
-            //db.Users.AddRange(users);
-            //db.SaveChanges();
+
             foreach(User user in users)
             {
                 string progLangs = Utility.GenerateProgrammingLanguages(randomInteger.Next(0,10));
@@ -155,7 +154,18 @@ namespace IdeallyConnected.Experiments
                 Console.WriteLine("Local skill:");
                 skill.printSkill();
                 
-                db.Users.Add(user);
+                User dbUser = db.Users.Find(user.Id);
+                if(dbUser == null)
+                {
+                    db.Users.Add(user); 
+                }
+                else
+                {
+                    dbUser.Skill = user.Skill;
+                    //db.Users.Add(user
+                    //db.Skills.Add(skill);
+                }
+                //db.Users.Add(user);
                 //db.Programmings.Add(skill);
             }
             
@@ -170,7 +180,8 @@ namespace IdeallyConnected.Experiments
             //db.Users.AddRange(users);
             try 
             {
-                db.SaveChanges();
+                int savedChanges = db.SaveChanges();
+                Console.WriteLine($"Saved changes: { savedChanges }");    
             }
             catch(Exception e)
             {
@@ -178,8 +189,7 @@ namespace IdeallyConnected.Experiments
                 Console.WriteLine(e);
             }
 
-            int savedChanges = db.SaveChanges();
-            Console.WriteLine($"Saved changes: { savedChanges }");
+
         }
     }
 }

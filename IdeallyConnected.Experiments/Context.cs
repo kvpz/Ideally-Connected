@@ -76,20 +76,16 @@ namespace IdeallyConnected.Experiments
     public class User
     {
         #region fields
-        //private bool             _visitor = true;
         private int?             _locationIP;
-        // Name of the physical hosting location (use proximity beacon)
         public string            locationName;
         #endregion
         #region properties
         [Key]
         [MaxLength(36)]
-        public string           Id { get; set; }
+        public string                        Id { get; set; }
         // Foreign Key
         public virtual ICollection<Skill>    Skill    { get; set; }
-
-        // The IP address of the nearby beacons. 
-        public int?             locationsIP 
+        public int?                          locationsIP 
         {
             get { return _locationIP; }
             set { _locationIP = value == 0 ? null : value; }
@@ -106,36 +102,20 @@ namespace IdeallyConnected.Experiments
 
         public Programming () : base(SkillEnum.Programming, 0x00)       
         {
-            //Console.WriteLine("In Programming default constructor");
+            ProgrammingLanguages = new HashSet<ProgrammingLanguage>();
         }
 
         public Programming(ExpertiseEnum expertise, string description, string languages) 
-        : base(SkillEnum.Programming, (byte)expertise)
+            : base(SkillEnum.Programming, (byte)expertise)
         {
-            //Console.WriteLine("SUPER PROGRAMMING CONSTRUCTOR");
             this.Description = description; 
-
-            if(this.ProgrammingLanguages == null)
-            {   
-                //Console.WriteLine("ProgrammingLanguages is null");
-                this.ProgrammingLanguages = new SortedSet<ProgrammingLanguage>();
-            }
-            foreach(string lang in languages.Split(delimiters))
-            {
-                //Console.WriteLine($"FOR EACH PROGRAMMING LANGUAGE { lang }");
-                if(!this.ProgrammingLanguages.Contains(lang)) {}
-                    this.ProgrammingLanguages.Add(lang); // Add uses implicit operator (explicitly) of ProgrammingLanguage.
-                
-            }
-
+            this.ProgrammingLanguages = new HashSet<ProgrammingLanguage>();
         }
 
         //public static implicit operator Programming(Programming p) => new Programming();
         // This should not be initialized in here.
         public virtual ISet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
     }
-
-
 
     public class ProgrammingLanguage : IComparable<ProgrammingLanguage>
     {
@@ -157,7 +137,7 @@ namespace IdeallyConnected.Experiments
         {
             if(obj == null)
                 throw new NotImplementedException();
-            Console.WriteLine($"Language CompareTO(): { this.language } vs { obj.language }");
+            //Console.WriteLine($"Language CompareTO(): { this.language } vs { obj.language }");
             if(this.language == obj.language)
                 return 0;
             else

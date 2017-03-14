@@ -3,7 +3,7 @@ namespace IdeallyConnected.Experiments.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InheritanceUserSkill : DbMigration
+    public partial class InitAgain : DbMigration
     {
         public override void Up()
         {
