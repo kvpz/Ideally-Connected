@@ -9,6 +9,11 @@ namespace IdeallyConnected.Experiments.Models
 {
     public class User
     {
+        public User()
+        {
+            Skill = new HashSet<Skill>();
+        }
+        
         #region fields
         private int?             _locationIP;
         public string            locationName;

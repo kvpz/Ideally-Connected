@@ -5,14 +5,14 @@ namespace IdeallyConnected.Experiments.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnected.Experiments.AppICDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnected.Experiments.Models.AppICDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(IdeallyConnected.Experiments.AppICDbContext context)
+        protected override void Seed(IdeallyConnected.Experiments.Models.AppICDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

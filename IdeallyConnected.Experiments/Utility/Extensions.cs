@@ -32,23 +32,23 @@ namespace IdeallyConnected.Experiments.Utility
                 .Select(value => converter((TEnum)value))
                 .ToList()
                 .ForEach(instance => dbSet.AddOrUpdate(instance));
-
+                
         public static void printSkill(this Skill s)
         {
             Console.WriteLine($"Skills\nID: {s.ID} \nDescription: {s.Description} \nType: {(SkillEnum)s.Type}\n");
         }
-
+        
         public static void printUser(this User u)
         {
             Console.WriteLine($"\nUsername: {u.Id} \nlocationName: {u.locationName} \nlocationsIP: {u.locationsIP}");
-            u.Skill.ToList().ForEach(printSkill);
+            //u.Skill.ToList().ForEach(printSkill);
         }
 
         public static void printDbSkills(this DbSet<Skill> dbskills)
         {
             foreach(Skill record in dbskills)
             {
-                record.printSkill();
+                //record.printSkill();
             }
         }
 
@@ -57,6 +57,16 @@ namespace IdeallyConnected.Experiments.Utility
             foreach(User record in dbusers)
             {
                 record.printUser();
+            }
+        }
+
+        public static void printSkill(this Programming pskill)
+        {
+            printSkill((Skill)pskill);
+            List<ProgrammingLanguage> plist = pskill.ProgrammingLanguages.DefaultIfEmpty().ToList();
+            foreach(ProgrammingLanguage plang in plist)
+            {
+                Console.Write($"{plang.language} ");
             }
         }
     }

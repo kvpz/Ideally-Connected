@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +10,60 @@ namespace IdeallyConnected.Experiments.Models.Repositories
 {
     public class AppICRepository<T> : IDisposable where T : class
     {
-        private bool disposed = false;
         private AppICDbContext dbcontext = null;
         protected DbSet<T> dbset { get; set; }
 
+        // Implicit assignment operator
+        public static implicit operator AppICRepository<T>(AppICDbContext dbContext) => new AppICRepository<T>(dbContext);
+
         public AppICRepository()
         {
-            dbcontext = new AppICDbContext();
+            Console.WriteLine("In AppICRepository() constructor");
+            dbcontext = new AppICDbContext(); 
             dbset = dbcontext.Set<T>();
+        }
+
+        public AppICRepository(AppICDbContext dbContext)
+        {
+            Console.WriteLine("In AppICRespotiroy(DSflknasd;klgknasewf) constructor");
+            this.dbcontext = dbContext;
+            dbset = dbcontext.Set<T>();
+        }
+
+        public List<T> GetAll()
+        {
+            return dbset.ToList();
+        }
+
+        public T Get(int id)
+        {
+            return dbset.Find(id);
+        }
+
+        public void Add(T entity)
+        {
+            dbset.Add(entity);
+        }
+
+        public virtual void Update(T entity)
+        {
+            dbcontext.Entry<T>(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(int id)
+        {
+            dbset.Remove(dbset.Find(id));
+        }
+
+        public void SaveChanges()
+        {
+            try {
+                dbcontext.SaveChanges();
+            }
+            catch(Exception e) {
+                Console.WriteLine("Caught error in savechanges() woop woop!:");
+                Console.WriteLine(e);
+            }
         }
 
         #region IDisposable Members

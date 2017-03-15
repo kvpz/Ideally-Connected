@@ -10,7 +10,7 @@ namespace IdeallyConnected.Experiments.Models
     {
         private Skill(SkillEnum @enum)
         {
-            //Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 1 ~~~");
+            Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 1 ~~~");
             ID = (int)@enum;
             Type = (int)@enum;
             _expertise = 0x00;
@@ -18,7 +18,7 @@ namespace IdeallyConnected.Experiments.Models
 
         protected Skill(SkillEnum @enum, byte expertise) 
         { 
-            //Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 2 ~~~");
+            Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 2 ~~~");
             ID = (int)@enum;
             Type = (int)@enum; 
             Expertise = expertise;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,8 @@ namespace IdeallyConnected.Experiments.Models
 {
     public class ProgrammingLanguage : IComparable<ProgrammingLanguage>
     {
+        public static implicit operator ProgrammingLanguage(string language) => new ProgrammingLanguage(language); 
+
         public ProgrammingLanguage() {} 
 
         private ProgrammingLanguage(string language)
@@ -15,12 +19,12 @@ namespace IdeallyConnected.Experiments.Models
             //Console.WriteLine("**** IN PROGRAMMINGLANGUAGE private Constructor ****");
             this.language = language;
         }
-        
-        public static implicit operator ProgrammingLanguage(string language) => new ProgrammingLanguage(language); 
-        
+                
         [Key]
+        public int Id { get; set; }
         [MaxLength(12)]
         public string language { get; set; }
+        //public virtual ICollection<Programming> Programming { get; set; }
 
         public int CompareTo(ProgrammingLanguage obj)
         {
