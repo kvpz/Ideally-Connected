@@ -85,14 +85,29 @@
     <Compile Include="Migrations\201703150235143_SkillProgrammingMig.Designer.cs">
       <DependentUpon>201703150235143_SkillProgrammingMig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703151536113_SkillModelInit.cs" />
+    <Compile Include="Migrations\201703151536113_SkillModelInit.Designer.cs">
+      <DependentUpon>201703151536113_SkillModelInit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703151603254_WritingModelInit.cs" />
+    <Compile Include="Migrations\201703151603254_WritingModelInit.Designer.cs">
+      <DependentUpon>201703151603254_WritingModelInit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703151606234_WritingModelInit1.cs" />
+    <Compile Include="Migrations\201703151606234_WritingModelInit1.Designer.cs">
+      <DependentUpon>201703151606234_WritingModelInit1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppICDbContext.cs" />
+    <Compile Include="Models\Design.cs" />
     <Compile Include="Models\Programming.cs" />
     <Compile Include="Models\ProgrammingLanguage.cs" />
     <Compile Include="Models\Repositories\AppICRepository.cs" />
     <Compile Include="Models\Repositories\UserRepository.cs" />
     <Compile Include="Models\Skill.cs" />
+    <Compile Include="Models\Speaking.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Writing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Extensions.cs" />
@@ -127,6 +142,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703150235143_SkillProgrammingMig.resx">
       <DependentUpon>201703150235143_SkillProgrammingMig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703151536113_SkillModelInit.resx">
+      <DependentUpon>201703151536113_SkillModelInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703151603254_WritingModelInit.resx">
+      <DependentUpon>201703151603254_WritingModelInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703151606234_WritingModelInit1.resx">
+      <DependentUpon>201703151606234_WritingModelInit1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

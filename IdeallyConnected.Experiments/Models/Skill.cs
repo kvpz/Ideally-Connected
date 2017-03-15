@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.Experiments.Models
 {
+    public enum SkillEnum { Programming, Design, Speaking, Writing, Other };
+    public enum ExpertiseEnum :byte { None = 0x00, Novice = 0x01, Intermediate, Advanced, Expert };
+
     public abstract class Skill
     {
         private Skill(SkillEnum @enum)
@@ -37,14 +40,13 @@ namespace IdeallyConnected.Experiments.Models
         }
 
         private ExpertiseEnum    _expertise = 0x00;
-        
         public int      ID          { get; set; } 
         public int      Type        { get; set; }
         public string   Description { get; set; }
         public byte?     Expertise   { get { return _expertise != 0x00 ? (byte?)_expertise : 0x00; } set { SetExpertise(value); } }
         public virtual User User { get; set; }
+        public static implicit operator SkillEnum(Skill skill) => (SkillEnum)skill.ID;
         //abstract public Func<SkillEnum, Skill> implicitConstructor { get; set; } // = (x) => new Skill(x);
         //public static implicit operator Skill(SkillEnum @enum);// => new Skill(@enum);
-        public static implicit operator SkillEnum(Skill skill) => (SkillEnum)skill.ID;
     }
 }

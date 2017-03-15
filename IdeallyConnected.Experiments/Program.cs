@@ -14,6 +14,7 @@ namespace IdeallyConnected.Experiments
 {
     public class Program
     {
+        public static IEqualityComparer<User> userIdComparer = EqualityComparerFactory<User>.Create((ua, ub) => ua.Id == ub.Id, u => u.GetHashCode());
         public static void createProgrammingLanguages(AppICDbContext db)
         {
             List<ProgrammingLanguage> plangs = new List<ProgrammingLanguage> { "C","C++", "C#", "Objective-C", "Ruby", "Javascript", "Python", "Bash", "MIPS", "LISP", "R", "F#", "PHP" };
@@ -73,6 +74,17 @@ namespace IdeallyConnected.Experiments
             Console.WriteLine($"Adding new user: {user.Id}");
         }
 
+        public static void AddUserSkillIfDoesNotExist(User dbUser, Skill userSkill)
+        {
+            // Update user if programming skill is missing
+            IEqualityComparer<Skill> compareSkills = EqualityComparerFactory<Skill>.Create((s1, s2) => s1.Type == s2.Type, s => s.GetHashCode());
+            if(!dbUser.Skill.ToList().Contains(userSkill, compareSkills))
+            {
+                Console.WriteLine($"dbUser does not contain skill: { userSkill }");
+                dbUser.Skill.Add(userSkill);
+            }
+        }
+
         /*
             This modifies a user including tables referencing the user.
         */
@@ -81,18 +93,12 @@ namespace IdeallyConnected.Experiments
             var userSkills = user.Skill.ToList();
             var userProgSkill = userSkills.Find(s => s.Type == 0);
             var dbUser = db.Users.ToList().Find(u => u.Id == user.Id);
-            IEqualityComparer<Skill> compareSkills = EqualityComparerFactory<Skill>.Create((s1, s2) => s1.Type == s2.Type, s => s.GetHashCode());
-            if(!dbUser.Skill.ToList().Contains(userProgSkill, compareSkills))
+            // Update any changes made to User properties
+            db.Users.AddOrUpdate(user);
+            foreach(Skill skill in user.Skill)
             {
-                Console.WriteLine("dbUser does not contain programming skill");
-                dbUser.Skill.Add(userProgSkill);
+                AddUserSkillIfDoesNotExist(dbUser, skill);
             }
-
-            if(!dbUser.Skill.ToList().Contains(userProgSkill, compareSkills))
-            {
-                Console.WriteLine("STILL NOT SKILLS!");
-            }
-
             db.SaveChanges();
         }
 
@@ -111,33 +117,32 @@ namespace IdeallyConnected.Experiments
             {
                 Console.WriteLine("Database exists");
                 //db.Database.Delete(); 
-                //db.Users = null;
-                //db.Skills = null;
-                //db.Programmings = null;
             }
+
             Random randomInteger = new Random();
             Array expertiseEnumValues = Enum.GetValues(typeof(ExpertiseEnum));
             IEnumerable<User> users = new List<User> {
-                new User { Id = "johninit", locationsIP = 11119 },
-                new User { Id = "johninit2", locationsIP = 12349 },
-                new User { Id = "johninit3", locationsIP = 1242359 },
-                new User { Id = "johninit4", locationsIP = 2134219 } 
+                new User { Id = "johninit", locationsIP = 1111 },
+                new User { Id = "johninit2", locationsIP = 12349},
+                new User { Id = "johninit3", locationsIP = 124235 },
+                new User { Id = "johninit4", locationsIP = 213421 } 
             };
 
-            
+            int userCounter = 0;
             foreach(User user in users)
             {
                 string progLangs = GenerateProgrammingLanguages(randomInteger.Next(0,10));
                 // Verify that the current input does not repeat languages
                 ValidateProgLangUnique(ref progLangs);
-                Programming skill = new Programming((ExpertiseEnum)expertiseEnumValues.GetValue(randomInteger.Next(expertiseEnumValues.Length)), 
+                Programming programmingSkill = new Programming((ExpertiseEnum)expertiseEnumValues.GetValue(randomInteger.Next(expertiseEnumValues.Length)), 
                                                     "I love programming ", progLangs);
-                skill.Description += progLangs; 
-
-                IEqualityComparer<User> userComparer = EqualityComparerFactory<User>.Create((ua, ub) => ua.Id == ub.Id, u => u.GetHashCode());
-                if(db.Users.ToList().Contains(user, userComparer))
+                programmingSkill.Description += progLangs; 
+                Design designSkill = new Design { DesignSubSkill = "Subskill one", Description = "Design description for " + user.Id, Type = (int)SkillEnum.Design, Expertise = (byte)ExpertiseEnum.Novice };
+                Writing writingSkill = new Writing { WritingSubSkill = "Subskill " + userCounter, Description = "Writing description for " + user.Id, Type = (int)SkillEnum.Writing, Expertise = (byte)ExpertiseEnum.Intermediate };
+                user.Skill = new List<Skill> { programmingSkill, designSkill, writingSkill };
+                if(db.Users.ToList().Contains(user, userIdComparer))
                 {
-                    user.Skill = new List<Skill> { skill };
+                    user.Skill = new List<Skill> { programmingSkill, designSkill, writingSkill };
                     ModifyExistingUser(user, db);
                 }
                 else
@@ -146,11 +151,6 @@ namespace IdeallyConnected.Experiments
                 }
             }
             
-            Console.WriteLine("Printing all local users");
-            printAllUsers(users);
-            Console.WriteLine("Users in dbset");
-            printAllUsers(db.Users);
-
             try 
             {
                 int savedChanges = db.SaveChanges();
@@ -162,6 +162,10 @@ namespace IdeallyConnected.Experiments
                 Console.WriteLine(e);
             }
 
+            Console.WriteLine("Printing all local users");
+            printAllUsers(users);
+            Console.WriteLine("Users in dbset");
+            printAllUsers(db.Users);
 
         }
     }
