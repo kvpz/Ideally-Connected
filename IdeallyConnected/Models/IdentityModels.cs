@@ -24,15 +24,15 @@ namespace IdeallyConnected.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        //public DbSet<ApplicationUser> AppUser { get; set; }
-        public DbSet<ProgrammingLanguages> ProgLanguages { get; set; }
-        public DbSet<Software> Software { get; set; }
-
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
         
+        public IDbSet<Skill> Skills { get; set; }
+           
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

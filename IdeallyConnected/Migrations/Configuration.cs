@@ -1,6 +1,8 @@
 namespace IdeallyConnected.Migrations
 {
+    using Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -10,7 +12,6 @@ namespace IdeallyConnected.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "IdeallyConnected.Models.ApplicationUser";
         }
 
         protected override void Seed(IdeallyConnected.Models.ApplicationDbContext context)
@@ -27,6 +28,55 @@ namespace IdeallyConnected.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            var users = new List<ApplicationUser>() {
+                new ApplicationUser() {
+                    UserName = "Bob1",
+                    FirstName = "Bob",
+                    LastName = "One"
+                },
+                new ApplicationUser() {
+                    UserName = "Bob2",
+                    FirstName = "Bob2",
+                    LastName =  "Two"
+                }, 
+                new ApplicationUser() {
+                    UserName = "Bob3",
+                    FirstName = "Bob3",
+                    LastName = "Three"
+                }
+            };
+
+            var skills = new List<Skill>() {
+                new Skill() {
+                    SkillManager = users[0],
+                    //UserId = users[0].Id,
+                    //Description = "sdfasdf",
+                    Type = 0
+                },
+                new Skill() {
+                    SkillManager = users[1],
+                    //UserId = users[1].Id,
+                    //Description = "sdfas",
+                    Type = 1
+                },
+                new Skill() {
+                    SkillManager = users[2],
+                    //UserId = users[2].Id, 
+                    //Description = "asdf",
+                    Type = 2
+                }
+            };
+            /*
+            context.Users.AddOrUpdate(
+                u => u.UserName,
+                users.ToArray()
+            );
+            */
+            context.Skills.AddOrUpdate(
+                //s => s.UserId,
+                skills.ToArray()
+            );
         }
     }
 }

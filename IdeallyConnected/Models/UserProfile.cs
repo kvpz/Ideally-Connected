@@ -15,9 +15,8 @@ namespace IdeallyConnected.Models
     */
     public partial class ApplicationUser//UserProfile 
     {
-        public String Biography { get; set; }
-
-        public virtual List<ProgrammingLanguages> ProgrammingLanguages { get; set; }
-        public virtual List<Software> Software { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Biography { get; set; }
     }
 }

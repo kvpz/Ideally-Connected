@@ -11,7 +11,6 @@ namespace IdeallyConnected.Controllers
 {
     public class pinglocationController : Controller
     {
-        private Repository<Software> rep = new Repository<Software>();
         
         // GET: pinglocation
         public ActionResult Index()
@@ -26,25 +25,7 @@ namespace IdeallyConnected.Controllers
                 rep.SaveChanges();
             }
             */
-            var usersMod = new IdeallyConnected.Models.Repositories.UserRepository();
-            Dictionary<String,SoftwareTypes> SoftwareDictionary = new Dictionary<String,SoftwareTypes>()
-            {
-                    { "Visual Studio", SoftwareTypes.TextEditor },
-                    { "OSX", SoftwareTypes.OperatingSystem },
-                    { "Notepad++", SoftwareTypes.TextEditor }
-            };
-
-            ApplicationUser initialUser = new ApplicationUser {
-                UserName = "Uone",
-                Biography = "I like programming and reading and guitar",
-                Software = SoftwareDictionary
-                                    .Select(st => new Software() { Id = st.Key,Type = st.Value }).ToList(),
-                Email = "Uone@gewgle.com"
-            };
-            if(usersMod.Get(initialUser.Id) == null) {
-                usersMod.Add(initialUser);
-            }
-            return View(usersMod.GetAll());
+            return View();
         }
 
         [HttpPost]

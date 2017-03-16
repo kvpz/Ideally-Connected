@@ -208,23 +208,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701181823166_first.cs" />
-    <Compile Include="Migrations\201701181823166_first.Designer.cs">
-      <DependentUpon>201701181823166_first.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702180157322_fresh.cs" />
-    <Compile Include="Migrations\201702180157322_fresh.Designer.cs">
-      <DependentUpon>201702180157322_fresh.cs</DependentUpon>
+    <Compile Include="Migrations\201703161535223_Initial.cs" />
+    <Compile Include="Migrations\201703161535223_Initial.Designer.cs">
+      <DependentUpon>201703161535223_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDataContextInitializer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ProgrammingLanguages.cs" />
     <Compile Include="Models\Repositories\Repository.cs" />
     <Compile Include="Models\Repositories\UserRepository.cs" />
-    <Compile Include="Models\Software.cs" />
+    <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -1482,18 +1477,15 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701181823166_first.resx">
-      <DependentUpon>201701181823166_first.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702180157322_fresh.resx">
-      <DependentUpon>201702180157322_fresh.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\IdeallyConnected.Utility\IdeallyConnected.Utility.csproj">
       <Project>{a7aa8c1b-4f9e-4772-9b76-c9055225d14d}</Project>
       <Name>IdeallyConnected.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703161535223_Initial.resx">
+      <DependentUpon>201703161535223_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
