@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.Experiments.Models
 {
+    /*
+        This becomes a dynamic proxy because all the properties in here are virtual.
+    */
     public class Programming : Skill
     {
         private static char[] delimiters = { ' ', ',' };
@@ -23,7 +26,7 @@ namespace IdeallyConnected.Experiments.Models
             this.ProgrammingLanguages = new HashSet<ProgrammingLanguage>(plangs);
 
         }
-
+        
         //public static implicit operator Programming(Programming p) => new Programming();
         public virtual ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
     }

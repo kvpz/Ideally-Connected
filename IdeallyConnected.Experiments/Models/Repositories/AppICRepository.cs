@@ -13,21 +13,20 @@ namespace IdeallyConnected.Experiments.Models.Repositories
         private AppICDbContext dbcontext = null;
         protected DbSet<T> dbset { get; set; }
 
-        // Implicit assignment operator
+        // Implicit assignment operator for assigning a dbContext object to this class.
         public static implicit operator AppICRepository<T>(AppICDbContext dbContext) => new AppICRepository<T>(dbContext);
 
         public AppICRepository()
         {
             Console.WriteLine("In AppICRepository() constructor");
             dbcontext = new AppICDbContext(); 
-            dbset = dbcontext.Set<T>();
+            dbset = dbcontext.Set<T>(); 
         }
 
         public AppICRepository(AppICDbContext dbContext)
         {
             Console.WriteLine("In AppICRespotiroy(DSflknasd;klgknasewf) constructor");
             this.dbcontext = dbContext;
-            dbset = dbcontext.Set<T>();
         }
 
         public List<T> GetAll()
@@ -40,7 +39,7 @@ namespace IdeallyConnected.Experiments.Models.Repositories
             return dbset.Find(id);
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             dbset.Add(entity);
         }
@@ -57,7 +56,8 @@ namespace IdeallyConnected.Experiments.Models.Repositories
 
         public void SaveChanges()
         {
-            try {
+            try 
+            {
                 dbcontext.SaveChanges();
             }
             catch(Exception e) {

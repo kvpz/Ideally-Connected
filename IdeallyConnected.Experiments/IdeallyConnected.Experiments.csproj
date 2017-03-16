@@ -60,6 +60,14 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -77,25 +85,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
-    <Compile Include="Migrations\201703140412090_InitAgain.cs" />
-    <Compile Include="Migrations\201703140412090_InitAgain.Designer.cs">
-      <DependentUpon>201703140412090_InitAgain.cs</DependentUpon>
+    <Compile Include="Migrations\201703151954284_ImprovedSkillDesign.cs" />
+    <Compile Include="Migrations\201703151954284_ImprovedSkillDesign.Designer.cs">
+      <DependentUpon>201703151954284_ImprovedSkillDesign.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703150235143_SkillProgrammingMig.cs" />
-    <Compile Include="Migrations\201703150235143_SkillProgrammingMig.Designer.cs">
-      <DependentUpon>201703150235143_SkillProgrammingMig.cs</DependentUpon>
+    <Compile Include="Migrations\201703152110295_ImprovedSkillDesign2.cs" />
+    <Compile Include="Migrations\201703152110295_ImprovedSkillDesign2.Designer.cs">
+      <DependentUpon>201703152110295_ImprovedSkillDesign2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703151536113_SkillModelInit.cs" />
-    <Compile Include="Migrations\201703151536113_SkillModelInit.Designer.cs">
-      <DependentUpon>201703151536113_SkillModelInit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703151603254_WritingModelInit.cs" />
-    <Compile Include="Migrations\201703151603254_WritingModelInit.Designer.cs">
-      <DependentUpon>201703151603254_WritingModelInit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703151606234_WritingModelInit1.cs" />
-    <Compile Include="Migrations\201703151606234_WritingModelInit1.Designer.cs">
-      <DependentUpon>201703151606234_WritingModelInit1.cs</DependentUpon>
+    <Compile Include="Migrations\201703160025220_ImprovedSkillDesign21.cs" />
+    <Compile Include="Migrations\201703160025220_ImprovedSkillDesign21.Designer.cs">
+      <DependentUpon>201703160025220_ImprovedSkillDesign21.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppICDbContext.cs" />
@@ -137,20 +137,14 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703140412090_InitAgain.resx">
-      <DependentUpon>201703140412090_InitAgain.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703151954284_ImprovedSkillDesign.resx">
+      <DependentUpon>201703151954284_ImprovedSkillDesign.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703150235143_SkillProgrammingMig.resx">
-      <DependentUpon>201703150235143_SkillProgrammingMig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703152110295_ImprovedSkillDesign2.resx">
+      <DependentUpon>201703152110295_ImprovedSkillDesign2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703151536113_SkillModelInit.resx">
-      <DependentUpon>201703151536113_SkillModelInit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703151603254_WritingModelInit.resx">
-      <DependentUpon>201703151603254_WritingModelInit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703151606234_WritingModelInit1.resx">
-      <DependentUpon>201703151606234_WritingModelInit1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703160025220_ImprovedSkillDesign21.resx">
+      <DependentUpon>201703160025220_ImprovedSkillDesign21.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

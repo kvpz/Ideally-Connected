@@ -11,13 +11,14 @@ namespace IdeallyConnected.Experiments.Models.Repositories
 {
     public class UserRepository : AppICRepository<User>
     {
-        public static implicit operator UserRepository(AppICDbContext context) => new UserRepository();
-/*
+        // Used for assigning dbContext object to and initial UserRepository object.
+        //public static implicit operator UserRepository(AppICDbContext context) => new UserRepository();
+
         public UserRepository() : base()
         {
             
         }
-*/
+
         public User Get(string username)
         {
             return dbset.Find(username);
@@ -25,13 +26,13 @@ namespace IdeallyConnected.Experiments.Models.Repositories
         
         public User Get(User user)
         {
-            return dbset.Find(user.Id);
+            return dbset.Find(user.Username);
         }
         
         public bool Exists(User user)
         {   
             //Get(user.Id);
-            IEqualityComparer<User> userComparer = EqualityComparerFactory<User>.Create((usera, userb) => usera.Id == userb.Id, (_user) => _user.GetHashCode());
+            IEqualityComparer<User> userComparer = EqualityComparerFactory<User>.Create((user_a, user_b) => user_a.Username == user_b.Username, (_user) => _user.GetHashCode());
             return dbset.ToList().Contains(user, userComparer);
         }        
         
@@ -39,7 +40,14 @@ namespace IdeallyConnected.Experiments.Models.Repositories
         public void AddOrUpdate(User entity)
         {
             //Expression<Func<User, ProgrammingLanguage>> exp = u => 
+            
             dbset.AddOrUpdate(entity);
+        }
+
+        public override void Add(User entity)
+        {
+            var skills = entity.Skill;
+            //dbset.Add(entity);
         }
     }
 }

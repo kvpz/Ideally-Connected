@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +16,7 @@ namespace IdeallyConnected.Experiments.Models
         private Skill(SkillEnum @enum)
         {
             Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 1 ~~~");
-            ID = (int)@enum;
+            //ID = (int)@enum;
             Type = (int)@enum;
             _expertise = 0x00;
         }
@@ -22,16 +24,13 @@ namespace IdeallyConnected.Experiments.Models
         protected Skill(SkillEnum @enum, byte expertise) 
         { 
             Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 2 ~~~");
-            ID = (int)@enum;
+            //ID = (int)@enum;
             Type = (int)@enum; 
             Expertise = expertise;
         }
         
         protected Skill() 
-        {
-            //Console.WriteLine("~~~ In SKILL PROTECTED CONSTRUCTOR ~~~");
-            ID = 1;
-        }
+        { }
 
         private void SetExpertise(byte? value)
         {
@@ -40,12 +39,15 @@ namespace IdeallyConnected.Experiments.Models
         }
 
         private ExpertiseEnum    _expertise = 0x00;
-        public int      ID          { get; set; } 
-        public int      Type        { get; set; }
+        //public int      ID          { get; set; } 
+
         public string   Description { get; set; }
         public byte?     Expertise   { get { return _expertise != 0x00 ? (byte?)_expertise : 0x00; } set { SetExpertise(value); } }
+        [Key, Column(Order = 0)]
         public virtual User User { get; set; }
-        public static implicit operator SkillEnum(Skill skill) => (SkillEnum)skill.ID;
+        [Key, Column(Order = 1)]
+        public int      Type        { get; set; }
+        public static implicit operator SkillEnum(Skill skill) => (SkillEnum)skill.Type; // skill.ID
         //abstract public Func<SkillEnum, Skill> implicitConstructor { get; set; } // = (x) => new Skill(x);
         //public static implicit operator Skill(SkillEnum @enum);// => new Skill(@enum);
     }

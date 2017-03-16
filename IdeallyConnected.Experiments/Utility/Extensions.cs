@@ -35,12 +35,12 @@ namespace IdeallyConnected.Experiments.Utility
                 
         public static void printSkill(this Skill s)
         {
-            Console.WriteLine($"Skills\nID: {s.ID} \nDescription: {s.Description} \nType: {(SkillEnum)s.Type}\n");
+            Console.WriteLine($"Skills\nID: {s.Type} \nDescription: {s.Description} \nType: {(SkillEnum)s.Type}\n");
         }
         
         public static void printUser(this User u)
         {
-            Console.WriteLine($"\nUsername: {u.Id} \nlocationName: {u.locationName} \nlocationsIP: {u.locationsIP}");
+            Console.WriteLine($"\nUsername: {u.Username} \nlocationName: {u.locationName} \nlocationsIP: {u.locationsIP}");
             //u.Skill.ToList().ForEach(printSkill);
         }
 

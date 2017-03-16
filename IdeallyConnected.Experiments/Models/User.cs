@@ -22,7 +22,7 @@ namespace IdeallyConnected.Experiments.Models
         #region properties
         [Key]
         [MaxLength(36)]
-        public string                        Id { get; set; }
+        public string                        Username { get; set; }
         // Foreign Key
         public virtual ICollection<Skill>    Skill    { get; set; }
         public int?                          locationsIP 

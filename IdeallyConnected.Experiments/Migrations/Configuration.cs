@@ -1,6 +1,8 @@
 namespace IdeallyConnected.Experiments.Migrations
 {
+    using Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -9,23 +11,32 @@ namespace IdeallyConnected.Experiments.Migrations
     {
         public Configuration()
         {
+            Console.WriteLine("Hello from CONFIGURATION");
             AutomaticMigrationsEnabled = false;
+            ImprovedSkillDesign sd = new ImprovedSkillDesign();
         }
 
         protected override void Seed(IdeallyConnected.Experiments.Models.AppICDbContext context)
-        {
-            //  This method will be called after migrating to the latest version.
+        {   
+            IList<ProgrammingLanguage> plangs = new List<ProgrammingLanguage>();
+            for(int i = 0; i < 10; ++i)
+            {
+                plangs.Add(new ProgrammingLanguage() { language = "C++" });
+            }
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            IList<Skill> skills = new List<Skill>();
+            fr
+
+            IList<User> users = new List<User>();
+
+            for(int i = 1; i < 10; ++i)
+            {
+                users.Add(new User { Username = "BobSeed" + i });
+            }
+
+            context.Users.AddRange(users);
+            context.SaveChanges();
+            
         }
     }
 }

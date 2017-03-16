@@ -20,9 +20,15 @@ namespace IdeallyConnected.Experiments.Models
             this.language = language;
         }
                 
-        [Key]
-        public int Id { get; set; }
+        //[Key, Column(Order = 0)]
+        //public int Id { get; set; }
+        //[Key, Column(Order = 1)]
+        
+        [Key, Column(Order = 0)]
+        public virtual User User { get; set; }
+        
         [MaxLength(12)]
+        [Key, Column(Order = 1)]
         public string language { get; set; }
         //public virtual ICollection<Programming> Programming { get; set; }
 

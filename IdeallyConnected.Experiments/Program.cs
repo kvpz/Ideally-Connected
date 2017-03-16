@@ -14,17 +14,18 @@ namespace IdeallyConnected.Experiments
 {
     public class Program
     {
-        public static IEqualityComparer<User> userIdComparer = EqualityComparerFactory<User>.Create((ua, ub) => ua.Id == ub.Id, u => u.GetHashCode());
+        public static IEqualityComparer<User> userIdComparer = EqualityComparerFactory<User>.Create((ua, ub) => ua.Username == ub.Username, u => u.GetHashCode());
         public static void createProgrammingLanguages(AppICDbContext db)
         {
             List<ProgrammingLanguage> plangs = new List<ProgrammingLanguage> { "C","C++", "C#", "Objective-C", "Ruby", "Javascript", "Python", "Bash", "MIPS", "LISP", "R", "F#", "PHP" };
-            plangs.ForEach(plang => db.ProgrammingLanguages.Add(plang));
+            plangs.ForEach(plang => db.Set<ProgrammingLanguage>().Add(plang));
             db.SaveChanges();
         }
 
-        public static ProgrammingLanguage GetProgrammingLanguage(string language, AppICDbContext db)
+        public static ProgrammingLanguage GetProgrammingLanguage(string language) //, AppICRepository<ProgrammingLanguage> db)
         {
-            return db.ProgrammingLanguages.SingleOrDefault(plang => plang.language == language);
+            AppICDbContext db = new AppICDbContext();
+            return db.Set<ProgrammingLanguage>().SingleOrDefault(plang => plang.language == language);
         }
 
         public static List<User> GenerateUsers()
@@ -69,9 +70,14 @@ namespace IdeallyConnected.Experiments
             users.ToList().ForEach(u => u.printUser());
         }   
 
-        public static void AddUser(User user, AppICDbContext db)
+        public static void AddUser(User user, UserRepository db)
         {
-            Console.WriteLine($"Adding new user: {user.Id}");
+            Console.WriteLine($"Adding new user: {user.Username}");
+            AppICRepository<Skill> skillRepo = new AppICRepository<Skill>();
+            AppICRepository<ProgrammingLanguage> progRepo = new AppICRepository<ProgrammingLanguage>();
+
+            db.AddOrUpdate(user);
+            db.SaveChanges();
         }
 
         public static void AddUserSkillIfDoesNotExist(User dbUser, Skill userSkill)
@@ -88,13 +94,16 @@ namespace IdeallyConnected.Experiments
         /*
             This modifies a user including tables referencing the user.
         */
-        public static void ModifyExistingUser(User user, AppICDbContext db)
+        public static void ModifyExistingUser(User user, UserRepository db)//AppICDbContext db)
         { 
+            Console.WriteLine("Modifying existing user");
             var userSkills = user.Skill.ToList();
             var userProgSkill = userSkills.Find(s => s.Type == 0);
-            var dbUser = db.Users.ToList().Find(u => u.Id == user.Id);
+            //var dbUser = db.Users.ToList().Find(u => u.Id == user.Id);
+            var dbUser = db.Get(user.Username);
             // Update any changes made to User properties
-            db.Users.AddOrUpdate(user);
+            //db.Users.AddOrUpdate(user);
+            db.AddOrUpdate(user);
             foreach(Skill skill in user.Skill)
             {
                 AddUserSkillIfDoesNotExist(dbUser, skill);
@@ -110,22 +119,17 @@ namespace IdeallyConnected.Experiments
 
         public static void Main(string[] args)
         {
-            var db = new AppICDbContext();
+            //var db = new AppICDbContext();
+            UserRepository userDbContext = new UserRepository();//db;
             //createProgrammingLanguages(db);
-
-            if(db.Database.Exists())
-            {
-                Console.WriteLine("Database exists");
-                //db.Database.Delete(); 
-            }
 
             Random randomInteger = new Random();
             Array expertiseEnumValues = Enum.GetValues(typeof(ExpertiseEnum));
             IEnumerable<User> users = new List<User> {
-                new User { Id = "johninit", locationsIP = 1111 },
-                new User { Id = "johninit2", locationsIP = 12349},
-                new User { Id = "johninit3", locationsIP = 124235 },
-                new User { Id = "johninit4", locationsIP = 213421 } 
+               // new User { Username = "johninit", locationsIP = 1111 },
+               // new User { Username = "johninit2", locationsIP = 12349},
+               // new User { Username = "johninit3", locationsIP = 124235 },
+                new User { Username = "johninit4", locationsIP = 213421 } 
             };
 
             int userCounter = 0;
@@ -134,38 +138,26 @@ namespace IdeallyConnected.Experiments
                 string progLangs = GenerateProgrammingLanguages(randomInteger.Next(0,10));
                 // Verify that the current input does not repeat languages
                 ValidateProgLangUnique(ref progLangs);
-                Programming programmingSkill = new Programming((ExpertiseEnum)expertiseEnumValues.GetValue(randomInteger.Next(expertiseEnumValues.Length)), 
-                                                    "I love programming ", progLangs);
+                Programming programmingSkill = new Programming((ExpertiseEnum)expertiseEnumValues.GetValue(randomInteger.Next(expertiseEnumValues.Length)), "I love programming ", progLangs);
                 programmingSkill.Description += progLangs; 
-                Design designSkill = new Design { DesignSubSkill = "Subskill one", Description = "Design description for " + user.Id, Type = (int)SkillEnum.Design, Expertise = (byte)ExpertiseEnum.Novice };
-                Writing writingSkill = new Writing { WritingSubSkill = "Subskill " + userCounter, Description = "Writing description for " + user.Id, Type = (int)SkillEnum.Writing, Expertise = (byte)ExpertiseEnum.Intermediate };
+                Design designSkill = new Design { DesignSubSkill = "Subskill one", Description = "Design description for " + user.Username, Type = (int)SkillEnum.Design, Expertise = (byte)ExpertiseEnum.Novice };
+                Writing writingSkill = new Writing { WritingSubSkill = "Subskill " + userCounter, Description = "Writing description for " + user.Username, Type = (int)SkillEnum.Writing, Expertise = (byte)ExpertiseEnum.Intermediate };
                 user.Skill = new List<Skill> { programmingSkill, designSkill, writingSkill };
-                if(db.Users.ToList().Contains(user, userIdComparer))
+                //if(db.Users.ToList().Contains(user, UsernameComparer))
+                if(userDbContext.Exists(user))
                 {
-                    user.Skill = new List<Skill> { programmingSkill, designSkill, writingSkill };
-                    ModifyExistingUser(user, db);
+                    ModifyExistingUser(user, userDbContext);
                 }
                 else
                 {   
-                    AddUser(user, db);
+                    AddUser(user, userDbContext);
                 }
-            }
-            
-            try 
-            {
-                int savedChanges = db.SaveChanges();
-                Console.WriteLine($"Saved changes: { savedChanges }");    
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Caught savechanges() error: \n");
-                Console.WriteLine(e);
             }
 
             Console.WriteLine("Printing all local users");
             printAllUsers(users);
             Console.WriteLine("Users in dbset");
-            printAllUsers(db.Users);
+            printAllUsers(userDbContext.GetAll());
 
         }
     }
