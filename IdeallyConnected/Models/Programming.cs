@@ -11,7 +11,8 @@ namespace IdeallyConnected.Models
 
         public Programming () : base(SkillEnum.Programming, 0x00)       
         {
-            //ProgrammingLanguages = new List<ProgrammingLanguage>();
+            //ProgrammingLanguages = new HashSet<ProgrammingLanguage>();
+            ProgrammingLanguages = null;
         }
 
         public Programming(ExpertiseEnum expertise, string description, string languages) 
@@ -24,7 +25,7 @@ namespace IdeallyConnected.Models
         }
         
         //public static implicit operator Programming(Programming p) => new Programming();
-        //public virtual ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+        public virtual ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
     }
 }

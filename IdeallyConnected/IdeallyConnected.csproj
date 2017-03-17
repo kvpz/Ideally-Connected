@@ -216,6 +216,14 @@
     <Compile Include="Migrations\201703170034374_UserIdAsPrimaryForSkill.Designer.cs">
       <DependentUpon>201703170034374_UserIdAsPrimaryForSkill.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703170134305_UserHasVirtualSkills.cs" />
+    <Compile Include="Migrations\201703170134305_UserHasVirtualSkills.Designer.cs">
+      <DependentUpon>201703170134305_UserHasVirtualSkills.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703170241234_ProgrammingLanguage.cs" />
+    <Compile Include="Migrations\201703170241234_ProgrammingLanguage.Designer.cs">
+      <DependentUpon>201703170241234_ProgrammingLanguage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDataContextInitializer.cs" />
@@ -223,6 +231,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Programming.cs" />
+    <Compile Include="Models\ProgrammingLanguage.cs" />
     <Compile Include="Models\Repositories\Repository.cs" />
     <Compile Include="Models\Repositories\UserRepository.cs" />
     <Compile Include="Models\Skill.cs" />
@@ -1494,6 +1503,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703170034374_UserIdAsPrimaryForSkill.resx">
       <DependentUpon>201703170034374_UserIdAsPrimaryForSkill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703170134305_UserHasVirtualSkills.resx">
+      <DependentUpon>201703170134305_UserHasVirtualSkills.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703170241234_ProgrammingLanguage.resx">
+      <DependentUpon>201703170241234_ProgrammingLanguage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

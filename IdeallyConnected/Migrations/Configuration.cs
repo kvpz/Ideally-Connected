@@ -83,7 +83,7 @@ namespace IdeallyConnected.Migrations
                 new ApplicationUser() {
                     UserName = "Bob33",
                     FirstName = "Bob3",
-                    LastName = "Three"
+                    LastName = "Three",
                 }
             };
             
@@ -114,7 +114,7 @@ namespace IdeallyConnected.Migrations
 
             var designSkills = new List<Design>() {
                 new Design() {
-                    SkillManager = dbUsers?[0],
+                    SkillManager = dbUsers?[0]
                 },
                 new Design() {
                     SkillManager = dbUsers?[1]
@@ -124,10 +124,8 @@ namespace IdeallyConnected.Migrations
                 }
             };
            
-            //context.Skills.AddOrUpdateIfNoneExists(programmingSkills.ToArray(), s => new { s.Type, s.UserId });
-            context.Skills.AddOrUpdateIfNoneExists(designSkills.ToArray(), s => new { s.Type, s.UserId });
-
-            
+            context.Programmings.AddOrUpdateIfNoneExists(programmingSkills.ToArray(), s => new { s.Type, s.UserId });
+            context.Designs.AddOrUpdateIfNoneExists(designSkills.ToArray(), s => new { s.Type, s.UserId });
         }
     }
 }
