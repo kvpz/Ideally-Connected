@@ -25,7 +25,7 @@ namespace IdeallyConnected.Experiments.Migrations
             }
 
             IList<Skill> skills = new List<Skill>();
-            fr
+           
 
             IList<User> users = new List<User>();
 
