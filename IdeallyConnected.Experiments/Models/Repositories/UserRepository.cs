@@ -46,7 +46,7 @@ namespace IdeallyConnected.Experiments.Models.Repositories
 
         public override void Add(User entity)
         {
-            var skills = entity.Skill;
+            //var skills = entity.Skill;
             //dbset.Add(entity);
         }
     }

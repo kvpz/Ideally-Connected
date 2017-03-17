@@ -24,9 +24,11 @@ namespace IdeallyConnected.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnected.Models.ApplicationDbContext>
     {
+        /*
         IEqualityComparer<Skill> programmingSkillComparer = EqualityComparerGeneric<Skill>.Create(
             (pskill_a, pskill_b) => pskill_a.Type == pskill_b.Type && pskill_a.UserId == pskill_b.UserId, 
             pskill               => pskill.GetHashCode());
+        */
         public static class EqualityComparerGeneric<T> 
         {
             private class Comparer : IEqualityComparer<T>
@@ -68,6 +70,8 @@ namespace IdeallyConnected.Migrations
 
         protected override void Seed(IdeallyConnected.Models.ApplicationDbContext context)
         {
+            //context.Users.Include("UserMapper");
+            //var values = context.Entry<ApplicationUser>(new ApplicationUser()).CurrentValues;
 
             var users = new List<ApplicationUser>() {
                 new ApplicationUser() {
@@ -84,6 +88,7 @@ namespace IdeallyConnected.Migrations
                     UserName = "Bob33",
                     FirstName = "Bob3",
                     LastName = "Three",
+                    
                 }
             };
             
@@ -123,9 +128,14 @@ namespace IdeallyConnected.Migrations
                     SkillManager = dbUsers?[2]
                 }
             };
-           
-            context.Programmings.AddOrUpdateIfNoneExists(programmingSkills.ToArray(), s => new { s.Type, s.UserId });
-            context.Designs.AddOrUpdateIfNoneExists(designSkills.ToArray(), s => new { s.Type, s.UserId });
+            
+            //var skillSet = context.Users.Include("_skillSet");
+            context.Set<ApplicationUser.UserMapper>();
+
+            //context.Programmings.AddOrUpdateIfNoneExists(programmingSkills.ToArray(), s => new { s.SkillManager, s.UserId });
+            //context.Designs.AddOrUpdateIfNoneExists(designSkills.ToArray(), s => new { s.SkillManager, s.UserId });
+            
+            
         }
     }
 }

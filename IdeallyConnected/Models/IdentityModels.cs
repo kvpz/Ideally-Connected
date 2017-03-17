@@ -28,10 +28,10 @@ namespace IdeallyConnected.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
             //Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
         }
         
-        public DbSet<Skill> Skills { get; set; }
+        //public DbSet<Skill> Skills { get; set; }
         public DbSet<Programming> Programmings { get; set; }
         public DbSet<Design> Designs { get; set; }
 
@@ -40,30 +40,20 @@ namespace IdeallyConnected.Models
             return new ApplicationDbContext();
         }
 
-        /*
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
-            // Change name of the table (to avoid AspNetUsers)
-            ///*
-            modelBuilder.Entity<IdentityUser>()
-                .ToTable("Users");
-            modelBuilder.Entity<ApplicationUser>()
-                .ToTable("Users");
-            
-                
-            modelBuilder.Entity<ApplicationUser>()
-                .HasOptional(t => t.UserProfile)
-                .WithRequired(t => t.ApplicationUser);
-                //.Map(p => p.MapKey("UserId"));
+            modelBuilder.Configurations.Add(new ApplicationUser.UserMapper());
+            //modelBuilder.Entity<ApplicationUser>().HasMany(us
             base.OnModelCreating(modelBuilder);
         }
-
+        
+        /*
         internal object Entity<T>(T entity)
         {
             throw new NotImplementedException();
         }
-    */
+        */
     }
 
 

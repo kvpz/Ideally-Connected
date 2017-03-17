@@ -82,12 +82,17 @@ namespace IdeallyConnected.Experiments
 
         public static void AddUserSkillIfDoesNotExist(User dbUser, Skill userSkill)
         {
+            AppICDbContext context = new AppICDbContext(); 
+            context.Users.Include("Skill");
+
             // Update user if programming skill is missing
             IEqualityComparer<Skill> compareSkills = EqualityComparerFactory<Skill>.Create((s1, s2) => s1.Type == s2.Type, s => s.GetHashCode());
-            if(!dbUser.Skill.ToList().Contains(userSkill, compareSkills))
-            {
+            //if(!dbUser.Skill.ToList().Contains(userSkill, compareSkills))
+            {  
+                
+                //context.Entry(new User.UserMapper()).CurrentValues.;
                 Console.WriteLine($"dbUser does not contain skill: { userSkill }");
-                dbUser.Skill.Add(userSkill);
+                //dbUser.Skill.Add(userSkill);
             }
         }
 
@@ -97,16 +102,16 @@ namespace IdeallyConnected.Experiments
         public static void ModifyExistingUser(User user, UserRepository db)//AppICDbContext db)
         { 
             Console.WriteLine("Modifying existing user");
-            var userSkills = user.Skill.ToList();
-            var userProgSkill = userSkills.Find(s => s.Type == 0);
+            //var userSkills = user.Skill.ToList();
+            //var userProgSkill = userSkills.Find(s => s.Type == 0);
             //var dbUser = db.Users.ToList().Find(u => u.Id == user.Id);
             var dbUser = db.Get(user.Username);
             // Update any changes made to User properties
             //db.Users.AddOrUpdate(user);
             db.AddOrUpdate(user);
-            foreach(Skill skill in user.Skill)
+            //foreach(Skill skill in user.Skill)
             {
-                AddUserSkillIfDoesNotExist(dbUser, skill);
+           //     AddUserSkillIfDoesNotExist(dbUser, skill);
             }
             db.SaveChanges();
         }
@@ -131,7 +136,7 @@ namespace IdeallyConnected.Experiments
                // new User { Username = "johninit3", locationsIP = 124235 },
                 new User { Username = "johninit4", locationsIP = 213421 } 
             };
-
+            /*
             int userCounter = 0;
             foreach(User user in users)
             {
@@ -160,7 +165,10 @@ namespace IdeallyConnected.Experiments
             printAllUsers(userDbContext.GetAll());
 
         }
+        */
     }
+    
+}
 }
 
 /*

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
@@ -18,6 +19,16 @@ namespace IdeallyConnected.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Biography { get; set; }
-        //public virtual ICollection<Skill> Skills { get; set; }
+        
+        protected virtual ICollection<Skill> _skillSet { get; set; }
+
+        public class UserMapper : EntityTypeConfiguration<ApplicationUser>
+        {
+            public UserMapper()
+            {
+                HasMany(s => s._skillSet);
+            }
+        }
+
     }
 }

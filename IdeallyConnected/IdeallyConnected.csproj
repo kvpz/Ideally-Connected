@@ -224,6 +224,10 @@
     <Compile Include="Migrations\201703170241234_ProgrammingLanguage.Designer.cs">
       <DependentUpon>201703170241234_ProgrammingLanguage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703170343095_SkillSet.cs" />
+    <Compile Include="Migrations\201703170343095_SkillSet.Designer.cs">
+      <DependentUpon>201703170343095_SkillSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDataContextInitializer.cs" />
@@ -1509,6 +1513,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703170241234_ProgrammingLanguage.resx">
       <DependentUpon>201703170241234_ProgrammingLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703170343095_SkillSet.resx">
+      <DependentUpon>201703170343095_SkillSet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
