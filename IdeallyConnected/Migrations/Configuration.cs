@@ -88,7 +88,7 @@ namespace IdeallyConnected.Migrations
             };
             
             var dbUsers = context.Users.ToList();
-            if(dbUsers.Count() < 3)
+            if(dbUsers.Count() == 0)
                 dbUsers = users;
             
             /*
@@ -96,19 +96,17 @@ namespace IdeallyConnected.Migrations
             */
             var programmingSkills = new List<Programming>() {
                 new Programming() {
-                    SkillManager = dbUsers?[0],//users[0],
+                    SkillManager = dbUsers?[0],
                     UserId = dbUsers[0]?.Id,
-                    //Description = "sdfasdf",
                     Expertise = (byte)ExpertiseEnum.Expert
                 },
                 new Programming() {
-                    SkillManager = dbUsers?[1],//users[1],
+                    SkillManager = dbUsers?[1],
                     UserId = dbUsers[1]?.Id,
-                    //Description = "sdfas",
                     Expertise = (byte)ExpertiseEnum.Intermediate
                 },
                 new Programming() {
-                    SkillManager = dbUsers?[2],//users[2],
+                    SkillManager = dbUsers?[2],
                     UserId = dbUsers[2]?.Id, 
                     Expertise = (byte)ExpertiseEnum.None
                 }
@@ -116,24 +114,20 @@ namespace IdeallyConnected.Migrations
 
             var designSkills = new List<Design>() {
                 new Design() {
-                    SkillManager = dbUsers?[0],//users[0],
-                    //UserId = dbUsers[0].Id,
-                    //Description = "sdfasdf",
+                    SkillManager = dbUsers?[0],
                 },
                 new Design() {
-                    SkillManager = dbUsers?[1],//users[1],
-                    //UserId = users[1].Id,
-                    //Description = "sdfas",
+                    SkillManager = dbUsers?[1]
                 },
                 new Design() {
-                    SkillManager = dbUsers?[2],//users[2],
-                    //UserId = users[2].Id, 
-                    //Description = "asdf",
+                    SkillManager = dbUsers?[2]
                 }
             };
            
             //context.Skills.AddOrUpdateIfNoneExists(programmingSkills.ToArray(), s => new { s.Type, s.UserId });
             context.Skills.AddOrUpdateIfNoneExists(designSkills.ToArray(), s => new { s.Type, s.UserId });
+
+            
         }
     }
 }
