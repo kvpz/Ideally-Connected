@@ -10,18 +10,16 @@ namespace IdeallyConnected.Models
     public enum SkillEnum { Programming, Design, Speaking, Writing, Other };
     public enum ExpertiseEnum :byte { None = 0x00, Novice = 0x01, Intermediate, Advanced, Expert };
 
-    public class Skill
+    public abstract class Skill
     {
         private Skill(SkillEnum @enum)
         {
-            Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 1 ~~~");
             Type = (int)@enum;
             _expertise = 0x00;
         }
 
         protected Skill(SkillEnum @enum, byte expertise) 
         { 
-            Console.WriteLine("~~~ IN SKILL CONSTRUCTOR 2 ~~~");
             Type = (int)@enum; 
             Expertise = expertise;
         }
@@ -36,10 +34,12 @@ namespace IdeallyConnected.Models
         }
 
         private ExpertiseEnum    _expertise = 0x00;
+        //private ApplicationUser _skillManager = null;
 
         public string   Description { get; set; }
 
         public byte?     Expertise   { get { return _expertise != 0x00 ? (byte?)_expertise : 0x00; } set { SetExpertise(value); } }
+
         [Key, Column(Order = 0)]
         public int      Type        { get; set; }
 

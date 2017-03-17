@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using WebGrease.Css.Extensions;
 using IdeallyConnected.Components;
+using IdeallyConnected.Migrations;
+using System.Data.Entity.Migrations;
 
 namespace IdeallyConnected.Controllers
 {
@@ -15,6 +17,9 @@ namespace IdeallyConnected.Controllers
     {
         public ActionResult Index()
         {
+            var configuration = new Configuration();
+            var migrator = new DbMigrator(configuration);
+            migrator.Update();
             return View();
         }
 

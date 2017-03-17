@@ -27,12 +27,14 @@ namespace IdeallyConnected.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            Configuration.ProxyCreationEnabled = false;
+            //Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }
         
-        public IDbSet<Skill> Skills { get; set; }
-           
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<Programming> Programmings { get; set; }
+        public DbSet<Design> Designs { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
