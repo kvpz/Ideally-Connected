@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data; // DataSet, etc. Represents ADO.NET
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer; // SqlServerMigrationSqlGenerator
 
 namespace IdeallyConnected.Models
 {
@@ -27,43 +28,31 @@ namespace IdeallyConnected.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-            //Configuration.ProxyCreationEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }
         
         public DbSet<Skill> Skills { get; set; }
-        public DbSet<Programming> Programmings { get; set; }
-        public DbSet<Design> Designs { get; set; }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
-        /*
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
-            // Change name of the table (to avoid AspNetUsers)
-            ///*
-            modelBuilder.Entity<IdentityUser>()
-                .ToTable("Users");
             modelBuilder.Entity<ApplicationUser>()
-                .ToTable("Users");
+                .HasMany<Skill>(s => s.Skills)
+                .WithMany(s => s.ApplicationUsers)
+                .Map(config => {
+                    config.MapLeftKey("UserId");
+                    config.MapRightKey("SkillId", "Type");
+                    config.ToTable("SkillUserRelation"); 
+                });
             
-                
-            modelBuilder.Entity<ApplicationUser>()
-                .HasOptional(t => t.UserProfile)
-                .WithRequired(t => t.ApplicationUser);
-                //.Map(p => p.MapKey("UserId"));
             base.OnModelCreating(modelBuilder);
         }
-
-        internal object Entity<T>(T entity)
-        {
-            throw new NotImplementedException();
-        }
-    */
     }
 
 

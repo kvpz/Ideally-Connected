@@ -15,7 +15,7 @@ namespace IdeallyConnected
         protected void Application_Start()
         {
             //Database.Delete("DevelopmentConnection");
-            //Database.SetInitializer<ApplicationDbContext>(new ApplicationDataContextInitializer());
+            Database.SetInitializer<ApplicationDbContext>(new ApplicationDataContextInitializer());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

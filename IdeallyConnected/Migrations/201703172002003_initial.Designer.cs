@@ -7,13 +7,13 @@ namespace IdeallyConnected.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UserIdAsPrimaryForSkill : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UserIdAsPrimaryForSkill));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703170034374_UserIdAsPrimaryForSkill"; }
+            get { return "201703172002003_initial"; }
         }
         
         string IMigrationMetadata.Source

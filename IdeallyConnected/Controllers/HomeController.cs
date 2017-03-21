@@ -10,6 +10,7 @@ using WebGrease.Css.Extensions;
 using IdeallyConnected.Components;
 using IdeallyConnected.Migrations;
 using System.Data.Entity.Migrations;
+using IdeallyConnected.Models.Repositories;
 
 namespace IdeallyConnected.Controllers
 {
@@ -17,10 +18,15 @@ namespace IdeallyConnected.Controllers
     {
         public ActionResult Index()
         {
+            /*
             var configuration = new Configuration();
             var migrator = new DbMigrator(configuration);
             migrator.Update();
-            return View();
+            */
+            UserRepository userdb = new UserRepository();
+            userdb.Add(new Models.ApplicationUser() { UserName = "UserOne" });
+            userdb.SaveChanges();
+            return View(userdb);
         }
 
         public ActionResult About()

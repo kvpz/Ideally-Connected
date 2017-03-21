@@ -24,9 +24,11 @@ namespace IdeallyConnected.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnected.Models.ApplicationDbContext>
     {
+        /*
         IEqualityComparer<Skill> programmingSkillComparer = EqualityComparerGeneric<Skill>.Create(
             (pskill_a, pskill_b) => pskill_a.Type == pskill_b.Type && pskill_a.UserId == pskill_b.UserId, 
             pskill               => pskill.GetHashCode());
+        */
         public static class EqualityComparerGeneric<T> 
         {
             private class Comparer : IEqualityComparer<T>
@@ -86,46 +88,27 @@ namespace IdeallyConnected.Migrations
                     LastName = "Three",
                 }
             };
-            
-            var dbUsers = context.Users.ToList();
-            if(dbUsers.Count() == 0)
-                dbUsers = users;
-            
-            /*
-                If the UserId is not defined like below, a duplicate key value error will occur.
-            */
-            var programmingSkills = new List<Programming>() {
-                new Programming() {
-                    SkillManager = dbUsers?[0],
-                    UserId = dbUsers[0]?.Id,
-                    Expertise = (byte)ExpertiseEnum.Expert
-                },
-                new Programming() {
-                    SkillManager = dbUsers?[1],
-                    UserId = dbUsers[1]?.Id,
-                    Expertise = (byte)ExpertiseEnum.Intermediate
-                },
-                new Programming() {
-                    SkillManager = dbUsers?[2],
-                    UserId = dbUsers[2]?.Id, 
-                    Expertise = (byte)ExpertiseEnum.None
-                }
-            };
 
-            var designSkills = new List<Design>() {
-                new Design() {
-                    SkillManager = dbUsers?[0]
-                },
-                new Design() {
-                    SkillManager = dbUsers?[1]
-                },
-                new Design() {
-                    SkillManager = dbUsers?[2]
-                }
+            var dbUsers = context.Users.ToList();
+
+            var programmingSkills = new List<Programming>() {
+                new Programming() { Type = "Programming", ProgrammingLanguages = "C, C++, C#", ProgrammingSoftware = "Emacs, VisualStudio"},
+                new Programming() { Type = "Programming", ProgrammingLanguages = "C, Python, Javascript", ProgrammingSoftware = "VisualStudio, Jetbrains" },
+                new Programming() { Type = "Programming", ProgrammingLanguages = "C#, Java, Go, Ruby", ProgrammingSoftware = "RubyMine, VisualStudio, Netbeans" }
             };
-           
-            context.Programmings.AddOrUpdateIfNoneExists(programmingSkills.ToArray(), s => new { s.Type, s.UserId });
-            context.Designs.AddOrUpdateIfNoneExists(designSkills.ToArray(), s => new { s.Type, s.UserId });
+            
+            // This shouldn't be allowed. Only add Skills through Users context.
+            //context.Skills.AddOrUpdate(programmingSkills.ToArray());
+            //context.SaveChanges();
+            int i = 0;
+            foreach(var u in users)
+            {
+                u.Skills.Add(programmingSkills[i]);
+                ++i;
+            }
+            context.Users.AddOrUpdate(users.ToArray());
+            context.SaveChanges();
+            
         }
     }
 }

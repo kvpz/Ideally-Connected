@@ -208,33 +208,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703170026137_Initial.cs" />
-    <Compile Include="Migrations\201703170026137_Initial.Designer.cs">
-      <DependentUpon>201703170026137_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703170034374_UserIdAsPrimaryForSkill.cs" />
-    <Compile Include="Migrations\201703170034374_UserIdAsPrimaryForSkill.Designer.cs">
-      <DependentUpon>201703170034374_UserIdAsPrimaryForSkill.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703170134305_UserHasVirtualSkills.cs" />
-    <Compile Include="Migrations\201703170134305_UserHasVirtualSkills.Designer.cs">
-      <DependentUpon>201703170134305_UserHasVirtualSkills.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703170241234_ProgrammingLanguage.cs" />
-    <Compile Include="Migrations\201703170241234_ProgrammingLanguage.Designer.cs">
-      <DependentUpon>201703170241234_ProgrammingLanguage.cs</DependentUpon>
+    <Compile Include="Migrations\201703172002003_initial.cs" />
+    <Compile Include="Migrations\201703172002003_initial.Designer.cs">
+      <DependentUpon>201703172002003_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDataContextInitializer.cs" />
-    <Compile Include="Models\Design.cs" />
+    <Compile Include="Models\Skills\Design.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Programming.cs" />
-    <Compile Include="Models\ProgrammingLanguage.cs" />
+    <Compile Include="Models\Skills\Medical.cs" />
+    <Compile Include="Models\Skills\ProblemSolving.cs" />
+    <Compile Include="Models\Skills\Programming.cs" />
     <Compile Include="Models\Repositories\Repository.cs" />
     <Compile Include="Models\Repositories\UserRepository.cs" />
-    <Compile Include="Models\Skill.cs" />
+    <Compile Include="Models\Skills\Skill.cs" />
+    <Compile Include="Models\Skills\Speaking.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -1498,17 +1488,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703170026137_Initial.resx">
-      <DependentUpon>201703170026137_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703170034374_UserIdAsPrimaryForSkill.resx">
-      <DependentUpon>201703170034374_UserIdAsPrimaryForSkill.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703170134305_UserHasVirtualSkills.resx">
-      <DependentUpon>201703170134305_UserHasVirtualSkills.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703170241234_ProgrammingLanguage.resx">
-      <DependentUpon>201703170241234_ProgrammingLanguage.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703172002003_initial.resx">
+      <DependentUpon>201703172002003_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

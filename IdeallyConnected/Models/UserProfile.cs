@@ -15,9 +15,14 @@ namespace IdeallyConnected.Models
     */
     public partial class ApplicationUser//UserProfile 
     {
+        public ApplicationUser()
+        {
+            Skills = new HashSet<Skill>();
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Biography { get; set; }
-        //public virtual ICollection<Skill> Skills { get; set; }
+        public virtual ICollection<Skill> Skills { get; set; }
     }
 }
