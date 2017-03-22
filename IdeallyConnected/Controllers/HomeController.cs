@@ -11,6 +11,9 @@ using IdeallyConnected.Components;
 using IdeallyConnected.Migrations;
 using System.Data.Entity.Migrations;
 using IdeallyConnected.Models.Repositories;
+using System.Net.Http;
+using IdeallyConnected.Models;
+using System.Net;
 
 namespace IdeallyConnected.Controllers
 {
@@ -23,10 +26,7 @@ namespace IdeallyConnected.Controllers
             var migrator = new DbMigrator(configuration);
             migrator.Update();
             */
-            UserRepository userdb = new UserRepository();
-            userdb.Add(new Models.ApplicationUser() { UserName = "UserOne" });
-            userdb.SaveChanges();
-            return View(userdb);
+            return View();
         }
 
         public ActionResult About()
@@ -46,6 +46,20 @@ namespace IdeallyConnected.Controllers
         public ActionResult FindPeople()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Route("users")]   // HttpResponseMessage
+        public JsonResult GetUsers() //(HttpRequestMessage request)
+        {
+            UserRepository userDb = new UserRepository();
+            var users = userDb.GetAll();
+            users = new List<ApplicationUser>() {
+                new ApplicationUser() { UserName = "Timmy", FirstName = "Tim", LastName = "Johner" }
+            };
+
+            return Json(new { list = users.ToList() }, JsonRequestBehavior.AllowGet);
+            //return request.CreateResponse<ApplicationUser[]>(HttpStatusCode.OK, users.ToArray());
         }
     }
 }

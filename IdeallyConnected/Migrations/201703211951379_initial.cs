@@ -8,21 +8,38 @@ namespace IdeallyConnected.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.Collaborators",
+                "dbo.AspNetRoles",
                 c => new
                     {
-                        UserA = c.String(nullable: false, maxLength: 128),
-                        UserB = c.String(nullable: false, maxLength: 128),
-                        Following = c.Boolean(nullable: false),
-                        Initiated = c.Boolean(nullable: false),
-                        Type = c.String(),
-                        InitialCollaboration = c.DateTime(nullable: false),
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(nullable: false, maxLength: 256),
                     })
-                .PrimaryKey(t => new { t.UserA, t.UserB })
-                .ForeignKey("dbo.AspNetUsers", t => t.UserA, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserB, cascadeDelete: true)
-                .Index(t => t.UserA)
-                .Index(t => t.UserB);
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.Skills",
+                c => new
+                    {
+                        ID = c.Guid(nullable: false, identity: true),
+                        Type = c.String(nullable: false, maxLength: 128),
+                        Expertise = c.Byte(),
+                        Description = c.String(),
+                    })
+                .PrimaryKey(t => new { t.ID, t.Type });
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -73,38 +90,20 @@ namespace IdeallyConnected.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.AspNetUserRoles",
+                "dbo.Collaborators",
                 c => new
                     {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
+                        UserA = c.String(nullable: false, maxLength: 128),
+                        UserB = c.String(nullable: false, maxLength: 128),
+                        Following = c.Boolean(nullable: false),
+                        Initiated = c.Boolean(nullable: false),
+                        InitialCollaboration = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.Skills",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false, identity: true),
-                        Type = c.String(nullable: false, maxLength: 128),
-                        Expertise = c.Byte(),
-                        Description = c.String(),
-                    })
-                .PrimaryKey(t => new { t.ID, t.Type });
-            
-            CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 256),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+                .PrimaryKey(t => new { t.UserA, t.UserB })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserA, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserB)
+                .Index(t => t.UserA)
+                .Index(t => t.UserB);
             
             CreateTable(
                 "dbo.SkillUserRelation",
@@ -180,7 +179,6 @@ namespace IdeallyConnected.Migrations
             DropForeignKey("dbo.ProgrammingSkills", new[] { "ID", "Type" }, "dbo.Skills");
             DropForeignKey("dbo.MedicalSkills", new[] { "ID", "Type" }, "dbo.Skills");
             DropForeignKey("dbo.DesignSkills", new[] { "ID", "Type" }, "dbo.Skills");
-            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Collaborators", "UserB", "dbo.AspNetUsers");
             DropForeignKey("dbo.Collaborators", "UserA", "dbo.AspNetUsers");
             DropForeignKey("dbo.SkillUserRelation", new[] { "SkillId", "Type" }, "dbo.Skills");
@@ -188,32 +186,33 @@ namespace IdeallyConnected.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropIndex("dbo.SpeakingSkills", new[] { "ID", "Type" });
             DropIndex("dbo.ProgrammingSkills", new[] { "ID", "Type" });
             DropIndex("dbo.MedicalSkills", new[] { "ID", "Type" });
             DropIndex("dbo.DesignSkills", new[] { "ID", "Type" });
             DropIndex("dbo.SkillUserRelation", new[] { "SkillId", "Type" });
             DropIndex("dbo.SkillUserRelation", new[] { "UserId" });
-            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
-            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.Collaborators", new[] { "UserB" });
+            DropIndex("dbo.Collaborators", new[] { "UserA" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Collaborators", new[] { "UserB" });
-            DropIndex("dbo.Collaborators", new[] { "UserA" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropTable("dbo.SpeakingSkills");
             DropTable("dbo.ProgrammingSkills");
             DropTable("dbo.MedicalSkills");
             DropTable("dbo.DesignSkills");
             DropTable("dbo.SkillUserRelation");
-            DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Skills");
-            DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.Collaborators");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Collaborators");
+            DropTable("dbo.Skills");
+            DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.AspNetRoles");
         }
     }
 }

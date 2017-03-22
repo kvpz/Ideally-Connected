@@ -37,5 +37,21 @@
 
             </table>
         </div>
+
+        <div>
+            <h5>UserListDb TEST</h5>
+            <table class="table">
+                <thead>
+                    <tr>Table row 1</tr>
+                    <tr>Table row 2</tr>
+                </thead>
+                <tbody ng-repeat="user in $ctrl.listUsersFromDb">
+                    <tr>
+                        <td>{{ user.FirstName }}</td>
+                        <td>{{ user.LastName }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
