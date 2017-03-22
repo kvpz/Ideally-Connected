@@ -8,6 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using WebGrease.Css.Extensions;
 using IdeallyConnected.Components;
+using IdeallyConnected.Migrations;
+using System.Data.Entity.Migrations;
+using IdeallyConnected.Models.Repositories;
+using System.Net.Http;
+using IdeallyConnected.Models;
+using System.Net;
 
 namespace IdeallyConnected.Controllers
 {
@@ -15,6 +21,11 @@ namespace IdeallyConnected.Controllers
     {
         public ActionResult Index()
         {
+            /*
+            var configuration = new Configuration();
+            var migrator = new DbMigrator(configuration);
+            migrator.Update();
+            */
             return View();
         }
 
@@ -35,6 +46,20 @@ namespace IdeallyConnected.Controllers
         public ActionResult FindPeople()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Route("users")]   // HttpResponseMessage
+        public JsonResult GetUsers() //(HttpRequestMessage request)
+        {
+            UserRepository userDb = new UserRepository();
+            var users = userDb.GetAll();
+            users = new List<ApplicationUser>() {
+                new ApplicationUser() { UserName = "Timmy", FirstName = "Tim", LastName = "Johner" }
+            };
+
+            return Json(new { list = users.ToList() }, JsonRequestBehavior.AllowGet);
+            //return request.CreateResponse<ApplicationUser[]>(HttpStatusCode.OK, users.ToArray());
         }
     }
 }

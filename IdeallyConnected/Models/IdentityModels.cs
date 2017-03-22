@@ -6,10 +6,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data; // DataSet, etc. Represents ADO.NET
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer; // SqlServerMigrationSqlGenerator
 
 namespace IdeallyConnected.Models
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public partial class ApplicationUser : IdentityUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -24,44 +24,48 @@ namespace IdeallyConnected.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        //public DbSet<ApplicationUser> AppUser { get; set; }
-        public DbSet<ProgrammingLanguages> ProgLanguages { get; set; }
-        public DbSet<Software> Software { get; set; }
-
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
-        
+
+        #region context
+        public DbSet<Skill> Skills { get; set; }
+        #endregion
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
-        /*
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
-            // Change name of the table (to avoid AspNetUsers)
-            ///*
-            modelBuilder.Entity<IdentityUser>()
-                .ToTable("Users");
+            // Create ApplicationUser and Skill Relationship Schema
             modelBuilder.Entity<ApplicationUser>()
-                .ToTable("Users");
+                .HasMany<Skill>(s => s.Skills)
+                .WithMany(s => s.ApplicationUsers)
+                .Map(config => {
+                    config.MapLeftKey("UserId");
+                    config.MapRightKey("SkillId", "Type");
+                    config.ToTable("SkillUserRelation"); 
+                });
+
+            // Create Collaborators Table 
+            modelBuilder.Entity<Collaborators>()
+                .HasKey(c => new { c.UserA, c.UserB });
+            modelBuilder.Entity<Collaborators>()
+                .HasRequired(u => u.ApplicationUser1)
+                .WithMany()
+                .HasForeignKey(c => c.UserA);
+            modelBuilder.Entity<Collaborators>()
+                .HasRequired(u => u.ApplicationUser2)
+                .WithMany()
+                .HasForeignKey(c => c.UserB)
+                .WillCascadeOnDelete(false);
             
-                
-            modelBuilder.Entity<ApplicationUser>()
-                .HasOptional(t => t.UserProfile)
-                .WithRequired(t => t.ApplicationUser);
-                //.Map(p => p.MapKey("UserId"));
             base.OnModelCreating(modelBuilder);
         }
-
-        internal object Entity<T>(T entity)
-        {
-            throw new NotImplementedException();
-        }
-    */
     }
 
 

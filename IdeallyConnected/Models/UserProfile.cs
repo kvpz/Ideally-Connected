@@ -13,11 +13,16 @@ namespace IdeallyConnected.Models
         A unidirectional relationship is established by only defining the navigation property
         on only one of the types that participates in the relationship and not both.
     */
-    public partial class ApplicationUser//UserProfile 
+    public partial class ApplicationUser 
     {
-        public String Biography { get; set; }
+        public ApplicationUser()
+        {
+            Skills = new HashSet<Skill>();
+        }
 
-        public virtual List<ProgrammingLanguages> ProgrammingLanguages { get; set; }
-        public virtual List<Software> Software { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Biography { get; set; }
+        public virtual ICollection<Skill> Skills { get; set; }
     }
 }

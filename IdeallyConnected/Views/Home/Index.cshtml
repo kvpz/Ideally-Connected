@@ -1,9 +1,15 @@
-﻿@{
+﻿@model IdeallyConnected.Models.ApplicationUser
+@{
     ViewBag.Title = "Home Page";
+    
 }
 @using IdeallyConnected.Components;
-@model LayoutMenuItemManager
+@using IdeallyConnected.Models;
+@*
+    @model LayoutMenuItemManager
+*@
 
+@*
 <div class="jumbotron" ng-controller="IndexViewModel as ivm">
     <h1>Ideally Connected</h1>
     <p class="lead">Bringing people together.</p>
@@ -15,4 +21,10 @@
     <div>
         Map
     </div>
+
+</div>
+
+*@
+<div ng-app="ICApp">
+    <div ng-view></div>
 </div>

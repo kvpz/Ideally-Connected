@@ -33,6 +33,11 @@ namespace IdeallyConnected.Experiments.Utility
             string testresult = randomIndexes.Aggregate<int, string>(f(randEnum.Current), (@string, element) => @string + ' ' + f(element));
             return testresult;
         }
+
+        public static void ValidateProgLangUnique(ref string languages)
+        {
+            languages = languages.Split(' ', ',').Distinct().Aggregate((sa, sb) => sa + ' ' + sb);
+        }
     }
 
     public static class EqualityComparerFactory<T>

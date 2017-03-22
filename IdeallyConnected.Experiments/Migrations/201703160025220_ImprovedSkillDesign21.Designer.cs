@@ -7,13 +7,13 @@ namespace IdeallyConnected.Experiments.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitAgain : IMigrationMetadata
+    public sealed partial class ImprovedSkillDesign21 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitAgain));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ImprovedSkillDesign21));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703140412090_InitAgain"; }
+            get { return "201703160025220_ImprovedSkillDesign21"; }
         }
         
         string IMigrationMetadata.Source

@@ -7,31 +7,14 @@ namespace IdeallyConnected.Models
 {
     public class ApplicationDataContextInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
-        
-        private static ApplicationUser 
-        NewApplicationUser(String UserName, String Biography, 
-        Dictionary<String, SoftwareTypes> SoftwareDictionary, String Email)
+        public ApplicationDataContextInitializer()
         {
-            return new ApplicationUser {
-                UserName = UserName,
-                Biography = Biography,
-                Software = SoftwareDictionary
-                            .Select( st => new Software() { Id = st.Key, Type = st.Value } ).ToList(),
-                Email = "Uone@gewgle.com"
-            };    
+            
+            System.Diagnostics.Debug.WriteLine("In AppDataContextInitializer constructor.",ConsoleColor.Red);
         }
 
         protected override void Seed(ApplicationDbContext context)
         {
-            ApplicationUser user = NewApplicationUser("Uone",
-                "I like programming and reading and guitar",
-                new Dictionary<String, SoftwareTypes> () 
-                { 
-                    { "Visual Studio", SoftwareTypes.TextEditor },
-                    { "OSX", SoftwareTypes.OperatingSystem },
-                    { "Notepad++", SoftwareTypes.TextEditor }
-                },
-                "Utwo@gewgle.com");
             
         }
     }

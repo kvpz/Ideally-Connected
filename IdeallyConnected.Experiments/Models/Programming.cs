@@ -6,24 +6,28 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.Experiments.Models
 {
+    /*
+        This becomes a dynamic proxy because all the properties in here are virtual.
+    */
     public class Programming : Skill
     {
         private static char[] delimiters = { ' ', ',' };
 
         public Programming () : base(SkillEnum.Programming, 0x00)       
         {
-            ProgrammingLanguages = new HashSet<ProgrammingLanguage>();
+            ProgrammingLanguages = new List<ProgrammingLanguage>();
         }
 
         public Programming(ExpertiseEnum expertise, string description, string languages) 
             : base(SkillEnum.Programming, (byte)expertise)
         {
             this.Description = description; 
-            this.ProgrammingLanguages = new HashSet<ProgrammingLanguage>();
-        }
+            List<ProgrammingLanguage> plangs = languages.Split(delimiters).ToList().ConvertAll((a) => (ProgrammingLanguage)a);
+            this.ProgrammingLanguages = new HashSet<ProgrammingLanguage>(plangs);
 
+        }
+        
         //public static implicit operator Programming(Programming p) => new Programming();
-        // This should not be initialized in here.
-        public virtual ISet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
+        public virtual ICollection<ProgrammingLanguage> ProgrammingLanguages { get; set; }
     }
 }

@@ -9,6 +9,11 @@ namespace IdeallyConnected.Experiments.Models
 {
     public class User
     {
+        public User()
+        {
+            Skill = new HashSet<Skill>();
+        }
+        
         #region fields
         private int?             _locationIP;
         public string            locationName;
@@ -17,7 +22,7 @@ namespace IdeallyConnected.Experiments.Models
         #region properties
         [Key]
         [MaxLength(36)]
-        public string                        Id { get; set; }
+        public string                        Username { get; set; }
         // Foreign Key
         public virtual ICollection<Skill>    Skill    { get; set; }
         public int?                          locationsIP 
