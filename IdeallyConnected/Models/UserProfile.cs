@@ -13,7 +13,7 @@ namespace IdeallyConnected.Models
         A unidirectional relationship is established by only defining the navigation property
         on only one of the types that participates in the relationship and not both.
     */
-    public partial class ApplicationUser//UserProfile 
+    public partial class ApplicationUser 
     {
         public ApplicationUser()
         {

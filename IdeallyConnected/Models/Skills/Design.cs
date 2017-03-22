@@ -12,6 +12,6 @@ namespace IdeallyConnected.Models
         public Design() : base(SkillEnum.Design, 0x00) {}
 
         public string TypeOfDesign { get; set; }
-        public string DesignSoftware { get; set; }
+        public string Software { get; set; }
     }
 }

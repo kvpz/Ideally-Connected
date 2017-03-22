@@ -13,7 +13,7 @@ namespace IdeallyConnected.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201703172002003_initial"; }
+            get { return "201703211951379_initial"; }
         }
         
         string IMigrationMetadata.Source

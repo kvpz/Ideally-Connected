@@ -24,11 +24,6 @@ namespace IdeallyConnected.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnected.Models.ApplicationDbContext>
     {
-        /*
-        IEqualityComparer<Skill> programmingSkillComparer = EqualityComparerGeneric<Skill>.Create(
-            (pskill_a, pskill_b) => pskill_a.Type == pskill_b.Type && pskill_a.UserId == pskill_b.UserId, 
-            pskill               => pskill.GetHashCode());
-        */
         public static class EqualityComparerGeneric<T> 
         {
             private class Comparer : IEqualityComparer<T>
@@ -92,9 +87,9 @@ namespace IdeallyConnected.Migrations
             var dbUsers = context.Users.ToList();
 
             var programmingSkills = new List<Programming>() {
-                new Programming() { Type = "Programming", ProgrammingLanguages = "C, C++, C#", ProgrammingSoftware = "Emacs, VisualStudio"},
-                new Programming() { Type = "Programming", ProgrammingLanguages = "C, Python, Javascript", ProgrammingSoftware = "VisualStudio, Jetbrains" },
-                new Programming() { Type = "Programming", ProgrammingLanguages = "C#, Java, Go, Ruby", ProgrammingSoftware = "RubyMine, VisualStudio, Netbeans" }
+                new Programming() { Type = "Programming", ProgrammingLanguages = "C, C++, C#", Software = "Emacs, VisualStudio"},
+                new Programming() { Type = "Programming", ProgrammingLanguages = "C, Python, Javascript", Software = "VisualStudio, Jetbrains" },
+                new Programming() { Type = "Programming", ProgrammingLanguages = "C#, Java, Go, Ruby", Software = "RubyMine, VisualStudio, Netbeans" }
             };
             
             // This shouldn't be allowed. Only add Skills through Users context.

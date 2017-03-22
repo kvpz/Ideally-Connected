@@ -19,11 +19,11 @@ namespace IdeallyConnected.Models
         {
             this.Description = description; 
             ProgrammingLanguages = languages;
-            ProgrammingSoftware = software;
+            Software = software;
         }
         
         public string ProgrammingLanguages { get; set; }
-        public string ProgrammingSoftware { get; set; }        
+        public string Software { get; set; }        
     }
 
 }
