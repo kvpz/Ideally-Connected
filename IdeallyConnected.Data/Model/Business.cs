@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace IdeallyConnected.Models
+namespace IdeallyConnected.Data.Models
 {
     public class Business
     {

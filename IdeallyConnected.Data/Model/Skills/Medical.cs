@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace IdeallyConnected.Models
+namespace IdeallyConnected.Data.Models
 {
     [Table("MedicalSkills")]
     public class Medical : Skill

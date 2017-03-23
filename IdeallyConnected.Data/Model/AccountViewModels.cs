@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace IdeallyConnected.Models
+namespace IdeallyConnected.Data.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

@@ -1,54 +1,69 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data; // DataSet, etc. Represents ADO.NET
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.SqlServer; // SqlServerMigrationSqlGenerator
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace IdeallyConnected.Models
+namespace IdeallyConnected.Data.Models
 {
-    public partial class ApplicationUser : IdentityUser
+    public partial class User : IdentityUser
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        public User() 
+        {
+            Skills = new HashSet<Skill>();
+        }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Biography { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime Created { get; set; }
+        public virtual ICollection<Skill> Skills { get; set; }
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
-            return userIdentity;            
+            return userIdentity;
         }
-        
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ICDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
+        public ICDbContext() : base("DevelopmentConnection", throwIfV1Schema: false)
         {
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
         }
 
-        #region context
-        public DbSet<Skill> Skills { get; set; }
-        #endregion
-
-        public static ApplicationDbContext Create()
+        public static ICDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new ICDbContext();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
+
             // Create ApplicationUser and Skill Relationship Schema
-            modelBuilder.Entity<ApplicationUser>()
+            modelBuilder.Entity<User>()
                 .HasMany<Skill>(s => s.Skills)
                 .WithMany(s => s.ApplicationUsers)
                 .Map(config => {
                     config.MapLeftKey("UserId");
                     config.MapRightKey("SkillId", "Type");
-                    config.ToTable("SkillUserRelation"); 
+                    config.ToTable("SkillUserRelation");
                 });
 
             // Create Collaborators Table 
@@ -63,11 +78,6 @@ namespace IdeallyConnected.Models
                 .WithMany()
                 .HasForeignKey(c => c.UserB)
                 .WillCascadeOnDelete(false);
-            
-            base.OnModelCreating(modelBuilder);
         }
     }
-
-
-
 }
