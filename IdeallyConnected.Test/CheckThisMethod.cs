@@ -3,12 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IdeallyConnected.Test
 {
-    [TestClass]
-    public class UnitTest1
+    //[TestClass]
+    [AttributeUsage(AttributeTargets.Method)]
+    public class CheckThisMethod : Attribute
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+
     }
 }
