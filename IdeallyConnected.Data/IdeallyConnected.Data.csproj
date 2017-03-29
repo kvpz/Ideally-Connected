@@ -105,6 +105,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Contact.cs" />
+    <Compile Include="Model\EntityFeatures\UserPartial.cs" />
     <Compile Include="Model\IdentityModels.cs" />
     <Compile Include="Model\AccountViewModels.cs" />
     <Compile Include="Model\ICDataContextInitializer.cs" />

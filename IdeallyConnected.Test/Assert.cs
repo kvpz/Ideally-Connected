@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.Test
 {
-    public static class Assert
+
+    public static class MyAssert
     {
         public static ObservableCollection<UnitTestInfo> TestResults { get; set; }
 
-        static Assert()
+        static MyAssert()
         {
             TestResults = new ObservableCollection<UnitTestInfo>();
         }

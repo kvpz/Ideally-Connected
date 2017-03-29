@@ -18,15 +18,16 @@ namespace IdeallyConnected.Data.Models.Repositories
 
         public Repository()
         {
-            dbContext = new ICDbContext();
+            this.dbContext = new ICDbContext();
             DbSet = dbContext.Set<T>();
         }
 
         public Repository(ICDbContext context)
         {
             this.dbContext = context;
+            DbSet = dbContext.Set<T>();
         }
-
+        
         public T Add(T entity)
         {
             return DbSet.Add(entity);
@@ -47,11 +48,21 @@ namespace IdeallyConnected.Data.Models.Repositories
             return DbSet.Find(id);
         }
 
+        public T Get(string id)
+        {
+            return DbSet.Find(id);
+        }
+
         public IQueryable<T> GetAll()
         {
             return DbSet;
         }
 
+        /*
+            Exceptions:
+            - DbUpdateConcurrencyException is thrown when an optimistic concurrency is detected while attempting to 
+            save an entity that uses foreign key associations.
+        */
         public void SaveChanges()
         {
             dbContext.SaveChanges();
@@ -74,7 +85,6 @@ namespace IdeallyConnected.Data.Models.Repositories
                 dbContext.Dispose();
                 disposed = true;
             }
-            throw new NotImplementedException();
         }
     }
 }

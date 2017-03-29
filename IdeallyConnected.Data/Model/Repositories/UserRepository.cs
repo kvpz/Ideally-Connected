@@ -8,20 +8,34 @@ namespace IdeallyConnected.Data.Models.Repositories
 {
     public class UserRepository : Repository<User>
     {
-        public List<User> GetByUserName(String name)
+        public UserRepository() { }
+        public UserRepository(ICDbContext context) : base(context)
         {
-            return DbSet.Where(n => n.UserName.Contains(name)).ToList();     
+        }
+
+        public User GetByUserName(string name)
+        {
+            //User result = DbSet.Where(n => n.UserName.Contains(name)).FirstOrDefault();
+            //User result = DbSet.Where(u => u.UserName == name).FirstOrDefault();
+            User result = DbSet.First(u => u.UserName == name);
+            return result;
+        }
+
+        public IQueryable<User> GetByFirstAndLastName(string firstName, string lastName)
+        {
+            return DbSet.Where(u => u.FirstName == firstName && u.LastName == lastName);
+        }
+
+        public List<User> GetUserProfile()
+        {
+            return DbSet.OfType<User>().ToList();
+            //return DbSet.ToList();
         }
 
         public override void Update(User entity)
         {
             base.Update(entity);
             SaveChanges();
-        }
-
-        public List<User> GetUserProfile()
-        {
-            return DbSet.OfType<User>().ToList();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace IdeallyConnected.Data.Models
 
         public Skill()
         {
-            ApplicationUsers = new SortedSet<User>();
+            Users = new SortedSet<User>();
         }
 
         private void SetExpertise(byte? value)
@@ -42,6 +42,6 @@ namespace IdeallyConnected.Data.Models
         [Key, Column(Order = 1)]
         public string Type { get; set; }
 
-        public ICollection<User> ApplicationUsers { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

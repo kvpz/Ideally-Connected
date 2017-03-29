@@ -8,77 +8,118 @@ using IdeallyConnected.Data.Models;
 using IdeallyConnected.Data.Models.Repositories;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MUT = Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 
 namespace IdeallyConnected.Test.Database
 {
+    using System.Data.Entity;
+    using System.Data.Entity.Validation;
+
     [TestClass]
     public class RepositoryTest
     {
-        [TestMethod]
-        public void Should_AddToContextIfEntryDoesNotExist()
+        private static readonly string connectionString = "ICTestConnection";
+        private static Repository<User> repo;
+        //private User user = new User() { UserName = "JSmith", FirstName = "John", LastName = "Smith", Biography = "John's bio is interesting", Created = DateTime.Now };
+        private static readonly List<User> testUsers = new List<User>()
         {
-            Repository<User> repo = new Repository<User>();
-            User user = new User() { UserName = "JSmith", FirstName = "John", LastName = "Smith", Biography = "John's bio is interesting", Created = DateTime.Now };
+            new User() { Id = "123", UserName = "JSmith", FirstName = "John", LastName = "Smith", Created = DateTime.Now },
+            new User() { UserName = "JSmith2", FirstName = "John", LastName = "Smith", Created = DateTime.Now },
+            new User() { UserName = "JSmith3", FirstName = "NotJohn", LastName = "Smith", Created = DateTime.Now },
+            new User() { UserName = "JSmith4", FirstName = "John", LastName = "NotSmith", Created = DateTime.Now },
+            new User() { UserName = "BobbyJ", FirstName = "Bob", LastName = "Jones", Created = DateTime.Now }
+        };
 
+        //[TestInitialize]
+        [ClassInitialize]
+        public static void TestInitialize(TestContext testContext)
+        {
+            ICDbContext context = new ICDbContext(connectionString);
+            context.Set<User>().AddOrUpdate(t => new { t.UserName }, testUsers.ToArray());
+            context.SaveChanges();
+            repo = new Repository<User>(context);
+        }
+
+        //[TestCleanup]
+        [ClassCleanup]
+        public static void TestCleanup()
+        {
+            repo.Dispose();
+            //Database.Delete(connectionString);
+        }
+
+        [TestMethod]
+        public void Should_Add_New_Entry()
+        {
+            User newUser = new User() { UserName = "NewUser", FirstName = "NewUserFirstName", LastName = "NewUserLastName", Biography = "NewUser's bio is interesting", Created = DateTime.Now };
             // Action: Add user to context, else return existing entry.
-            User dbExistingUser = repo.GetAll().Where(u => u.UserName == user.UserName).FirstOrDefault();
-            user = dbExistingUser ?? repo.Add(user);
-            repo.SaveChanges();
-            User contextUser = dbExistingUser ?? repo.Get(user.Id);
 
-            MUT.Assert.AreEqual(contextUser.Id, user.Id, "ContextUser and User are not equal. Addition failed.");
+            var result = repo.Add(newUser);
+            repo.SaveChanges();
+            MUT.Assert.AreEqual(newUser, result);
+            //MUT.Assert.AreEqual(contextUser.Id, user.Id, "ContextUser and User are not equal. Addition failed.");
         }
 
         [TestMethod]
-        public void Should_LoadToContextExistingData()
+        public void Should_Load_Existing_Data()
         {
-            // Assuming this user exists in the database
-            Repository<User> repo = new Repository<User>();
-            User user = new User() { UserName = "JSmith", FirstName = "John", LastName = "Smith", Biography = "John's bio is interesting", Created = DateTime.Now };
-
-            // Action the entry from the database, or add if it does not exist.
-            User dbExistingUser = repo.GetAll().Where(u => u.UserName == user.UserName).FirstOrDefault();
-            if (dbExistingUser == null)
-                dbExistingUser = repo.Add(user);
-
-            MUT.Assert.AreEqual(dbExistingUser.UserName, user.UserName, "Could not retrieve existing database entity.");
+            var existingData = repo.Where(d => d.UserName == testUsers[0].UserName).FirstOrDefault();
+            MUT.Assert.AreEqual(testUsers[0].UserName, existingData.UserName, "Could not retrieve existing database entity.");
         }
-
+        
         [TestMethod]
-        public void Should_UpdateContext()
+        public void Should_Update_Context()
         {
-            Repository<User> repo = new Repository<User>();
-            // If user exists load from context, else add to context.
-            User user = new User() { UserName = "JSmith", FirstName = "John", LastName = "Smith", Biography = "John's bio is interesting", Created = DateTime.Now };
-            User dbExistingUser = repo.GetAll().Where(u => u.UserName == user.UserName).ToList()?.First();
-            if (dbExistingUser == null)
-                repo.Add(user);
-            else
-                user = dbExistingUser;
-            repo.SaveChanges();
+            var updatedEntry = new User() { UserName = "JSmith", FirstName = "John", LastName = "Smith", Biography = "John updated his bio.", Created = DateTime.Now };
 
-            // Action: Changing an entry's property
-            user.UserName = "JSmithNewUsername";
+            var existingEntry = repo.Where(u => u.UserName == updatedEntry.UserName).FirstOrDefault();
+
+            // Action: Modifying the record.
+            existingEntry.UserName = "JSmithNewUsername";
+            existingEntry.Biography = updatedEntry.Biography;
             repo.SaveChanges();
 
             // Check: Retrieving to check if change was persisted.
-            User contextUser = repo.Get(dbExistingUser.Id);
-            MUT.Assert.AreEqual(user.Id, contextUser.Id, "Property change did not persist.");
+            User persistedEntry = repo.Get(existingEntry.Id);
+            MUT.Assert.AreEqual(existingEntry.Id, persistedEntry.Id, "Property change did not persist.");
         }
 
         [TestMethod]
-        public void Should_DeleteEntryFromContext()
+        public void Should_Delete_Entry_From_Context()
         {
-            // Given this user exists in the database
-            Repository<User> repo = new Repository<User>();
-            User user = new User() { UserName = "JSmith", FirstName = "John", LastName = "Smith", Biography = "John's bio is interesting", Created = DateTime.Now };
-            user = repo.Where(u => u.UserName == user.UserName).FirstOrDefault();
+            var existingEntry = repo.Where(u => u.UserName == "JSmith4").FirstOrDefault();
             // Deleting the existing entry
-            if(user != null)
-                repo.Delete(user);
+            if (existingEntry != null)
+                repo.Delete(existingEntry);
             repo.SaveChanges();
 
-            Assert.Equals(user, null);
+            var shouldBeNull = repo.Get(existingEntry.Id);
+            Assert.AreEqual(null, shouldBeNull);
         }
+        
+
+        [TestMethod]
+        //[ExpectedException(typeof(DbUpdateException),"Error because trying to persist existing data in a primary key column.")]
+        [ExpectedException(typeof(DbEntityValidationException), "Prevented adding existing data in unique data attribute.")]
+        public void Should_Prevent_Adding_Existing_UserName()
+        {
+            var newEntry = new User() { UserName = "JSmith", FirstName = "SomeFirstName", LastName = "IrrelevantLastName", Created = DateTime.Now };
+            repo.Add(newEntry);
+
+            repo.SaveChanges();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Trying to add null values to non-nullable column(s)")]
+        public void Should_Throw_Error_If_Inserting_Null_In_Nonnullable_Properties()
+        {
+            var newEntry = new User() { UserName = "NewInvalidUser", Created = DateTime.Now };
+            repo.Add(newEntry);
+
+            repo.SaveChanges();
+        }
+
+        
     }
 }

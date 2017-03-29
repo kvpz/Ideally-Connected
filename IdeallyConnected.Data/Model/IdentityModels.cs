@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
@@ -17,11 +18,21 @@ namespace IdeallyConnected.Data.Models
         {
             Skills = new HashSet<Skill>();
         }
+
+        [Required]
+        [MaxLength(50)]
+        [RegularExpression(@"^[a-zA-Z\s]+$")]
         public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        [RegularExpression(@"^[a-zA-Z\s]+$")]
         public string LastName { get; set; }
+
         public string Biography { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+
         public DateTime Created { get; set; }
+
         public virtual ICollection<Skill> Skills { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
@@ -36,6 +47,12 @@ namespace IdeallyConnected.Data.Models
     public class ICDbContext : IdentityDbContext<User>
     {
         public ICDbContext() : base("DevelopmentConnection", throwIfV1Schema: false)
+        {
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+        }
+
+        public ICDbContext(string connectionString) : base(connectionString, throwIfV1Schema: false)
         {
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
@@ -59,7 +76,7 @@ namespace IdeallyConnected.Data.Models
             // Create ApplicationUser and Skill Relationship Schema
             modelBuilder.Entity<User>()
                 .HasMany<Skill>(s => s.Skills)
-                .WithMany(s => s.ApplicationUsers)
+                .WithMany(s => s.Users)
                 .Map(config => {
                     config.MapLeftKey("UserId");
                     config.MapRightKey("SkillId", "Type");
@@ -70,11 +87,11 @@ namespace IdeallyConnected.Data.Models
             modelBuilder.Entity<Collaborators>()
                 .HasKey(c => new { c.UserA, c.UserB });
             modelBuilder.Entity<Collaborators>()
-                .HasRequired(u => u.ApplicationUser1)
+                .HasRequired(u => u.User1)
                 .WithMany()
                 .HasForeignKey(c => c.UserA);
             modelBuilder.Entity<Collaborators>()
-                .HasRequired(u => u.ApplicationUser2)
+                .HasRequired(u => u.User2)
                 .WithMany()
                 .HasForeignKey(c => c.UserB)
                 .WillCascadeOnDelete(false);

@@ -28,7 +28,7 @@ namespace IdeallyConnected.Test
             var result = usermatcher.FindMatches();
             HashSet<string> resultChecker = new HashSet<string>(users, StringComparer.Ordinal);
             string sa = resultChecker.Count.ToString(), sb = result.Count.ToString();
-            Assert.AreEqual(resultChecker, result, $"Repeated users were not caught.  { sa } - { sb }");
+            MyAssert.AreEqual(resultChecker, result, $"Repeated users were not caught.  { sa } - { sb }");
         }
     }
 }

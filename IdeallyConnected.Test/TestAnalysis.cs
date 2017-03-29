@@ -9,10 +9,10 @@ namespace IdeallyConnected.Test
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    [TestClass]
+    //[TestClass]
     public class TestAnalysis
     {
-        [TestMethod]
+        //[TestMethod]
         //[CheckThisMethod]
         public void TestPassedMethod()
         {
@@ -23,7 +23,7 @@ namespace IdeallyConnected.Test
             //Assert.AreEqual(resultWhichShouldBeTrue, true, "Expected value is TRUE.");
         }
 
-        [TestMethod]
+        //[TestMethod]
         //[CheckThisMethod]
         public void TestFailedMethod()
         {

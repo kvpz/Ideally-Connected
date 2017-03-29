@@ -7,6 +7,7 @@ namespace IdeallyConnected.Data.Models
 {
     public class Business
     {
+        public string Name { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Address { get; set; }

@@ -16,10 +16,10 @@ namespace IdeallyConnected.Data.Models
         public virtual string UserB { get; set; }
 
         [ForeignKey("UserA")]
-        public virtual User ApplicationUser1 { get; set; }
+        public virtual User User1 { get; set; }
 
         [ForeignKey("UserB")]
-        public virtual User ApplicationUser2 { get; set; }
+        public virtual User User2 { get; set; }
 
         // Total amount of times both users collaborated with each other
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
