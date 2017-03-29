@@ -24,7 +24,14 @@
 
 </div>
 
-*@
-<div ng-app="ICApp">
-    <div ng-view></div>
+    *@
+<div ng-controller="IndexViewModel as ctrl">
+    <h3>Space</h3>
+    <br />
+    <hr />
+    {{ ctrl.author }}
+    {{ helloScope }}
 </div>
+
+
+

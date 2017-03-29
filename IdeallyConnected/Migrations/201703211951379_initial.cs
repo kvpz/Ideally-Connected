@@ -35,8 +35,8 @@ namespace IdeallyConnected.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        FirstName = c.String(),
-                        LastName = c.String(),
+                        FirstName = c.String(nullable: false, maxLength: 50),
+                        LastName = c.String(nullable: false, maxLength: 50),
                         Biography = c.String(),
                         Created = c.DateTime(nullable: false),
                         Email = c.String(maxLength: 256),

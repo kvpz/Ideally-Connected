@@ -11,8 +11,28 @@ vicinity in which the user can connect with. The user will be prompted if there 
 matches, else { insert sad face }.
 The user can then choose to register for the app.
 
+
 ### Registration
 **Summary**
+A new page for registration will be served. It will contain a basic form with a submit button.
+Later versions should allow registration through Facebook, Google, etc.
+
+** Features **
+- Html form with fields for Username, FirstName, LastName, Email, and Residence area.
+- Button for submittin the form data. 
+
+** Development Notes **
+- Upon submitting a successfully completed form, the users will be prompted with on the same page
+with, perhaps, a dialog box notifying them to confirm their email before being able to use any 
+member services.
+
+### Account Management
+**Summary**
+A page where a user can edit their profile such as adding their own skills, biography, etc.
+
+** Featres **
+- Change of password.
+- Add/ modify skills and other details.
 
 
 ### Contact
@@ -22,7 +42,9 @@ registered user or not. They must provide their names and an email. On the serve
 process will have the least priority, but data persistence will be just as important as
 any other process.
 
-~~~ Design ~~~
+
+
+~~~ UX Design ~~~
 
 Features for visitors:
 - Display a counter of total amount of app users.

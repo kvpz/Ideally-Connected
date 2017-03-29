@@ -14,14 +14,23 @@ using IdeallyConnected.Data.Models.Repositories;
 using System.Net.Http;
 using IdeallyConnected.Data.Models;
 using System.Net;
+using IdeallyConnected.API.Models;
 
 namespace IdeallyConnected.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IContactService _contactService;
+        
+        public HomeController(IContactService contactService)
+        {
+            _contactService = contactService;
+        }
+        
         public ActionResult Index()
         {
             /*
+            // For debugging purposes
             var configuration = new Configuration();
             var migrator = new DbMigrator(configuration);
             migrator.Update();
@@ -59,7 +68,7 @@ namespace IdeallyConnected.Controllers
             };
 
             return Json(new { list = users.ToList() }, JsonRequestBehavior.AllowGet);
-            //return request.CreateResponse<ApplicationUser[]>(HttpStatusCode.OK, users.ToArray());
+            //return request.CreateResponse<User[]>(HttpStatusCode.OK, users.ToArray());
         }
     }
 }

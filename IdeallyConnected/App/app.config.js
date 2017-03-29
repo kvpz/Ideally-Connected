@@ -4,9 +4,10 @@
     function IndexViewModelController($scope, $http, $q, $routeParams, $window, $location) {
         var self = this;
         self.author = "Created by Kevin Perez";
+        self.title = "Ideally Connected";
     }
 
-    function configICApp($locationProvider, $routeProvider) {
+    function ConfigICApp($locationProvider, $routeProvider) {
         $locationProvider.hashPrefix('!');
 
         $routeProvider
@@ -19,14 +20,14 @@
             .otherwise('/');
     }
 
-    angular
-        .module('ICApp')
-        .controller('IndexViewModel', ['$scope', '$http', '$q', '$routeParams', '$window', '$location', IndexViewModelController]);
-
     // Configure existing services & providers. The function is executed upon loading the module. 
     angular
         .module('ICApp')
-        .config(['$locationProvider', '$routeProvider', configICApp]);
+        .config(['$locationProvider', '$routeProvider', ConfigICApp]);
+
+    angular
+        .module('ICApp')
+        .controller('IndexViewModel', ['$scope', '$http', '$q', '$routeParams', '$window', '$location', IndexViewModelController]);
 })();
 /*
     All variables defined with the : prefix are extracted into the (injectable) $routeParams object and

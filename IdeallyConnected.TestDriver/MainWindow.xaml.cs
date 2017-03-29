@@ -26,13 +26,13 @@ namespace IdeallyConnected.TestDriver
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = Assert.TestResults;
+            this.DataContext = MyAssert.TestResults;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var testClass = new TestAnalysis();
-            Assert.RunTests();
+            MyAssert.RunTests();
             //testClass.TestPassedMethod();
             //testClass.TestFailedMethod();
             

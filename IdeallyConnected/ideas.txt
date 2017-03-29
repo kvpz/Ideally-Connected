@@ -3,3 +3,18 @@ my IP address in the connection string found in Web.config.
 
 Role-based access control: 
 There will be Visitors, Registered Users, Business Owners, and Administrator.
+
+Syndicate customer details to business owners.
+
+Features:
+- In-memory analytics: database queries are further processed and analyzed in RAM.
+
+Association Rule Mining:
+Support(%): how often X & Y go together
+Confidence(%): how often Y goes together with the X
+Lift: ratio of the observed support to the expected
+
+Apriori Algorithm:
+Find subsets that are common to at least a minimum number of the itemsets. Frequent
+subsets are extended one item at a time. Groups of candidates at each level are
+tested against the data for minimum support.
