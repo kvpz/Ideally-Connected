@@ -147,6 +147,12 @@
       <DependentUpon>201703160025220_ImprovedSkillDesign21.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IdeallyConnected.Utility\IdeallyConnected.Utility.csproj">
+      <Project>{a7aa8c1b-4f9e-4772-9b76-c9055225d14d}</Project>
+      <Name>IdeallyConnected.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
