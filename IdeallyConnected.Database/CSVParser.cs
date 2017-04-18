@@ -118,6 +118,7 @@ namespace IdeallyConnected.Database
                     row["Latitude"] = locationRecord.Latitude;
                     row["Longitude"] = locationRecord.Longitude;
 
+                    // prevent duplicate zip codes in one column
                     if (locationRecord.ZipCode.Length > 5)
                     {
                         foreach (string zipcode in locationRecord.ZipCode.Split(' ').ToList())
