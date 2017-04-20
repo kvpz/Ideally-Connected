@@ -120,8 +120,6 @@ namespace IdeallyConnected.Experiments
 
         public static void Main(string[] args)
         {
-            CSVParser csvParser = new CSVParser();
-            csvParser.LoadLocationsFile("C: \\Users\\kp12g_000\\Documents\\Visual Studio 2017\\Projects\\CSharpFinalProject\\IdeallyConnected.Utility\\uscitiesv1.1.csv");
             /*
             //var db = new AppICDbContext();
             UserRepository userDbContext = new UserRepository();//db;

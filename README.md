@@ -23,6 +23,7 @@ performant code first and then focus on improving performance.
 [Performance Tips for .NET](https://msdn.microsoft.com/en-us/library/ms973839.aspx)
 [Angular-seed: an application skeleton](https://github.com/angular/angular-seed)
 Location data obtained from [Simple Maps](http://simplemaps.com/data/us-cities)
+SampleSuperstore data obtained from Tableau Sample data.
 
 
 

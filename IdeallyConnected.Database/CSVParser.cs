@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using IdeallyConnected.Utility;
 using CsvHelper;
 using System.Reflection;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace IdeallyConnected.Database
+namespace IdeallyConnected.DatabaseManager.Tools
 {
     public class LocationRecord
     {
@@ -46,31 +45,17 @@ namespace IdeallyConnected.Database
             while (csvstream.Read())
             {
                 LocationRecord record = new LocationRecord();
-                record.ZipCode = csvstream.GetField(0);
-                record.State = csvstream.GetField(1); //"state_name");
-                record.StateAbbreviation = csvstream.GetField(2); //("state_id");
-                record.City = csvstream.GetField(3);
-                record.County = csvstream.GetField(4); //("county_name");
+                record.ZipCode = csvstream.GetField(0); // zip code
+                record.State = csvstream.GetField(1); // State
+                record.StateAbbreviation = csvstream.GetField(2); // State abbreviation
+                record.City = csvstream.GetField(3); // City
+                record.County = csvstream.GetField(4); // County
                 int population;
-                record.Population = csvstream.TryGetField<int>(5, out population) ? population : 0;
-                //record.Population = csvstream. .GetField<int>(5);
-                record.Latitude = csvstream.GetField<decimal>(6); //("lat");
-                record.Longitude = csvstream.GetField<decimal>(7); //("lng");
-                // Create a new tuple for each zip code.
-                /*
-                if (record.ZipCode.Length > 5)
-                {
-                    foreach (string zipcode in record.ZipCode.Split(' ').ToList())
-                    {
-                        record.ZipCode = zipcode;
-                        result.Add(record);
-                    }
-                }
-                */
-                //else
-                //{
-                    result.Add(record);
-                //}
+                record.Population = csvstream.TryGetField<int>(5, out population) ? population : 0; // Population
+                record.Latitude = csvstream.GetField<decimal>(6); // latitude
+                record.Longitude = csvstream.GetField<decimal>(7); // longitude
+
+                result.Add(record);
             }
 
             return result;
@@ -150,6 +135,53 @@ namespace IdeallyConnected.Database
             }
         }
 
+        public void QuickLoad<T>(List<T> recordsToLoad, string connectionString, string sqlCommandName, string sqlParameterName, string tableName, Dictionary<string, Type> columns) where T: new()
+        {
+            //var recordsToLoad = records;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.CommandText = sqlCommandName;
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlCommand.Connection = connection;
+                SqlParameter sqlParameter = new SqlParameter(sqlParameterName, SqlDbType.Structured);
+                sqlCommand.Parameters.Add(sqlParameter);
+                
+                DataTable dataTable = new DataTable(tableName);
+                foreach(KeyValuePair<string, Type> column in columns)
+                {
+                    dataTable.Columns.Add(column.Key, column.Value);
+                }
+
+                foreach(T record in recordsToLoad)
+                {
+                    DataRow row = dataTable.NewRow();
+                    foreach(string c in columns.Keys)
+                    {
+                        row[c] = record.GetType().GetProperty(c).GetValue(record);
+                    }
+                    dataTable.Rows.Add(row);
+                }
+
+                sqlCommand.Parameters[sqlParameterName].Value = dataTable;
+                int queriesExecuted = 0;
+                try
+                {
+                    queriesExecuted = sqlCommand.ExecuteNonQuery();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                finally
+                {
+                    Console.WriteLine($"Queries executed: {queriesExecuted}");
+                }
+            }
+        }
+
         public void LoadLocationCSVData()
         {
             List<LocationRecord> records = LoadLocationsCSVFile(locationsCSVFile);
@@ -178,14 +210,8 @@ namespace IdeallyConnected.Database
             }
         }
 
+
+
     }
 
-    public class Driver
-    {
-        public static void Main(string[] args)
-        {
-            CSVParser cobj = new CSVParser();
-            cobj.QuickLoadLocations();
-        }
-    }
 }
