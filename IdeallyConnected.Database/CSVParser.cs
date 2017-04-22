@@ -8,21 +8,10 @@ using System.Reflection;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data;
+using IdeallyConnected.TestDatabases;
 
 namespace IdeallyConnected.DatabaseManager.Tools
 {
-    public class LocationRecord
-    {
-        public string ZipCode { get; set; }
-        public string State { get; set; }
-        public string StateAbbreviation { get; set; }
-        public string City { get; set; }
-        public string County { get; set; }
-        public int Population { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
-    }
-
     public class CSVParser
     {
         private string locationsCSVFile = "C:\\Users\\kp12g_000\\Documents\\Visual Studio 2017\\Projects\\CSharpFinalProject\\IdeallyConnected.Utility\\uscitiesv1.1.csv";
@@ -34,17 +23,17 @@ namespace IdeallyConnected.DatabaseManager.Tools
         /// </summary>
         /// <param name="fileLocation"></param>
         /// <returns></returns>
-        public List<LocationRecord> LoadLocationsCSVFile(string fileLocation)
+        public List<Location> LoadLocationsCSVFile(string fileLocation)
         {
             string filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            List<LocationRecord> result = new List<LocationRecord>();
+            List<Location> result = new List<Location>();
             StreamReader fstream = File.OpenText(fileLocation); 
             CsvReader csvstream = new CsvReader(fstream);
             csvstream.Read();
 
             while (csvstream.Read())
             {
-                LocationRecord record = new LocationRecord();
+                Location record = new Location();
                 record.ZipCode = csvstream.GetField(0); // zip code
                 record.State = csvstream.GetField(1); // State
                 record.StateAbbreviation = csvstream.GetField(2); // State abbreviation
@@ -66,7 +55,7 @@ namespace IdeallyConnected.DatabaseManager.Tools
         /// </summary>
         public void QuickLoadLocations()
         {
-            List<LocationRecord> recordsToLoad = LoadLocationsCSVFile(locationsCSVFile);
+            List<Location> recordsToLoad = LoadLocationsCSVFile(locationsCSVFile);
             string connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=LocationsDb; Trusted_Connection=True;";
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
@@ -91,7 +80,7 @@ namespace IdeallyConnected.DatabaseManager.Tools
                 locationDataTable.Columns.Add("Population", typeof(int));
                 locationDataTable.Columns.Add("Latitude", typeof(decimal));
                 locationDataTable.Columns.Add("Longitude", typeof(decimal));
-                foreach(LocationRecord locationRecord in recordsToLoad)
+                foreach(Location locationRecord in recordsToLoad)
                 {
                     DataRow row = locationDataTable.NewRow();
                     row["ZipCode"] = locationRecord.ZipCode.Length > 5 ? locationRecord.ZipCode.Substring(0,5) : locationRecord.ZipCode;
@@ -184,7 +173,7 @@ namespace IdeallyConnected.DatabaseManager.Tools
 
         public void LoadLocationCSVData()
         {
-            List<LocationRecord> records = LoadLocationsCSVFile(locationsCSVFile);
+            List<Location> records = LoadLocationsCSVFile(locationsCSVFile);
             string connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=LocationsDb; Trusted_Connection=True;";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {

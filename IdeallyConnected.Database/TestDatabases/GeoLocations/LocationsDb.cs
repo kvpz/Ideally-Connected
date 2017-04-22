@@ -4,9 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdeallyConnected.Database.TestDatabases
+namespace IdeallyConnected.TestDatabases
 {
-    class LocationsDb
+    public class LocationsDb : DbManager
     {
+        public Location _Location { get; set; }
+
+        public LocationsDb()
+            : base("Locations")
+        {
+            _Location = new Location();
+        }
     }
 }

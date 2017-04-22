@@ -10,6 +10,8 @@ namespace IdeallyConnected.Database
     using System.Reflection;
     using IdeallyConnected.DatabaseManager;
     using System.IO;
+    using IdeallyConnected.TestDatabases.Configurations;
+    using IdeallyConnected.TestDatabases.SampleSuperstore;
 
     public class Driver
     {
@@ -17,25 +19,47 @@ namespace IdeallyConnected.Database
         {
             Console.WriteLine("\tA. Show available databases.");
             Console.WriteLine("\tB. Show available database servers.");
+            Console.WriteLine("\tC. Select a database.");
+        }
+
+        private static void SelectDatabase()
+        {
+            Console.Write("Type the database name: ");
+            string databaseName = Console.ReadLine().Trim();
+            if (!DatabaseManager.DatabaseExists(databaseName))
+            {
+                WriteLineFormatted($"\t!* The database {databaseName} does not exist! *!", ConsoleColor.Red);
+                return;
+            }
+
+            if (!DatabaseManager.FeatureDatabases.Contains(databaseName))
+            {
+                WriteLineFormatted($"\t*** {databaseName} exists, but it is not featured. ***", ConsoleColor.DarkMagenta);
+                return;
+            }
+        }
+
+        private static void SetOutputFormat()
+        {
+            Console.CursorSize = 50;
+            Console.Title = "IdeallyConnected Database Management";
+        }
+
+        private static void WriteLineFormatted(string output, ConsoleColor c)
+        {
+            Console.ForegroundColor = c;
+            Console.WriteLine(output);
+            Console.ResetColor();
         }
 
         public static void Main(string[] args)
         {
-            DatabaseManager dbManager = new DatabaseManager();
-            //System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
-            //System.Configuration.ConfigurationSectionCollection sections = config.Sections;
-            //Console.WriteLine(sections["appSettings"].ToString());
-            SampleSuperstoreSection configSampleSuperstore = 
-                (IdeallyConnected.TestDatabases.SampleSuperstoreSection)System.Configuration.ConfigurationManager.GetSection("TestDatabases/SampleSuperstore");
+            SetOutputFormat();
+
+            SampleSuperstoreDb sampleSuperStore = new SampleSuperstoreDb();
+            DbManager db = new SampleSuperstoreDb();
             
-            Console.WriteLine((configSampleSuperstore.SectionInformation.ToString()));
-            StreamReader fstream = File.OpenText(configSampleSuperstore.CsvFileName);
-            if(fstream.Peek() > 0)
-            {
-                Console.WriteLine(fstream.Peek());
-                fstream.Close();
-            }
-            Console.WriteLine("\t~~~ Database Manager ~~~\n");
+            WriteLineFormatted("\t~~~ Database Manager ~~~\n", ConsoleColor.DarkGreen);
             char menuSelection = 'm';
             bool programLoop = true;
             do
@@ -43,10 +67,13 @@ namespace IdeallyConnected.Database
                 switch(menuSelection)
                 {
                     case 'a': case 'A':
-                        dbManager.ShowDatabases();
+                        DatabaseManager.ShowDatabases();
                         break;
                     case 'b': case 'B':
-                        dbManager.ShowServers();
+                        DatabaseManager.ShowServers();
+                        break;
+                    case 'c': case 'C':
+                        SelectDatabase();
                         break;
                     case 'q': case 'Q':
                         programLoop = false;

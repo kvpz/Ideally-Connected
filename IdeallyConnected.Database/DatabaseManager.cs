@@ -13,45 +13,49 @@ using System.Configuration;
 
 namespace IdeallyConnected.DatabaseManager
 {
+    using IdeallyConnected.TestDatabases.Configurations;
     using Microsoft.SqlServer.Management.Smo;
     using System.Collections.Specialized;
     using System.Data.SqlClient;
 
-    public class DatabaseManager
+    public static class DatabaseManager
     {
-        public Dictionary<string, HashSet<string>> Servers { get; private set; }
+        public static Dictionary<string, SortedSet<string>> Servers { get; private set; }
+        public static HashSet<string> FeatureDatabases { get; set; }
 
-        public DatabaseManager()
+        static DatabaseManager()
         {
-            Servers = new Dictionary<string, HashSet<string>>();
+            Servers = new Dictionary<string, SortedSet<string>>();
 
-            ConnectionStringSettingsCollection connStrCol = ConfigurationManager.ConnectionStrings;
-            foreach(ConnectionStringSettings cstr in connStrCol)
+            foreach(ConnectionStringSettings cstr in ConfigurationManager.ConnectionStrings)
             {
                 SqlConnectionStringBuilder connStrBuilder = new SqlConnectionStringBuilder(cstr.ConnectionString);
                 if (!Servers.ContainsKey(connStrBuilder.DataSource))
                 {
-                    Servers[connStrBuilder.DataSource] = new HashSet<string>();
-                    if (connStrBuilder.InitialCatalog.Length > 1)
-                        Servers[connStrBuilder.DataSource].Add(connStrBuilder.InitialCatalog);
+                    Servers[connStrBuilder.DataSource] = new SortedSet<string>();
+
+                    Server server = new Server(connStrBuilder.DataSource);
+                    foreach(Database db in server.Databases)
+                    {
+                        Servers[connStrBuilder.DataSource].Add(db.ToString());
+                    }
                 }
                 else
                     Servers[connStrBuilder.DataSource].Add(connStrBuilder.InitialCatalog);
             }
-            /*
-            NameValueCollection appSettings = ConfigurationManager.AppSettings;
-            Console.WriteLine(appSettings.ToString());
-            foreach(string s in appSettings.AllKeys)
+
+            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            foreach(ConfigurationSection cs in config.GetSectionGroup("TestDatabases").Sections)
             {
-                Console.WriteLine(appSettings[s]);
+                FeatureDatabases.Add(cs.SectionInformation.Name);
             }
-            */
+
         }
 
-        public void ShowDatabases()
+        public static void ShowDatabases()
         {
             Console.WriteLine("Databases: ");
-            foreach(HashSet<string> serverDbs in Servers.Values)
+            foreach(SortedSet<string> serverDbs in Servers.Values)
             {
                 foreach(string db in serverDbs)
                 {
@@ -60,13 +64,24 @@ namespace IdeallyConnected.DatabaseManager
             }
         }
 
-        public void ShowServers()
+        public static void ShowServers()
         {
             Console.WriteLine("Servers:");
             foreach(string server in Servers.Keys)
             {
                 Console.WriteLine($"\t{server}");
             }
+        }
+
+        public static bool DatabaseExists(string databaseName)
+        {
+            foreach(KeyValuePair<string, SortedSet<string>> server in Servers)
+            {
+                if (server.Value.Contains(databaseName))
+                    return true;
+            }
+
+            return false;
         }
     }
 }
