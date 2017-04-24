@@ -7,23 +7,22 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.TestDatabases.Configurations
 {
-    public sealed class TestDbConfigSection : ConfigurationSection
+    public sealed class DbConfigSection : ConfigurationSection
     {
-        private TestDbConfigSection()
-        { }
+        private DbConfigSection() { }
 
         private static bool _ReadOnly;
 
         #region properties
         [ConfigurationProperty("database")]
-        public TestDbConfigElement DatabaseConfig
+        public DbConfigElement DatabaseConfig
         {
             get
             {
-                return (TestDbConfigElement)this["database"];
+                return (DbConfigElement)this["database"];
             }
         }
-
+        
         [ConfigurationProperty("tables", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(TablesCollection),
             AddItemName = "add",
@@ -33,7 +32,8 @@ namespace IdeallyConnected.TestDatabases.Configurations
         {
             get
             {
-                return (TablesCollection)base["tables"];
+                TablesCollection t = (TablesCollection)this["tables"];
+                return t;
             }
         }
         #endregion

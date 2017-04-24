@@ -16,6 +16,7 @@ namespace IdeallyConnected.TestDatabases
     using System.IO;
     using System.Reflection;
     using CsvHelper;
+    using IdeallyConnected.DatabaseManager.Tools;
 
     /// <summary>
     /// A class intended to be inherited by a class representing a single database. The class provides
@@ -29,15 +30,17 @@ namespace IdeallyConnected.TestDatabases
         public Dictionary<string, string> CsvFilePaths { get; set; }
         public Database _database { get; set; }
         public IReadOnlyCollection<string> FeaturedProcedures { get; set; }
+        protected Dictionary<string, Dictionary<ProcedureType, string>> FeaturedProceduresDictionary { get; set; }
+        public enum ProcedureType { Create, Read, Update, Delete }
 
         private DbManager()
         {
-            
+            Console.WriteLine("In DbManager Private Constructor");
         }
 
-        protected DbManager(string databaseName)
+        protected DbManager(string databaseName) : this()
         {
-            TestDbConfigSection config = (TestDbConfigSection)ConfigurationManager.GetSection("TestDatabases/" + databaseName);
+            DbConfigSection config = (DbConfigSection)ConfigurationManager.GetSection("TestDatabases/" + databaseName);
             ConnectionString = config.DatabaseConfig.ConnectionString;
 
             SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(ConnectionString);
@@ -50,27 +53,64 @@ namespace IdeallyConnected.TestDatabases
 
             UpdateProcedures();
 
-            Console.WriteLine(config.Tables);
+            CsvFilePaths = new Dictionary<string, string>();
+            foreach (TableElement t in config.Tables)
+            {
+                if (t.Name.Length > 1)
+                {
+                    CsvFilePaths.Add(t.Name, t.CsvFile);
+                }
+            }
         }
 
-        public virtual void LoadTableFromCsv<TableType>(string tableName) where TableType : DbTable, new()
+        public virtual IEnumerable<TableType> LoadTableFromCsv<TableType>(string tableName) where TableType : IModel<TableType>, new()
         {
-            TableType table = new TableType();
+            TableType tableModel = new TableType(); 
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            List<TableType> result = new List<TableType>();
-            StreamReader csvStream = File.OpenText(CsvFilePaths[tableName]);
+            List<TableType> table = new List<TableType>();
+            StreamReader csvStream = File.OpenText(CsvFilePaths[typeof(TableType).Name + "s"]);
             CsvReader csvReader = new CsvReader(csvStream);
+
             if (csvReader.Configuration.HasHeaderRecord == false) // assuming first row is truly a header
                 csvReader.Read();
-
+            
             while (csvReader.Read())
             {
-                table = new TableType();
-                //table.Person = csvReader.GetField(0);
-                //table.Region = csvReader.GetField(1);
-                result.Add(table);
+                tableModel = IModel<TableType>.TInitialize(csvReader.CurrentRecord);
+                table.Add(tableModel);
             }
+
+            return table;
         } 
+
+        public virtual void Menu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("\tbA. generic base option");
+            
+        }
+
+        public virtual void PersistTable<T>(List<T> data) where T : IModel<T>, new()
+        {
+            CSVParser cobj = new CSVParser();
+            Dictionary<string, Type> ManagerAttributes = new Dictionary<string, Type>();
+            T managerObj = new T();
+            PropertyInfo[] managerProperties = managerObj.GetType().GetProperties();
+            foreach (PropertyInfo prop in managerProperties)
+            {
+                Console.WriteLine(prop.Name);
+                Console.WriteLine(prop.PropertyType.Name);
+                ManagerAttributes.Add(prop.Name, prop.PropertyType);
+            }
+
+            cobj.QuickLoad<T>(
+                data,
+                ConnectionString,
+                GetTableProcedure(ProcedureType.Update, typeof(T).Name),
+                "@" + typeof(T).Name,
+                "Managers",
+                ManagerAttributes);
+        }
 
         /// <summary>
         /// Print details about the database.
@@ -99,6 +139,11 @@ namespace IdeallyConnected.TestDatabases
                 FeaturedProcedures = featuredProcedures;
                 connection.Close();
             }
+        }
+
+        public virtual string GetTableProcedure(ProcedureType procedureType, string tableName)
+        {
+            return FeaturedProceduresDictionary[tableName][procedureType];
         }
 
         public void ViewProcedures()

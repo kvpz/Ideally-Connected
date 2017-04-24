@@ -112,14 +112,15 @@
     <Compile Include="Configurations\TableSection.cs" />
     <Compile Include="CSVParser.cs" />
     <Compile Include="DatabaseManager.cs" />
+    <Compile Include="DbSet.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDatabases\DbManager.cs" />
     <Compile Include="TestDatabases\DbTable.cs" />
-    <Compile Include="TestDatabases\GeoLocations\Location.cs" />
-    <Compile Include="TestDatabases\GeoLocations\LocationsDb.cs" />
+    <Compile Include="TestDatabases\Location\Location.cs" />
     <Compile Include="TestDatabases\IDbManager.cs" />
     <Compile Include="TestDatabases\IDbTable.cs" />
+    <Compile Include="TestDatabases\Location\LocationDb.cs" />
     <Compile Include="TestDatabases\SampleSuperstore\Manager.cs" />
     <Compile Include="TestDatabases\SampleSuperstore\Order.cs" />
     <Compile Include="TestDatabases\SampleSuperstore\Return.cs" />
@@ -132,7 +133,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Configurations\Locations\Locations.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DataFiles.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -140,6 +146,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Configurations\SampleSuperstore\SampleSuperstore.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
@@ -180,8 +189,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configurations\GeoLocations\" />
-    <Folder Include="Configurations\SampleSuperstore\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

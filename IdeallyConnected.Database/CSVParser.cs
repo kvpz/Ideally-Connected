@@ -8,7 +8,7 @@ using System.Reflection;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data;
-using IdeallyConnected.TestDatabases;
+using IdeallyConnected.TestDatabases.Location;
 
 namespace IdeallyConnected.DatabaseManager.Tools
 {

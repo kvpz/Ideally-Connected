@@ -11,10 +11,27 @@ namespace IdeallyConnected.Database
     using IdeallyConnected.DatabaseManager;
     using System.IO;
     using IdeallyConnected.TestDatabases.Configurations;
-    using IdeallyConnected.TestDatabases.SampleSuperstore;
+    using System.Reflection.Emit;
+
+    public class MiscUtility
+    {
+        public static void WriteLineFormatted(string str, ConsoleColor foregroundColor)
+        {
+            Console.ForegroundColor = foregroundColor;
+            Console.WriteLine(str);
+            Console.ResetColor();
+        }
+    }
 
     public class Driver
     {
+        public static DbManager dbManager { get; set; }
+        public const string AssemblyNamespace = "IdeallyConnected.TestDatabases.";
+        public static SampleSuperstoreDb sampleSuperstoreDb { get; set; }
+        public static string CurrentDatabaseName { get; set; }
+        public static Type CurrentDatabaseType { get; set; }
+        public static dynamic dynamicDbManager { get; set; }
+
         public static void Menu()
         {
             Console.WriteLine("\tA. Show available databases.");
@@ -22,27 +39,37 @@ namespace IdeallyConnected.Database
             Console.WriteLine("\tC. Select a database.");
         }
 
-        private static void SelectDatabase()
+        private static bool SelectDatabase()
         {
-            Console.Write("Type the database name: ");
+            Console.Write("Type the desired database's name: ");
             string databaseName = Console.ReadLine().Trim();
+
             if (!DatabaseManager.DatabaseExists(databaseName))
             {
                 WriteLineFormatted($"\t!* The database {databaseName} does not exist! *!", ConsoleColor.Red);
-                return;
+                return false;
             }
 
             if (!DatabaseManager.FeatureDatabases.Contains(databaseName))
             {
                 WriteLineFormatted($"\t*** {databaseName} exists, but it is not featured. ***", ConsoleColor.DarkMagenta);
-                return;
+                return false;
             }
+
+            Type dbType = Type.GetType(AssemblyNamespace + databaseName + "Db");
+            CurrentDatabaseName = databaseName;
+            CurrentDatabaseType = dbType;
+
+            dynamicDbManager = Activator.CreateInstance(CurrentDatabaseType);
+            dbManager = Convert.ChangeType(dynamicDbManager, CurrentDatabaseType);
+            
+            return true;
         }
 
         private static void SetOutputFormat()
         {
             Console.CursorSize = 50;
-            Console.Title = "IdeallyConnected Database Management";
+            Console.Title = "Database Management Tool";
         }
 
         private static void WriteLineFormatted(string output, ConsoleColor c)
@@ -54,14 +81,23 @@ namespace IdeallyConnected.Database
 
         public static void Main(string[] args)
         {
-            SetOutputFormat();
+            //DbManager dbman = new SampleSuperstoreDb();
+            //(dbman as SampleSuperstoreDb).Managers = (List<Manager>)dbman.LoadTableFromCsv<Manager>("Managers");
+            SampleSuperstoreDb dbsamp = new SampleSuperstoreDb();
+            dbsamp.Managers = (List<Manager>)dbsamp.LoadTableFromCsv<Manager>("Managers");
 
-            SampleSuperstoreDb sampleSuperStore = new SampleSuperstoreDb();
-            DbManager db = new SampleSuperstoreDb();
-            
+            foreach(Manager man in (dbsamp as SampleSuperstoreDb).Managers)
+            {
+                Console.WriteLine(man.Person + " " + man.Region);
+            }
+
+            dbsamp.PersistTable<Manager>(dbsamp.Managers);
+
+            SetOutputFormat();           
             WriteLineFormatted("\t~~~ Database Manager ~~~\n", ConsoleColor.DarkGreen);
             char menuSelection = 'm';
             bool programLoop = true;
+
             do
             {
                 switch(menuSelection)
@@ -73,7 +109,10 @@ namespace IdeallyConnected.Database
                         DatabaseManager.ShowServers();
                         break;
                     case 'c': case 'C':
-                        SelectDatabase();
+                        if (SelectDatabase())
+                        {
+                            dynamicDbManager.Menu();
+                        }
                         break;
                     case 'q': case 'Q':
                         programLoop = false;

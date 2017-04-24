@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.TestDatabases.Configurations
 {
+    /// <summary>
+    /// The configuration element used to represent a table in a database.
+    /// </summary>
     public class TableElement : ConfigurationElement
     {
         public TableElement()
         {
 
+        }
+        
+        public TableElement(string name)
+        {
+            this.Name = name;
         }
 
         [ConfigurationProperty("csvFile")]
@@ -39,5 +47,19 @@ namespace IdeallyConnected.TestDatabases.Configurations
                 this["name"] = value;
             }
         }
+
+        [ConfigurationProperty("procedures")]
+        public string Procedures
+        {
+            get
+            {
+                return (string)this["procedures"];
+            }
+            set
+            {
+                this["procedures"] = value;
+            }
+        }
     }
+    
 }

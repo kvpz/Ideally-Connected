@@ -12,7 +12,7 @@ using System.Configuration;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 
-namespace IdeallyConnected.TestDatabases.SampleSuperstore
+namespace IdeallyConnected.TestDatabases
 {
     public abstract class ContextManager
     {
@@ -35,22 +35,17 @@ namespace IdeallyConnected.TestDatabases.SampleSuperstore
         public readonly string AddManagersBulkImportProcedure = "AddManagersBulkImport";
         public readonly string AddManagerParameterName = "@ManagerData";
 
-        public IEnumerable<Manager> Managers { get; set; }
-        public Order Orders { get; set; }
-        public Return Returns { get; set; }
-        /*
-        private SampleSuperstoreDb()
-        {
-            Manager.CsvFilePath = CsvFilePaths["Manager"];
-            Managers = new List<Manager>();
-            Order.CsvFilePath = CsvFilePaths["Order"];
-            
-        }
-        */
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Return> Returns { get; set; }
+
         public SampleSuperstoreDb()
             : base("SampleSuperstore")
         {
             NameValueCollection appSettings = ConfigurationManager.AppSettings;
+            Managers = new DbSet<Manager>();
+            Orders = new DbSet<Order>();
+            Returns = new DbSet<Return>();
         }
 
         public List<Manager> LoadManagersFromCSV(string fileLocation = ManagersCSV)
@@ -71,6 +66,41 @@ namespace IdeallyConnected.TestDatabases.SampleSuperstore
             }
 
             return result;
+        }
+
+        public void MainLoop()
+        {
+            Menu();
+            string selection = "m";
+            bool loop = true;
+            do
+            {
+                selection = Console.ReadLine();
+                switch (selection)
+                {
+                    case "a": case "A":
+                        Managers = (List<Manager>)LoadTableFromCsv<Manager>("Manager");
+                        break;
+                    case "m": case "M":
+                        Menu();
+                        break;
+                    case "q": case "Q":
+                        loop = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid selection.\n");
+                        Menu();
+                        break;
+                }
+            } while (loop);
+        }
+
+        public override void Menu()
+        {
+            Console.WriteLine("Menu from SampleSuperstoreDb");
+            base.Menu();
+            Console.WriteLine("\tA. Load Managers data from CSV");
+            Console.WriteLine("\tQ. Go back");
         }
 
         public void InsertManagers()

@@ -18,6 +18,9 @@ namespace IdeallyConnected.DatabaseManager
     using System.Collections.Specialized;
     using System.Data.SqlClient;
 
+    /// <summary>
+    /// This static class handles the metadata associated with databases and their servers. 
+    /// </summary>
     public static class DatabaseManager
     {
         public static Dictionary<string, SortedSet<string>> Servers { get; private set; }
@@ -44,12 +47,14 @@ namespace IdeallyConnected.DatabaseManager
                     Servers[connStrBuilder.DataSource].Add(connStrBuilder.InitialCatalog);
             }
 
+            FeatureDatabases = new HashSet<string>();
+            
             System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             foreach(ConfigurationSection cs in config.GetSectionGroup("TestDatabases").Sections)
             {
                 FeatureDatabases.Add(cs.SectionInformation.Name);
             }
-
+            
         }
 
         public static void ShowDatabases()
@@ -82,6 +87,12 @@ namespace IdeallyConnected.DatabaseManager
             }
 
             return false;
+        }
+
+        public static T CreateDatabaseInstance<T>(string databaseName = default(string)) where T : class, new()
+        {
+
+            return new T();
         }
     }
 }

@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.TestDatabases.Configurations
 {
-    public class TestDbConfigElement : ConfigurationElement
+    /// <summary>
+    /// A configuration element used to represent a database.
+    /// </summary>
+    public class DbConfigElement : ConfigurationElement
     {
-        private TestDbConfigElement() { }
+        public DbConfigElement() { }
 
         [StringValidator(InvalidCharacters = "()[]{}!@#$%&*;'\",<>?")]
         [ConfigurationProperty("databaseName")]
@@ -70,6 +73,7 @@ namespace IdeallyConnected.TestDatabases.Configurations
             }
         }
 
+        /*
         [ConfigurationProperty("tableName")]
         public string TableName
         {
@@ -83,6 +87,7 @@ namespace IdeallyConnected.TestDatabases.Configurations
                 this["tableName"] = value;
             }
         }
+        */
 
         public override bool IsReadOnly()
         {

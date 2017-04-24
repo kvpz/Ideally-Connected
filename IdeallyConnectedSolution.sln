@@ -1,20 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "LinqExamples", "..\LinqExamples\src\LinqExamples\LinqExamples.xproj", "{336C8D34-180A-4AF5-B30E-999197937BA2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C381D20C-E62B-4136-A56D-C3A184B5D47C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqExamples", "..\LinqExamples\src\LinqExamples\LinqExamples.xproj", "{336C8D34-180A-4AF5-B30E-999197937BA2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.Test", "IdeallyConnected.Test\IdeallyConnected.Test.csproj", "{C7EF9DD5-69A5-46B7-B795-48C07A4847D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected", "IdeallyConnected\IdeallyConnected.csproj", "{511F11F4-06CD-4299-873A-D5D62438A5A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.Utility", "IdeallyConnected.Utility\IdeallyConnected.Utility.csproj", "{A7AA8C1B-4F9E-4772-9B76-C9055225D14D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C381D20C-E62B-4136-A56D-C3A184B5D47C}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "IdeallyConnected.UWP", "IdeallyConnected.UWP\IdeallyConnected.UWP.jsproj", "{D8C49EC2-9334-402C-9AB9-A34283AE284C}"
 EndProject

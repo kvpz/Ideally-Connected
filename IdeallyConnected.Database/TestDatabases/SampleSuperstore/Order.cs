@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdeallyConnected.TestDatabases.SampleSuperstore
+namespace IdeallyConnected.TestDatabases
 {
     public class Order : DbTable
     {
