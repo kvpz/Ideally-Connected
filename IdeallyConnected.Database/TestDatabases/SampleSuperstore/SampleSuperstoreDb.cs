@@ -27,7 +27,7 @@ namespace IdeallyConnected.TestDatabases
     /// it represents. This is equivalent to a data set, or the "Relational Database Object" in the
     /// Object Relational Modeling technique.
     /// </summary>
-    public class SampleSuperstoreDb : DbManager
+    public class SampleSuperstore : DbManager
     {
         //private readonly string ExcelFileLocation = "C:\\Users\\kp12g_000\\Documents\\Visual Studio 2017\\Projects\\CSharpFinalProject\\SampleSuperstore.xls";
         //public const string ManagersCSV = "C:\\Users\\kp12g_000\\Documents\\Visual Studio 2017\\Projects\\CSharpFinalProject\\SampleSuperstore_Managers.csv";
@@ -36,17 +36,17 @@ namespace IdeallyConnected.TestDatabases
         public readonly string AddManagersBulkImportProcedure = "AddManagersBulkImport";
         public readonly string AddManagerParameterName = "@ManagerData";
 
-        public DataCollection<Manager> Managers { get; set; }
-        public DataCollection<Order> Orders { get; set; }
-        public DataCollection<Return> Returns { get; set; }
+        public DataSet<Manager> Managers { get; set; }
+        public DataSet<Order> Orders { get; set; }
+        public DataSet<Return> Returns { get; set; }
 
-        public SampleSuperstoreDb()
+        public SampleSuperstore()
             : base("SampleSuperstore")
         {
             NameValueCollection appSettings = ConfigurationManager.AppSettings;
-            Managers = new DataCollection<Manager>();
-            Orders = new DataCollection<Order>();
-            Returns = new DataCollection<Return>();
+            Managers = new DataSet<Manager>();
+            Orders = new DataSet<Order>();
+            Returns = new DataSet<Return>();
         }
 
         public void MainLoop()
@@ -61,6 +61,19 @@ namespace IdeallyConnected.TestDatabases
                 {
                     case "a": case "A":
                         Managers = (List<Manager>)LoadTableFromCsv<Manager>("Manager");
+                        MiscUtility.WriteLineFormatted($"Added {Managers.Count()} managers onto the stack.\n", ConsoleColor.Green);
+                        break;
+                    case "b": case "B":
+                        try
+                        {
+                            InsertManagers();
+                            MiscUtility.WriteLineFormatted($"Inserted {Managers.Count()} records into the database.", ConsoleColor.Green);
+                            Managers.Clear();
+                        }
+                        catch (SqlException e)
+                        {
+                            MiscUtility.WriteLineFormatted(e.Message, ConsoleColor.Red);
+                        }
                         break;
                     case "m": case "M":
                         Menu();
@@ -73,14 +86,16 @@ namespace IdeallyConnected.TestDatabases
                         Menu();
                         break;
                 }
+                Console.WriteLine();
             } while (loop);
         }
 
         public override void Menu()
         {
-            Console.WriteLine("Menu from SampleSuperstoreDb");
+            Console.WriteLine("Menu from SampleSuperstore");
             base.Menu();
-            Console.WriteLine("\tA. Load Managers data from CSV");
+            Console.WriteLine("\tA. Load Manager data from CSV");
+            Console.WriteLine("\tB. Insert Manager data into database");
             Console.WriteLine("\tQ. Go back");
         }
 
@@ -88,13 +103,10 @@ namespace IdeallyConnected.TestDatabases
         {
             CSVParser cobj = new CSVParser();
             Dictionary<string, Type> ManagerAttributes = new Dictionary<string, Type>();
-            Manager managerObj = new Manager();
-            //Type ManagerTypes = Assembly.GetAssembly(managerObj.GetType());
-            PropertyInfo[] managerProperties = managerObj.GetType().GetProperties();
+
+            PropertyInfo[] managerProperties = typeof(Manager).GetProperties();
             foreach (PropertyInfo prop in managerProperties)
             {
-                Console.WriteLine(prop.Name);
-                Console.WriteLine(prop.PropertyType.Name);
                 ManagerAttributes.Add(prop.Name, prop.PropertyType);
             }
 
