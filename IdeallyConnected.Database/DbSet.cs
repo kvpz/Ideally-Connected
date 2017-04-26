@@ -7,40 +7,37 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.TestDatabases
 {
+
     /// <summary>
     /// This class represents an instance of a table in the database, and it can be thought
     /// of as a generic Relation Database Object.
     /// Data associated from an instance of this class is not inserted into the database
     /// unless specified, nor does it necessarily contain data from the database. 
     /// </summary>
-    /// <typeparam name="DbType"></typeparam>
-    public class DataCollection<DbType> : IEnumerable<DbType> where DbType : class
+    /// <typeparam name="DbTableType">The class representing the entire database.</typeparam>
+    public class DataSet<DbTableType> : IModel<DbTableType>, IEnumerable<DbTableType> where DbTableType : class, new()
     {
-        private List<DbType> _localData { get; set; }
+        private List<DbTableType> _localData { get; set; }
+        private bool _savedToDatabase = false;
+        private bool _added = false;
 
-        public DataCollection()
+        public DataSet()
         {
-            _localData = new List<DbType>();
+            _localData = new List<DbTableType>();
         }
 
-        public void Add(DbType strArr)
+        public void Add(DbTableType strArr)
         {
             _localData.Add(strArr);
+            _added = false;
         }
 
-        public static implicit operator DataCollection<DbType>(List<DbType> d)
+        public void Clear()
         {
-            DataCollection<DbType> newDbSet = new DataCollection<DbType>();
-            newDbSet._localData = d;
-            return newDbSet;
+            _localData.Clear();
         }
 
-        public static implicit operator List<DbType>(DataCollection<DbType> d)
-        {
-            return d._localData;
-        }
-
-        public IEnumerator<DbType> GetEnumerator()
+        public IEnumerator<DbTableType> GetEnumerator()
         {
             return _localData.GetEnumerator();
         }
@@ -48,6 +45,18 @@ namespace IdeallyConnected.TestDatabases
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _localData.GetEnumerator();
+        }
+
+        public static implicit operator DataSet<DbTableType>(List<DbTableType> d)
+        {
+            DataSet<DbTableType> newDbSet = new DataSet<DbTableType>();
+            newDbSet._localData = new List<DbTableType>(d);
+            return newDbSet;
+        }
+
+        public static implicit operator List<DbTableType>(DataSet<DbTableType> d)
+        {
+            return d._localData;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.Office.Interop.Excel;
+using System.Data;
 
 namespace IdeallyConnected.TestDatabases
 {
@@ -12,7 +13,6 @@ namespace IdeallyConnected.TestDatabases
     using System.Data.SqlClient;
     using Microsoft.SqlServer.Management.Smo;
     using Microsoft.SqlServer.Management.Common;
-    using System.Data;
     using System.IO;
     using System.Reflection;
     using CsvHelper;
@@ -67,6 +67,16 @@ namespace IdeallyConnected.TestDatabases
             }
         }
 
+        public virtual DataSet<T> Set<T>(Type tableType) where T : class, new()
+        {
+            if(tableType.Name == DatabaseName)
+            {
+                throw new Exception("A DataSet cannot be created from database model class.");
+            }
+
+            return Activator.CreateInstance<DataSet<T>>();
+        }
+
         /// <summary>
         /// Load an entire table's data from the current database. An IEnumerable representing the table records is returned.
         /// Note that the first element of the list returned may represent the table's column names.
@@ -88,6 +98,27 @@ namespace IdeallyConnected.TestDatabases
             // Read data from the CSV
             TableType tableModel = new TableType();
             List<TableType> table = new List<TableType>();
+
+            // check if the first record represents the table columns
+            csvReader.Configuration.HasHeaderRecord = false;
+            csvReader.Read();
+            HashSet<string> tableAttributes = new HashSet<string>(new List<string>(typeof(TableType).GetProperties().Select(prop => prop.Name)));
+            foreach(string element in csvReader.CurrentRecord)
+            {
+                if (tableAttributes.Contains(element))
+                {
+                    csvReader.Configuration.HasHeaderRecord = true;
+                    break;
+                }
+            }
+
+            if (csvReader.Configuration.HasHeaderRecord == false)
+            {
+                tableModel = IModel<TableType>.TInitialize(csvReader.CurrentRecord);
+                table.Add(tableModel);
+            }
+
+            // Read the rest of the records
             while (csvReader.Read())
             {
                 tableModel = IModel<TableType>.TInitialize(csvReader.CurrentRecord);
@@ -109,7 +140,7 @@ namespace IdeallyConnected.TestDatabases
         /// <typeparam name="T">The name of model class representing a database table.</typeparam>
         /// <param name="data">The table records to be inserted into the database.</param>
         /// <param name="importProcedure">The name of the database procedure used to insert data.</param>
-        public virtual void PersistTable<T>(List<T> data, string importProcedure = default(string)) where T : IModel<T>, new()
+        public virtual void Insert<T>(List<T> data, string importProcedure = default(string)) where T : IModel<T>, new()
         {
             Dictionary<string, Type> TableAttributes = new Dictionary<string, Type>();
             PropertyInfo[] managerProperties = IModel<T>.GetProperties();

@@ -125,6 +125,7 @@
     <Compile Include="TestDatabases\SampleSuperstore\Order.cs" />
     <Compile Include="TestDatabases\SampleSuperstore\Return.cs" />
     <Compile Include="TestDatabases\SampleSuperstore\SampleSuperstoreDb.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IdeallyConnected.Utility\IdeallyConnected.Utility.csproj">

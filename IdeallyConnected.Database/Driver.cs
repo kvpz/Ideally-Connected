@@ -13,24 +13,14 @@ namespace IdeallyConnected.Database
     using IdeallyConnected.TestDatabases.Configurations;
     using System.Reflection.Emit;
 
-    public class MiscUtility
-    {
-        public static void WriteLineFormatted(string str, ConsoleColor foregroundColor)
-        {
-            Console.ForegroundColor = foregroundColor;
-            Console.WriteLine(str);
-            Console.ResetColor();
-        }
-    }
-
     public class Driver
     {
         public static DbManager dbManager { get; set; }
         public const string AssemblyNamespace = "IdeallyConnected.TestDatabases.";
-        public static SampleSuperstoreDb sampleSuperstoreDb { get; set; }
+        public static SampleSuperstore sampleSuperstoreDb { get; set; }
         public static string CurrentDatabaseName { get; set; }
         public static Type CurrentDatabaseType { get; set; }
-        public static dynamic dynamicDbManager { get; set; }
+        public static dynamic CurrentDatabase { get; set; }
 
         public static void Menu()
         {
@@ -56,13 +46,13 @@ namespace IdeallyConnected.Database
                 return false;
             }
 
-            Type dbType = Type.GetType(AssemblyNamespace + databaseName + "Db");
+            Type dbType = Type.GetType(AssemblyNamespace + databaseName);
             CurrentDatabaseName = databaseName;
             CurrentDatabaseType = dbType;
 
-            dynamicDbManager = Activator.CreateInstance(CurrentDatabaseType);
-            dbManager = Convert.ChangeType(dynamicDbManager, CurrentDatabaseType);
-            
+            CurrentDatabase = Activator.CreateInstance(CurrentDatabaseType);
+            dbManager = Convert.ChangeType(CurrentDatabase, CurrentDatabaseType);
+
             return true;
         }
 
@@ -80,22 +70,7 @@ namespace IdeallyConnected.Database
         }
 
         public static void Main(string[] args)
-        {
-            //DbManager dbman = new SampleSuperstoreDb();
-            //(dbman as SampleSuperstoreDb).Managers = (List<Manager>)dbman.LoadTableFromCsv<Manager>("Managers");
-            DataCollection<SampleSuperstoreDb> dbsamp = new DataCollection<SampleSuperstoreDb>();
-            dbsamp.Managers = (List<Manager>)dbsamp.LoadTableFromCsv<Manager>("Managers");
-
-            Console.WriteLine("Outputing the table data");
-            foreach(Manager man in (dbsamp as SampleSuperstoreDb).Managers)
-            {
-                Console.WriteLine(man.Person + " " + man.Region);
-            }
-
-            Console.WriteLine("Persisting data:");
-            //dbsamp.PersistTable<Manager>(dbsamp.Managers);
-            dbsamp.ShowDetails();
-            
+        {            
             Initialize();           
             WriteLineFormatted("\t~~~ Database Manager ~~~\n", ConsoleColor.DarkGreen);
             char menuSelection = 'm';
@@ -114,7 +89,7 @@ namespace IdeallyConnected.Database
                     case 'c': case 'C':
                         if (SelectDatabase())
                         {
-                            dynamicDbManager.Menu();
+                            CurrentDatabase.MainLoop();
                         }
                         break;
                     case 'q': case 'Q':

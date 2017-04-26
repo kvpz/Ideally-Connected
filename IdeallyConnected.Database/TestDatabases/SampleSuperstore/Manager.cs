@@ -11,12 +11,9 @@ namespace IdeallyConnected.TestDatabases
     {
         public delegate T InitializeModel(string[] attributes);
 
-        /*
-                  
-        */
         public static InitializeModel TInitialize { get; set; }
 
-        public IModel(params string[] args)
+        public IModel()
         {
             TInitialize = delegate (string[] attributes) { return (T)Activator.CreateInstance(typeof(T), attributes); };
         }
@@ -25,6 +22,7 @@ namespace IdeallyConnected.TestDatabases
         {
 
         }
+
         public static System.Reflection.PropertyInfo[] GetProperties()
         {
             return typeof(T).GetProperties();
