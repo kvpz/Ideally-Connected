@@ -156,18 +156,7 @@ namespace IdeallyConnected.DatabaseManager.Tools
 
                 sqlCommand.Parameters[sqlParameterName].Value = dataTable;
                 int queriesExecuted = 0;
-                try
-                {
-                    queriesExecuted = sqlCommand.ExecuteNonQuery();
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-                finally
-                {
-                    Console.WriteLine($"Queries executed: {queriesExecuted}");
-                }
+                queriesExecuted = sqlCommand.ExecuteNonQuery();
             }
         }
 
