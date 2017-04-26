@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.TestDatabases
 {
-    class Utility
+    public class DbUtility
     {
     }
 
