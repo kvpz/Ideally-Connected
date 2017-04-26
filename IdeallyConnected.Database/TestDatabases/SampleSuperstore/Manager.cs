@@ -9,20 +9,26 @@ namespace IdeallyConnected.TestDatabases
 
     public abstract class IModel<T> where T : class, new()
     {
-        private T _model { get; set; }
+        public delegate T InitializeModel(string[] attributes);
+
+        /*
+                  
+        */
         public static InitializeModel TInitialize { get; set; }
 
         public IModel(params string[] args)
         {
-            TInitialize = delegate (string[] attributes) { return (T)Activator.CreateInstance(typeof(T), attributes); };//return attributes; };
+            TInitialize = delegate (string[] attributes) { return (T)Activator.CreateInstance(typeof(T), attributes); };
         }
 
         public void Add(string[] attributes)
         {
 
         }
-
-        public delegate T InitializeModel(string[] attributes);
+        public static System.Reflection.PropertyInfo[] GetProperties()
+        {
+            return typeof(T).GetProperties();
+        }
     }
 
     public class Manager : IModel<Manager>

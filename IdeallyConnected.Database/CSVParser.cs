@@ -124,7 +124,7 @@ namespace IdeallyConnected.DatabaseManager.Tools
             }
         }
 
-        public void QuickLoad<T>(List<T> recordsToLoad, string connectionString, string sqlCommandName, string sqlParameterName, string tableName, Dictionary<string, Type> columns) where T: new()
+        public void QuickImport<T>(List<T> recordsToLoad, string connectionString, string sqlCommandName, string sqlParameterName, string tableName, Dictionary<string, Type> columns) where T: new()
         {
             //var recordsToLoad = records;
 

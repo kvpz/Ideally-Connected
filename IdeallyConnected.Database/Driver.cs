@@ -66,7 +66,7 @@ namespace IdeallyConnected.Database
             return true;
         }
 
-        private static void SetOutputFormat()
+        private static void Initialize()
         {
             Console.CursorSize = 50;
             Console.Title = "Database Management Tool";
@@ -83,17 +83,20 @@ namespace IdeallyConnected.Database
         {
             //DbManager dbman = new SampleSuperstoreDb();
             //(dbman as SampleSuperstoreDb).Managers = (List<Manager>)dbman.LoadTableFromCsv<Manager>("Managers");
-            SampleSuperstoreDb dbsamp = new SampleSuperstoreDb();
+            DataCollection<SampleSuperstoreDb> dbsamp = new DataCollection<SampleSuperstoreDb>();
             dbsamp.Managers = (List<Manager>)dbsamp.LoadTableFromCsv<Manager>("Managers");
 
+            Console.WriteLine("Outputing the table data");
             foreach(Manager man in (dbsamp as SampleSuperstoreDb).Managers)
             {
                 Console.WriteLine(man.Person + " " + man.Region);
             }
 
-            dbsamp.PersistTable<Manager>(dbsamp.Managers);
-
-            SetOutputFormat();           
+            Console.WriteLine("Persisting data:");
+            //dbsamp.PersistTable<Manager>(dbsamp.Managers);
+            dbsamp.ShowDetails();
+            
+            Initialize();           
             WriteLineFormatted("\t~~~ Database Manager ~~~\n", ConsoleColor.DarkGreen);
             char menuSelection = 'm';
             bool programLoop = true;

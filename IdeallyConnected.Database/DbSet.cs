@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 namespace IdeallyConnected.TestDatabases
 {
     /// <summary>
-    /// This class represents an instance of a table in the database.
-    /// Data associated from an instance of this class is not persisted or to the database
-    /// unless specified, nor is it necessarily from the database.
+    /// This class represents an instance of a table in the database, and it can be thought
+    /// of as a generic Relation Database Object.
+    /// Data associated from an instance of this class is not inserted into the database
+    /// unless specified, nor does it necessarily contain data from the database. 
     /// </summary>
     /// <typeparam name="DbType"></typeparam>
-    public class DbSet<DbType> : IEnumerable<DbType> where DbType : class
+    public class DataCollection<DbType> : IEnumerable<DbType> where DbType : class
     {
         private List<DbType> _localData { get; set; }
 
-        public DbSet()
+        public DataCollection()
         {
             _localData = new List<DbType>();
         }
@@ -27,14 +28,14 @@ namespace IdeallyConnected.TestDatabases
             _localData.Add(strArr);
         }
 
-        public static implicit operator DbSet<DbType>(List<DbType> d)
+        public static implicit operator DataCollection<DbType>(List<DbType> d)
         {
-            DbSet<DbType> newDbSet = new DbSet<DbType>();
+            DataCollection<DbType> newDbSet = new DataCollection<DbType>();
             newDbSet._localData = d;
             return newDbSet;
         }
 
-        public static implicit operator List<DbType>(DbSet<DbType> d)
+        public static implicit operator List<DbType>(DataCollection<DbType> d)
         {
             return d._localData;
         }
