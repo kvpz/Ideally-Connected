@@ -17,10 +17,12 @@ namespace IdeallyConnected.TestDatabases
     using System.Reflection;
     using CsvHelper;
     using IdeallyConnected.DatabaseManager.Tools;
+    using CsvHelper.Configuration;
 
     /// <summary>
     /// A class intended to be inherited by a class representing a single database. The class provides
-    /// the usual functionality required to interact with the database. This is equivalent to a data adapter.
+    /// the usual functionality required to interact with the database. This is equivalent to a data adapter, or
+    /// the "mapping" object in the ORM technique.
     /// </summary>
     public abstract class DbManager : IDbManager
     {
@@ -28,28 +30,30 @@ namespace IdeallyConnected.TestDatabases
         public string DataSource { get; set; }
         public string DatabaseName { get; set; }
         public Dictionary<string, string> CsvFilePaths { get; set; }
-        public Database _database { get; set; }
+        private Database _database { get; set; }
         public IReadOnlyCollection<string> FeaturedProcedures { get; set; }
         protected Dictionary<string, Dictionary<ProcedureType, string>> FeaturedProceduresDictionary { get; set; }
         public enum ProcedureType { Create, Read, Update, Delete }
 
         private DbManager()
         {
-            Console.WriteLine("In DbManager Private Constructor");
         }
 
         protected DbManager(string databaseName) : this()
         {
+            DatabaseName = databaseName;
+
             DbConfigSection config = (DbConfigSection)ConfigurationManager.GetSection("TestDatabases/" + databaseName);
             ConnectionString = config.DatabaseConfig.ConnectionString;
 
             SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(ConnectionString);
             DataSource = connectionStringBuilder.DataSource;
-            DatabaseName = databaseName;
+
             ServerConnection serverConnection = new ServerConnection(DataSource);
-            serverConnection.DatabaseName = databaseName;
+            serverConnection.DatabaseName = DatabaseName;
+
             Server server = new Server(serverConnection);
-            _database = server.Databases[databaseName];
+            _database = server.Databases[DatabaseName];
 
             UpdateProcedures();
 
@@ -63,17 +67,27 @@ namespace IdeallyConnected.TestDatabases
             }
         }
 
+        /// <summary>
+        /// Load an entire table's data from the current database. An IEnumerable representing the table records is returned.
+        /// Note that the first element of the list returned may represent the table's column names.
+        /// </summary>
+        /// <typeparam name="TableType"></typeparam>
+        /// <param name="tableName">The name of the table/ model as defined in the C# class.</param>
+        /// <returns></returns>
         public virtual IEnumerable<TableType> LoadTableFromCsv<TableType>(string tableName) where TableType : IModel<TableType>, new()
         {
-            TableType tableModel = new TableType(); 
+            // Connect with the CSV file
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            List<TableType> table = new List<TableType>();
+            string csvFilePath = 
+                CsvFilePaths.ContainsKey(typeof(TableType).Name + "s") ? CsvFilePaths[typeof(TableType).Name + "s"] : CsvFilePaths[typeof(TableType).Name];
+
             StreamReader csvStream = File.OpenText(CsvFilePaths[typeof(TableType).Name + "s"]);
             CsvReader csvReader = new CsvReader(csvStream);
-
-            if (csvReader.Configuration.HasHeaderRecord == false) // assuming first row is truly a header
-                csvReader.Read();
+            CsvConfiguration csvConfig = new CsvConfiguration();
             
+            // Read data from the CSV
+            TableType tableModel = new TableType();
+            List<TableType> table = new List<TableType>();
             while (csvReader.Read())
             {
                 tableModel = IModel<TableType>.TInitialize(csvReader.CurrentRecord);
@@ -87,29 +101,44 @@ namespace IdeallyConnected.TestDatabases
         {
             Console.WriteLine();
             Console.WriteLine("\tbA. generic base option");
-            
         }
 
-        public virtual void PersistTable<T>(List<T> data) where T : IModel<T>, new()
+        /// <summary>
+        /// Insert data into the table using procedure stored in the database.
+        /// </summary>
+        /// <typeparam name="T">The name of model class representing a database table.</typeparam>
+        /// <param name="data">The table records to be inserted into the database.</param>
+        /// <param name="importProcedure">The name of the database procedure used to insert data.</param>
+        public virtual void PersistTable<T>(List<T> data, string importProcedure = default(string)) where T : IModel<T>, new()
         {
-            CSVParser cobj = new CSVParser();
-            Dictionary<string, Type> ManagerAttributes = new Dictionary<string, Type>();
-            T managerObj = new T();
-            PropertyInfo[] managerProperties = managerObj.GetType().GetProperties();
+            Dictionary<string, Type> TableAttributes = new Dictionary<string, Type>();
+            PropertyInfo[] managerProperties = IModel<T>.GetProperties();
             foreach (PropertyInfo prop in managerProperties)
             {
-                Console.WriteLine(prop.Name);
-                Console.WriteLine(prop.PropertyType.Name);
-                ManagerAttributes.Add(prop.Name, prop.PropertyType);
+                TableAttributes.Add(prop.Name, prop.PropertyType);
             }
 
-            cobj.QuickLoad<T>(
+            if(importProcedure == null)
+            {
+                try
+                {
+                    importProcedure = GetTableProcedure(ProcedureType.Update, typeof(T).Name);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Can't find any procedures for updating the table.");
+                    return;
+                }
+            }
+
+            CSVParser cobj = new CSVParser();
+            cobj.QuickImport<T>(
                 data,
                 ConnectionString,
-                GetTableProcedure(ProcedureType.Update, typeof(T).Name),
+                importProcedure,
                 "@" + typeof(T).Name,
                 "Managers",
-                ManagerAttributes);
+                TableAttributes);
         }
 
         /// <summary>
@@ -118,12 +147,12 @@ namespace IdeallyConnected.TestDatabases
         public virtual void ShowDetails()
         {
             Console.WriteLine($"\tConnection String: \"{ConnectionString}\"");
-            //int totalProcedures = Procedures.Aggregate(0, (accum, kv) => accum += kv.Value.Count, accum => accum);
-            //Console.WriteLine($"\tTotal procedures: {totalProcedures}");
+            int totalProcedures = FeaturedProcedures.Aggregate(0, (accum, kv) => accum += 1, accum => accum);
+            Console.WriteLine($"\tTotal procedures: {totalProcedures}");
         }
 
         /// <summary>
-        /// Update the current list of procedures found in the database.
+        /// Update the current list of user defined procedures found in the database. 
         /// </summary>
         public virtual void UpdateProcedures()
         {
@@ -141,8 +170,28 @@ namespace IdeallyConnected.TestDatabases
             }
         }
 
+        /// <summary>
+        /// Create a dictionary of procedures organized by tables and the type of procedure. Unidentifiable
+        /// procedures would be stored as miscellaneous.
+        /// </summary>
+        /// <param name="procedureType"></param>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
         public virtual string GetTableProcedure(ProcedureType procedureType, string tableName)
         {
+            if(FeaturedProceduresDictionary == null)
+            {
+                throw new System.Exception("There are no featured procedures for this database.");
+            }
+            if (!FeaturedProceduresDictionary.ContainsKey(tableName))
+            {
+                throw new System.Exception("The table is not defined in the FeaturedProceduresDictionary.");
+            }
+            if (!FeaturedProceduresDictionary[tableName].ContainsKey(procedureType))
+            {
+                throw new System.Exception($"The procedureType is not defined for the table {tableName}.");
+            }
+
             return FeaturedProceduresDictionary[tableName][procedureType];
         }
 
