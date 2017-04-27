@@ -15,7 +15,7 @@ namespace IdeallyConnected.TestDatabases
     /// unless specified, nor does it necessarily contain data from the database. 
     /// </summary>
     /// <typeparam name="DbTableType">The class representing the entire database.</typeparam>
-    public class DataSet<DbTableType> : IModel<DbTableType>, IEnumerable<DbTableType> where DbTableType : class, new()
+    public class DataSet<DbTableType> : Model<DbTableType>, IEnumerable<DbTableType> where DbTableType : class, new()
     {
         private List<DbTableType> _localData { get; set; }
         private bool _savedToDatabase = false;

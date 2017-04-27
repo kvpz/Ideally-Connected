@@ -6,30 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.TestDatabases
 {
-
-    public abstract class IModel<T> where T : class, new()
-    {
-        public delegate T InitializeModel(string[] attributes);
-
-        public static InitializeModel TInitialize { get; set; }
-
-        public IModel()
-        {
-            TInitialize = delegate (string[] attributes) { return (T)Activator.CreateInstance(typeof(T), attributes); };
-        }
-
-        public void Add(string[] attributes)
-        {
-
-        }
-
-        public static System.Reflection.PropertyInfo[] GetProperties()
-        {
-            return typeof(T).GetProperties();
-        }
-    }
-
-    public class Manager : IModel<Manager>
+    public class Manager : Model<Manager>
     {
         public string Person { get; set; }
         public string Region { get; set; }

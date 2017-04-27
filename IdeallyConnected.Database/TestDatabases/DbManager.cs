@@ -84,7 +84,7 @@ namespace IdeallyConnected.TestDatabases
         /// <typeparam name="TableType"></typeparam>
         /// <param name="tableName">The name of the table/ model as defined in the C# class.</param>
         /// <returns></returns>
-        public virtual IEnumerable<TableType> LoadTableFromCsv<TableType>(string tableName) where TableType : IModel<TableType>, new()
+        public virtual IEnumerable<TableType> LoadTableFromCsv<TableType>(string tableName) where TableType : Model<TableType>, new()
         {
             // Connect with the CSV file
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -114,14 +114,14 @@ namespace IdeallyConnected.TestDatabases
 
             if (csvReader.Configuration.HasHeaderRecord == false)
             {
-                tableModel = IModel<TableType>.TInitialize(csvReader.CurrentRecord);
+                tableModel = Model<TableType>.TInitialize(csvReader.CurrentRecord);
                 table.Add(tableModel);
             }
 
             // Read the rest of the records
             while (csvReader.Read())
             {
-                tableModel = IModel<TableType>.TInitialize(csvReader.CurrentRecord);
+                tableModel = Model<TableType>.TInitialize(csvReader.CurrentRecord);
                 table.Add(tableModel);
             }
 
@@ -140,10 +140,10 @@ namespace IdeallyConnected.TestDatabases
         /// <typeparam name="T">The name of model class representing a database table.</typeparam>
         /// <param name="data">The table records to be inserted into the database.</param>
         /// <param name="importProcedure">The name of the database procedure used to insert data.</param>
-        public virtual void Insert<T>(List<T> data, string importProcedure = default(string)) where T : IModel<T>, new()
+        public virtual void Insert<T>(List<T> data, string importProcedure = default(string)) where T : Model<T>, new()
         {
             Dictionary<string, Type> TableAttributes = new Dictionary<string, Type>();
-            PropertyInfo[] managerProperties = IModel<T>.GetProperties();
+            PropertyInfo[] managerProperties = Model<T>.GetProperties();
             foreach (PropertyInfo prop in managerProperties)
             {
                 TableAttributes.Add(prop.Name, prop.PropertyType);

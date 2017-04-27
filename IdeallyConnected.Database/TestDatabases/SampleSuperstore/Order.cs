@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdeallyConnected.TestDatabases
 {
-    public class Order : DbTable
+    public class Order : Model<Order>
     {
         public string OrderID { get; set; }
         public DateTime OrderDate { get; set; }

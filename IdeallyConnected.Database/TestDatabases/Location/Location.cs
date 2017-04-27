@@ -90,9 +90,9 @@ namespace IdeallyConnected.TestDatabases
         }
 
         /// <summary>
-        /// This loads about 25,000 records / second into the database. No logging.
+        /// This loads about 25,000 records / second into the database. No logging. Data is cleaned to be valid; no null values.
         /// </summary>
-        public int QuickLoadLocations()
+        public int QuickInsertLocations()
         {
             List<Location> recordsToLoad = LoadLocationsCSVFile(locationsCSVFile);
             string connectionString = "Server=(localdb)\\MSSQLLocalDB; Database=LocationsDb; Trusted_Connection=True;";
