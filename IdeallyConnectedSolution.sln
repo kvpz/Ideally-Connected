@@ -1,18 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-
 VisualStudioVersion = 15.0.26403.7
-
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C381D20C-E62B-4136-A56D-C3A184B5D47C}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqExamples", "..\LinqExamples\src\LinqExamples\LinqExamples.xproj", "{336C8D34-180A-4AF5-B30E-999197937BA2}"
-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.Test", "IdeallyConnected.Test\IdeallyConnected.Test.csproj", "{C7EF9DD5-69A5-46B7-B795-48C07A4847D8}"
 EndProject
@@ -24,7 +20,6 @@ Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "IdeallyConnected.UWP", "Ide
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.Experiments", "IdeallyConnected.Experiments\IdeallyConnected.Experiments.csproj", "{2F608BC7-F425-4C68-B9B1-97CB3D412C7D}"
 EndProject
-
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.Database", "IdeallyConnected.Database\IdeallyConnected.Database.csproj", "{D47759E2-287A-4A9F-9688-7D83FD0D5D52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.Core", "IdeallyConnected.Core\IdeallyConnected.Core.csproj", "{FBE17334-AF4F-4E2C-8232-BAE8EA273DA0}"
@@ -36,7 +31,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.TestDriver", "IdeallyConnected.TestDriver\IdeallyConnected.TestDriver.csproj", "{E944DA93-AF74-47DC-ACE0-702B6C520200}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.Library", "IdeallyConnected.Library\IdeallyConnected.Library.csproj", "{645B1B17-2252-4356-B9A4-0D0279768A6C}"
-
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,7 +147,22 @@ Global
 		{2F608BC7-F425-4C68-B9B1-97CB3D412C7D}.Release|x64.Build.0 = Release|Any CPU
 		{2F608BC7-F425-4C68-B9B1-97CB3D412C7D}.Release|x86.ActiveCfg = Release|Any CPU
 		{2F608BC7-F425-4C68-B9B1-97CB3D412C7D}.Release|x86.Build.0 = Release|Any CPU
-
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Debug|ARM.Build.0 = Debug|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Debug|x64.Build.0 = Debug|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Debug|x86.Build.0 = Debug|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Release|ARM.Build.0 = Release|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Release|x64.ActiveCfg = Release|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Release|x64.Build.0 = Release|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Release|x86.ActiveCfg = Release|Any CPU
+		{D47759E2-287A-4A9F-9688-7D83FD0D5D52}.Release|x86.Build.0 = Release|Any CPU
 		{FBE17334-AF4F-4E2C-8232-BAE8EA273DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FBE17334-AF4F-4E2C-8232-BAE8EA273DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBE17334-AF4F-4E2C-8232-BAE8EA273DA0}.Debug|ARM.ActiveCfg = Debug|Any CPU

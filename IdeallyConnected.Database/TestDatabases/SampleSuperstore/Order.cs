@@ -13,16 +13,6 @@ namespace IdeallyConnected.TestDatabases
         public Order()
         { }
 
-        public Order(Dictionary<string, object> attrData)
-        {
-            foreach(KeyValuePair<string, object> kv in attrData)
-            {
-                PropertyInfo property = this.GetType().GetProperty(kv.Key, BindingFlags.Public | BindingFlags.Instance);
-                property.SetValue(this, kv.Value);
-                //this.GetType().InvokeMember(kv.Key, BindingFlags.Public | BindingFlags.Instance, Type.DefaultBinder, this, );
-            }
-        }
-
         /// <summary>
         /// Constructor method used to initialize the properties with string values
         /// converted to the appropriate type.
@@ -33,7 +23,6 @@ namespace IdeallyConnected.TestDatabases
             PropertyInfo[] properties = this.GetType().GetProperties();
             for(int i = 0; i < properties.Count(); ++i)
             {
-                //Console.WriteLine($"{properties[i]} - {attributeData[i]}");
                 if (properties[i].PropertyType == typeof(string))
                     properties[i].SetValue(this, attributeData[i]);
                 else if (properties[i].PropertyType == typeof(int))

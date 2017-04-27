@@ -14,14 +14,6 @@ using System.Collections.ObjectModel;
 
 namespace IdeallyConnected.TestDatabases
 {
-    public abstract class ContextManager
-    {
-        public string CSVFileLocation { get; set; }
-        public string ConnectionString { get; set; }
-        public string ImportProcedure { get; set; }
-        public string QuickImportProcedure { get; set; }
-    }
-
     /// <summary>
     /// This class maintains the structure and any special functionality required by the database
     /// it represents. This is equivalent to a data set, or the "Relational Database Object" in the
@@ -29,13 +21,10 @@ namespace IdeallyConnected.TestDatabases
     /// </summary>
     public class SampleSuperstore : DbManager
     {
-        //private readonly string ExcelFileLocation = "C:\\Users\\kp12g_000\\Documents\\Visual Studio 2017\\Projects\\CSharpFinalProject\\SampleSuperstore.xls";
-        //public const string ManagersCSV = "C:\\Users\\kp12g_000\\Documents\\Visual Studio 2017\\Projects\\CSharpFinalProject\\SampleSuperstore_Managers.csv";
-        //public readonly string ConnectionString = "Server=(localdb)\\MSSQLLocalDB; Database=SampleSuperstore; Trusted_Connection=True;";
-        public readonly string AddManagersProcedure = "AddManagers";
         public readonly string AddManagersBulkImportProcedure = "AddManagersBulkImport";
         public readonly string OrderBulkImport = "OrdersBulkImport";
         public readonly string AddManagerParameterName = "@ManagerData";
+        public readonly string ReturnBulkImport = "ReturnsBulkImport";
 
         public DataSet<Manager> Managers { get; set; }
         public DataSet<Order> Orders { get; set; }
@@ -68,7 +57,6 @@ namespace IdeallyConnected.TestDatabases
                         try
                         {
                             MiscUtility.WriteLineFormatted($"Inserted {InsertManagers()} records into the database.", ConsoleColor.Green);
-                            Managers.Clear();
                         }
                         catch (SqlException e)
                         {
@@ -83,9 +71,22 @@ namespace IdeallyConnected.TestDatabases
                         try
                         {
                             MiscUtility.WriteLineFormatted($"Inserted {InsertOrders()} records into the database.", ConsoleColor.Green);
-                            Orders.Clear();
                         }
                         catch (SqlException e)
+                        {
+                            MiscUtility.WriteLineFormatted(e.Message, ConsoleColor.Red);
+                        }
+                        break;
+                    case "e": case "E":
+                        Returns = (List<Return>)LoadTableFromCsv<Return>("Return");
+                        MiscUtility.WriteLineFormatted($"Added {Returns.Count()} orders onto the stack.\n", ConsoleColor.Green);
+                        break;
+                    case "f": case "F":
+                        try
+                        {
+                            MiscUtility.WriteLineFormatted($"Inserted {InsertReturns()} records into the database.", ConsoleColor.Green);
+                        }
+                        catch(SqlException e)
                         {
                             MiscUtility.WriteLineFormatted(e.Message, ConsoleColor.Red);
                         }
@@ -113,6 +114,8 @@ namespace IdeallyConnected.TestDatabases
             Console.WriteLine("\tB. Insert Manager data into database");
             Console.WriteLine("\tC. Load Order data from CSV");
             Console.WriteLine("\tD. Insert Order data into database");
+            Console.WriteLine("\tE. Load Return data from CSV");
+            Console.WriteLine("\tF. Insert Return data into database");
             Console.WriteLine("\tQ. Go back");
         }
 
@@ -151,7 +154,7 @@ namespace IdeallyConnected.TestDatabases
             }
 
             int totalInserted = QuickImport<Order>(
-                Orders, //LoadTableFromCsv<Order>("Order").ToList(),
+                Orders, 
                 ConnectionString,
                 OrderBulkImport,
                 "@OrderData",
@@ -161,6 +164,30 @@ namespace IdeallyConnected.TestDatabases
 
             // Clear data from the stack
             Orders.Clear();
+
+            return totalInserted;
+        }
+
+        public int InsertReturns()
+        {
+            Dictionary<string, Type> ReturnAttributes = new Dictionary<string, Type>();
+
+            foreach (PropertyInfo property in typeof(Return).GetProperties())
+            {
+                ReturnAttributes.Add(property.Name, property.PropertyType);
+            }
+
+            int totalInserted = QuickImport<Return>(
+                Returns,
+                ConnectionString,
+                ReturnBulkImport,
+                "@ReturnData",
+                "Returns",
+                ReturnAttributes
+                );
+
+            // Clear data from the stack
+            Returns.Clear();
 
             return totalInserted;
         }
