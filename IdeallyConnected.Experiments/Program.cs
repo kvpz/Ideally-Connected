@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.ModelBinding;
 using IdeallyConnected.Experiments.Models.Repositories;
 using System.Data.Entity.Migrations;
+using IdeallyConnected.Utility;
 
 namespace IdeallyConnected.Experiments
 {
@@ -119,6 +120,7 @@ namespace IdeallyConnected.Experiments
 
         public static void Main(string[] args)
         {
+            /*
             //var db = new AppICDbContext();
             UserRepository userDbContext = new UserRepository();//db;
             //createProgrammingLanguages(db);
@@ -158,6 +160,7 @@ namespace IdeallyConnected.Experiments
             printAllUsers(users);
             Console.WriteLine("Users in dbset");
             printAllUsers(userDbContext.GetAll());
+            */
 
         }
     }
