@@ -70,7 +70,10 @@ namespace IdeallyConnected.Database
         }
 
         public static void Main(string[] args)
-        {            
+        {
+            Converter<PropertyInfo, string> propertyInfoToString = (prop) => { return prop.Name; };
+            //Order order = new Order(Array.ConvertAll(Order.GetProperties(), propertyInfoToString));
+            
             Initialize();           
             WriteLineFormatted("\t~~~ Database Manager ~~~\n", ConsoleColor.DarkGreen);
             char menuSelection = 'm';

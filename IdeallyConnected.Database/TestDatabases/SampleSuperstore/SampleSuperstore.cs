@@ -34,6 +34,7 @@ namespace IdeallyConnected.TestDatabases
         //public readonly string ConnectionString = "Server=(localdb)\\MSSQLLocalDB; Database=SampleSuperstore; Trusted_Connection=True;";
         public readonly string AddManagersProcedure = "AddManagers";
         public readonly string AddManagersBulkImportProcedure = "AddManagersBulkImport";
+        public readonly string OrderBulkImport = "OrdersBulkImport";
         public readonly string AddManagerParameterName = "@ManagerData";
 
         public DataSet<Manager> Managers { get; set; }
@@ -75,6 +76,22 @@ namespace IdeallyConnected.TestDatabases
                             MiscUtility.WriteLineFormatted(e.Message, ConsoleColor.Red);
                         }
                         break;
+                    case "c": case "C":
+                        Orders = (List<Order>)LoadTableFromCsv<Order>("Order");
+                        MiscUtility.WriteLineFormatted($"Added {Orders.Count()} orders onto the stack.\n", ConsoleColor.Green);
+                        break;
+                    case "d": case "D":
+                        try
+                        {
+                            InsertOrders();
+                            MiscUtility.WriteLineFormatted($"Inserted {Orders.Count()} records into the database.", ConsoleColor.Green);
+                            Orders.Clear();
+                        }
+                        catch (SqlException e)
+                        {
+                            MiscUtility.WriteLineFormatted(e.Message, ConsoleColor.Red);
+                        }
+                        break;
                     case "m": case "M":
                         Menu();
                         break;
@@ -96,12 +113,13 @@ namespace IdeallyConnected.TestDatabases
             base.Menu();
             Console.WriteLine("\tA. Load Manager data from CSV");
             Console.WriteLine("\tB. Insert Manager data into database");
+            Console.WriteLine("\tC. Load Order data from CSV");
+            Console.WriteLine("\tD. Insert Order data into database");
             Console.WriteLine("\tQ. Go back");
         }
 
         public void InsertManagers()
         {
-            CSVParser cobj = new CSVParser();
             Dictionary<string, Type> ManagerAttributes = new Dictionary<string, Type>();
 
             PropertyInfo[] managerProperties = typeof(Manager).GetProperties();
@@ -110,13 +128,33 @@ namespace IdeallyConnected.TestDatabases
                 ManagerAttributes.Add(prop.Name, prop.PropertyType);
             }
 
-            cobj.QuickImport<Manager>(
+            CSVParser.QuickImport<Manager>(
                 LoadTableFromCsv<Manager>("Manager").ToList(),
                 ConnectionString,
                 AddManagersBulkImportProcedure,
                 AddManagerParameterName,
                 "Managers",
                 ManagerAttributes);
+        }
+
+        public void InsertOrders()
+        {
+            Dictionary<string, Type> OrderAttributes = new Dictionary<string, Type>();
+
+            PropertyInfo[] orderProperties = typeof(Order).GetProperties();
+            foreach(PropertyInfo property in orderProperties)
+            {
+                OrderAttributes.Add(property.Name, property.PropertyType);
+            }
+
+            CSVParser.QuickImport<Order>(
+                LoadTableFromCsv<Order>("Order").ToList(),
+                ConnectionString,
+                OrderBulkImport,
+                "@OrderData",
+                "Orders",
+                OrderAttributes
+                );
         }
 
         public override void ShowDetails()

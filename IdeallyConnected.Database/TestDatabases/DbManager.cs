@@ -162,8 +162,7 @@ namespace IdeallyConnected.TestDatabases
                 }
             }
 
-            CSVParser cobj = new CSVParser();
-            cobj.QuickImport<T>(
+            CSVParser.QuickImport<T>(
                 data,
                 ConnectionString,
                 importProcedure,

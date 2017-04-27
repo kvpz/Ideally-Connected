@@ -26,7 +26,7 @@ namespace IdeallyConnected.DatabaseManager.Tools
         /// <param name="tableName">Name of the table in the database.</param>
         /// <param name="columns">Set of column names and their respective data type.</param>
         /// <returns></returns>
-        public int QuickImport<T>(List<T> recordsToLoad, string connectionString, string procedureName, string sqlParameterName, string tableName, Dictionary<string, Type> columns) where T: new()
+        public static int QuickImport<T>(List<T> recordsToLoad, string connectionString, string procedureName, string sqlParameterName, string tableName, Dictionary<string, Type> columns) where T: new()
         {
             int rowsAffected = 0;
             using (SqlConnection connection = new SqlConnection(connectionString))
