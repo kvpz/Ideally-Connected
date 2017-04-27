@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 /*
     Another option for registering routes is to enable attribute routing. Initial
-    development will setup routes using this class.
+    development will setup routes using this class. 
+    Note that the routes in RegisterRoutes are checked serially and ordered.
 */
 namespace IdeallyConnected
 {
@@ -14,23 +15,15 @@ namespace IdeallyConnected
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            // Ignore Http handlers
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            /*
-            // appends only /AllUsers instead of /Home/AllUsers to url
-            routes.MapRoute(
-                name: "allusers",
-                url: "allusers/{*catch-all}",
-                defaults: new {
-                    controller = "Home", action = "AllUsers"
-                }
-            );
-            */            
+
             routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = "" }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
             
             //routes.RouteExistingFiles = false;      

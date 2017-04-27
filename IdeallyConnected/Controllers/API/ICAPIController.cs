@@ -1,5 +1,5 @@
-﻿using IdeallyConnected.Models;
-using IdeallyConnected.Models.Repositories;
+﻿using IdeallyConnected.Data.Models;
+using IdeallyConnected.Data.Models.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 namespace IdeallyConnected.Migrations
 {
-    using Models;
+    using IdeallyConnected.Data.Models;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -22,7 +22,7 @@ namespace IdeallyConnected.Migrations
         }
     }
 
-    internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnected.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<IdeallyConnected.Data.Models.ICDbContext>
     {
         public static class EqualityComparerGeneric<T> 
         {
@@ -63,21 +63,21 @@ namespace IdeallyConnected.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(IdeallyConnected.Models.ApplicationDbContext context)
+        protected override void Seed(IdeallyConnected.Data.Models.ICDbContext context)
         {
 
-            var users = new List<ApplicationUser>() {
-                new ApplicationUser() {
+            var users = new List<User>() {
+                new User() {
                     UserName = "Bob11",
                     FirstName = "Bob",
                     LastName = "One"
                 },
-                new ApplicationUser() {
+                new User() {
                     UserName = "Bob22",
                     FirstName = "Bob2",
                     LastName =  "Two"
                 }, 
-                new ApplicationUser() {
+                new User() {
                     UserName = "Bob33",
                     FirstName = "Bob3",
                     LastName = "Three",
