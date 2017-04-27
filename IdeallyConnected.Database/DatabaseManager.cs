@@ -54,7 +54,6 @@ namespace IdeallyConnected.DatabaseManager
             {
                 FeatureDatabases.Add(cs.SectionInformation.Name);
             }
-            
         }
 
         public static void ShowDatabases()
@@ -87,12 +86,6 @@ namespace IdeallyConnected.DatabaseManager
             }
 
             return false;
-        }
-
-        public static T CreateDatabaseInstance<T>(string databaseName = default(string)) where T : class, new()
-        {
-
-            return new T();
         }
     }
 }
