@@ -32,8 +32,6 @@ namespace IdeallyConnected.TestDatabases
         public Dictionary<string, string> CsvFilePaths { get; set; }
         private Database _database { get; set; }
         public IReadOnlyCollection<string> FeaturedProcedures { get; set; }
-        protected Dictionary<string, Dictionary<ProcedureType, string>> FeaturedProceduresDictionary { get; set; }
-        public enum ProcedureType { Create, Read, Update, Delete }
 
         private DbManager()
         {
@@ -148,19 +146,6 @@ namespace IdeallyConnected.TestDatabases
                 TableAttributes.Add(prop.Name, prop.PropertyType);
             }
 
-            if(importProcedure == null)
-            {
-                try
-                {
-                    importProcedure = GetTableProcedure(ProcedureType.Update, typeof(T).Name);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Can't find any procedures for updating the table.");
-                    return;
-                }
-            }
-
             QuickImport<T>(
                 data,
                 ConnectionString,
@@ -250,31 +235,6 @@ namespace IdeallyConnected.TestDatabases
                 FeaturedProcedures = featuredProcedures;
                 connection.Close();
             }
-        }
-
-        /// <summary>
-        /// Create a dictionary of procedures organized by tables and the type of procedure. Unidentifiable
-        /// procedures would be stored as miscellaneous.
-        /// </summary>
-        /// <param name="procedureType"></param>
-        /// <param name="tableName"></param>
-        /// <returns></returns>
-        public virtual string GetTableProcedure(ProcedureType procedureType, string tableName)
-        {
-            if(FeaturedProceduresDictionary == null)
-            {
-                throw new System.Exception("There are no featured procedures for this database.");
-            }
-            if (!FeaturedProceduresDictionary.ContainsKey(tableName))
-            {
-                throw new System.Exception("The table is not defined in the FeaturedProceduresDictionary.");
-            }
-            if (!FeaturedProceduresDictionary[tableName].ContainsKey(procedureType))
-            {
-                throw new System.Exception($"The procedureType is not defined for the table {tableName}.");
-            }
-
-            return FeaturedProceduresDictionary[tableName][procedureType];
         }
 
         public void ViewProcedures()

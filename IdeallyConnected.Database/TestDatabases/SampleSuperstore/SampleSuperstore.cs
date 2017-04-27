@@ -128,7 +128,7 @@ namespace IdeallyConnected.TestDatabases
                 ManagerAttributes.Add(prop.Name, prop.PropertyType);
             }
 
-            CSVParser.QuickImport<Manager>(
+            QuickImport<Manager>(
                 LoadTableFromCsv<Manager>("Manager").ToList(),
                 ConnectionString,
                 AddManagersBulkImportProcedure,
@@ -147,7 +147,7 @@ namespace IdeallyConnected.TestDatabases
                 OrderAttributes.Add(property.Name, property.PropertyType);
             }
 
-            CSVParser.QuickImport<Order>(
+            QuickImport<Order>(
                 LoadTableFromCsv<Order>("Order").ToList(),
                 ConnectionString,
                 OrderBulkImport,
