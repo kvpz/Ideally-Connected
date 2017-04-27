@@ -14,14 +14,6 @@ using System.Collections.ObjectModel;
 
 namespace IdeallyConnected.TestDatabases
 {
-    public abstract class ContextManager
-    {
-        public string CSVFileLocation { get; set; }
-        public string ConnectionString { get; set; }
-        public string ImportProcedure { get; set; }
-        public string QuickImportProcedure { get; set; }
-    }
-
     /// <summary>
     /// This class maintains the structure and any special functionality required by the database
     /// it represents. This is equivalent to a data set, or the "Relational Database Object" in the
@@ -29,10 +21,6 @@ namespace IdeallyConnected.TestDatabases
     /// </summary>
     public class SampleSuperstore : DbManager
     {
-        //private readonly string ExcelFileLocation = "C:\\Users\\kp12g_000\\Documents\\Visual Studio 2017\\Projects\\CSharpFinalProject\\SampleSuperstore.xls";
-        //public const string ManagersCSV = "C:\\Users\\kp12g_000\\Documents\\Visual Studio 2017\\Projects\\CSharpFinalProject\\SampleSuperstore_Managers.csv";
-        //public readonly string ConnectionString = "Server=(localdb)\\MSSQLLocalDB; Database=SampleSuperstore; Trusted_Connection=True;";
-        public readonly string AddManagersProcedure = "AddManagers";
         public readonly string AddManagersBulkImportProcedure = "AddManagersBulkImport";
         public readonly string OrderBulkImport = "OrdersBulkImport";
         public readonly string AddManagerParameterName = "@ManagerData";
