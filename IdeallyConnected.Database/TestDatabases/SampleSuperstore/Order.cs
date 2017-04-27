@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -10,12 +11,7 @@ namespace IdeallyConnected.TestDatabases
     public class Order : Model<Order>
     {
         public Order()
-        {
-            foreach (var d in this.GetType().GetProperties())
-            {
-                Console.WriteLine(d);
-            }
-        }
+        { }
 
         public Order(Dictionary<string, object> attrData)
         {
@@ -42,6 +38,8 @@ namespace IdeallyConnected.TestDatabases
                     properties[i].SetValue(this, attributeData[i]);
                 else if (properties[i].PropertyType == typeof(int))
                     properties[i].SetValue(this, Int32.Parse(attributeData[i]));
+                else if (properties[i].PropertyType == typeof(float))
+                    properties[i].SetValue(this, float.Parse(attributeData[i]));
                 else if (properties[i].PropertyType == typeof(DateTime))
                     properties[i].SetValue(this, DateTime.Parse(attributeData[i]));
             }
@@ -63,9 +61,9 @@ namespace IdeallyConnected.TestDatabases
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string ProductName { get; set; }
-        public double Sales { get; set; }
+        public float Sales { get; set; }
         public int Quantity { get; set; }
-        public double Discount { get; set; }
-        public double Profit { get; set; }
+        public float Discount { get; set; }
+        public float Profit { get; set; }
     }
 }

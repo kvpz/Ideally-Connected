@@ -67,8 +67,7 @@ namespace IdeallyConnected.TestDatabases
                     case "b": case "B":
                         try
                         {
-                            InsertManagers();
-                            MiscUtility.WriteLineFormatted($"Inserted {Managers.Count()} records into the database.", ConsoleColor.Green);
+                            MiscUtility.WriteLineFormatted($"Inserted {InsertManagers()} records into the database.", ConsoleColor.Green);
                             Managers.Clear();
                         }
                         catch (SqlException e)
@@ -83,8 +82,7 @@ namespace IdeallyConnected.TestDatabases
                     case "d": case "D":
                         try
                         {
-                            InsertOrders();
-                            MiscUtility.WriteLineFormatted($"Inserted {Orders.Count()} records into the database.", ConsoleColor.Green);
+                            MiscUtility.WriteLineFormatted($"Inserted {InsertOrders()} records into the database.", ConsoleColor.Green);
                             Orders.Clear();
                         }
                         catch (SqlException e)
@@ -118,7 +116,7 @@ namespace IdeallyConnected.TestDatabases
             Console.WriteLine("\tQ. Go back");
         }
 
-        public void InsertManagers()
+        public int InsertManagers()
         {
             Dictionary<string, Type> ManagerAttributes = new Dictionary<string, Type>();
 
@@ -127,17 +125,22 @@ namespace IdeallyConnected.TestDatabases
             {
                 ManagerAttributes.Add(prop.Name, prop.PropertyType);
             }
-
-            QuickImport<Manager>(
-                LoadTableFromCsv<Manager>("Manager").ToList(),
+            
+            int totalInserted = QuickImport<Manager>(
+                Managers,
                 ConnectionString,
                 AddManagersBulkImportProcedure,
                 AddManagerParameterName,
                 "Managers",
                 ManagerAttributes);
+
+            // Clear data from stack
+            Managers.Clear();
+
+            return totalInserted;
         }
 
-        public void InsertOrders()
+        public int InsertOrders()
         {
             Dictionary<string, Type> OrderAttributes = new Dictionary<string, Type>();
 
@@ -147,14 +150,19 @@ namespace IdeallyConnected.TestDatabases
                 OrderAttributes.Add(property.Name, property.PropertyType);
             }
 
-            QuickImport<Order>(
-                LoadTableFromCsv<Order>("Order").ToList(),
+            int totalInserted = QuickImport<Order>(
+                Orders, //LoadTableFromCsv<Order>("Order").ToList(),
                 ConnectionString,
                 OrderBulkImport,
                 "@OrderData",
                 "Orders",
-                OrderAttributes
+                OrderAttributes 
                 );
+
+            // Clear data from the stack
+            Orders.Clear();
+
+            return totalInserted;
         }
 
         public override void ShowDetails()
