@@ -10,18 +10,27 @@ using WebGrease.Css.Extensions;
 using IdeallyConnected.Components;
 using IdeallyConnected.Migrations;
 using System.Data.Entity.Migrations;
-using IdeallyConnected.Models.Repositories;
+using IdeallyConnected.Data.Models.Repositories;
 using System.Net.Http;
-using IdeallyConnected.Models;
+using IdeallyConnected.Data.Models;
 using System.Net;
+using IdeallyConnected.API.Models;
 
 namespace IdeallyConnected.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IContactService _contactService;
+        
+        public HomeController(IContactService contactService)
+        {
+            _contactService = contactService;
+        }
+        
         public ActionResult Index()
         {
             /*
+            // For debugging purposes
             var configuration = new Configuration();
             var migrator = new DbMigrator(configuration);
             migrator.Update();
@@ -53,13 +62,13 @@ namespace IdeallyConnected.Controllers
         public JsonResult GetUsers() //(HttpRequestMessage request)
         {
             UserRepository userDb = new UserRepository();
-            var users = userDb.GetAll();
-            users = new List<ApplicationUser>() {
-                new ApplicationUser() { UserName = "Timmy", FirstName = "Tim", LastName = "Johner" }
+            var users = userDb.GetAll().ToList();
+            users = new List<User>() {
+                new User() { UserName = "Timmy", FirstName = "Tim", LastName = "Johner" }
             };
 
             return Json(new { list = users.ToList() }, JsonRequestBehavior.AllowGet);
-            //return request.CreateResponse<ApplicationUser[]>(HttpStatusCode.OK, users.ToArray());
+            //return request.CreateResponse<User[]>(HttpStatusCode.OK, users.ToArray());
         }
     }
 }

@@ -1,0 +1,56 @@
+﻿App from a visitor user's perspective:
+
+~~~ Views ~~~
+### Home
+**Summary**
+Upon entering the home page, the user is presented with an overview of the app. The user
+can then choose to enable location services which would activate a counter which displays
+the amount of people using the app in the vicinity. The user can then test the app by
+inputing or choosing a detail about themselves to compare against other candidates in the
+vicinity in which the user can connect with. The user will be prompted if there are any
+matches, else { insert sad face }.
+The user can then choose to register for the app.
+
+### Registration
+**Summary**
+
+
+### Contact
+**Summary**
+The user will have the ability to contact the developers of the app whether they are a
+registered user or not. They must provide their names and an email. On the server, this
+process will have the least priority, but data persistence will be just as important as
+any other process.
+
+~~~ Design ~~~
+
+Features for visitors:
+- Display a counter of total amount of app users.
+- Display a heat map where dense areas represent many users
+- Check box area where users can select ONE skill (or some attribute) to use for finding local candidates for.
+- Register button at the bottom.
+- Login & Register buttons at the top right.
+- About and Contact buttons in the footer.
+
+
+Features for Users:
+- Search for other users with any amount and combination of skills.
+- Precise location of users. Only two users that agree to meet up can pinpoint each others' location.
+- Access to (limited) data of business' from around the country. Idea: a qualitative evaluation of quantative data.
+
+Features for Users(signed into a business' VPN):
+- Access to the data the business decides to share.
+- Access to a feed for commenting on the business' products.
+
+Features for Users already friends:
+- Users can chat with each other whenever they want
+- Users can be notified of each others' nearby presence. 
+- Users can determine friends of friends (to the 3rd degree?). Idea: extra feature for friends of friends relationship?
+
+
+Features for Business Owners:
+- Business can adjust how much data they want to share with local users (within the business vicinity).
+
+
+~~~ Technical ~~~
+

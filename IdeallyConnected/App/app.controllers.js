@@ -3,9 +3,18 @@
 angular
     .module('ICApp.controllers', [])
     .controller('MainController', ['$scope', 'UserService',
-    function ($scope, UserService) {
-        var self = this;
-    }]);
+        function ($scope, UserService) {
+            var self = this;
+        }]);
+
+angular
+    .module('ICApp.controllers')
+    .controller('IndexViewController', ['$scope',
+        function ($scope) {
+            var self = this;
+            $scope.helloScope = "Hello from IndexViewController";
+            this.helloThis = "Hello from IndexViewController (this)";
+        }]);
 
 angular
     .module('ICApp.controllers')
