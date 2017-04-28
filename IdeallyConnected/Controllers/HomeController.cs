@@ -10,11 +10,12 @@ using WebGrease.Css.Extensions;
 using IdeallyConnected.Components;
 using IdeallyConnected.Migrations;
 using System.Data.Entity.Migrations;
-using IdeallyConnected.Data.Models.Repositories;
+using IdeallyConnected.Models.Repositories;
 using System.Net.Http;
 using IdeallyConnected.Data.Models;
 using System.Net;
 using IdeallyConnected.API.Models;
+using IdeallyConnected.Models;
 
 namespace IdeallyConnected.Controllers
 {
@@ -63,8 +64,8 @@ namespace IdeallyConnected.Controllers
         {
             UserRepository userDb = new UserRepository();
             var users = userDb.GetAll().ToList();
-            users = new List<User>() {
-                new User() { UserName = "Timmy", FirstName = "Tim", LastName = "Johner" }
+            users = new List<ApplicationUser>() {
+                new ApplicationUser() { UserName = "Timmy", FirstName = "Tim", LastName = "Johner" }
             };
 
             return Json(new { list = users.ToList() }, JsonRequestBehavior.AllowGet);
