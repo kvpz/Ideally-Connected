@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace IdeallyConnected.Data.Models
+namespace IdeallyConnected.Models
 {
     [Table("DesignSkills")]
     public class Design : Skill

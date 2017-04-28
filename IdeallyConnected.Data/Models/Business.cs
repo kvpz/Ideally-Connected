@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace IdeallyConnected.Data.Models
+namespace IdeallyConnected.Models
 {
     public class Business
     {
+        public int ID { get; set; }
         public string Name { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Address { get; set; }
-        public string ZipCode { get; set; }
+        public int LocationID { get; set; }
         public bool? ChatService { get; set; }
         public bool? P2PService { get; set; }
         public bool? IdentificationService { get; set; }
