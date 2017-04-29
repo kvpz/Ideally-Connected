@@ -19,6 +19,5 @@ namespace IdeallyConnected.Data.Models
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public virtual ICollection<UserLocations> UserLocations { get; set; }
-        public virtual Business Business { get; set; }
     }
 }
