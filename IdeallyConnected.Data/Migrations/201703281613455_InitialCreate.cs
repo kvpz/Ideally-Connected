@@ -91,6 +91,56 @@ namespace IdeallyConnected.Data.Migrations
                 .PrimaryKey(t => new { t.ID, t.Type });
             
             CreateTable(
+                "dbo.UserLocations",
+                c => new
+                    {
+                        UserID = c.String(nullable: false, maxLength: 128),
+                        LocationID = c.Int(nullable: false),
+                        TotalVisitations = c.Int(nullable: false),
+                        FirstVisited = c.DateTime(nullable: false),
+                        LastVisited = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.UserID, t.LocationID })
+                .ForeignKey("dbo.Locations", t => t.LocationID, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserID, cascadeDelete: true)
+                .Index(t => t.UserID)
+                .Index(t => t.LocationID);
+            
+            CreateTable(
+                "dbo.Locations",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Address = c.String(nullable: false),
+                        ZipCode = c.String(),
+                        State = c.String(nullable: false),
+                        StateAbbreviation = c.String(),
+                        City = c.String(nullable: false),
+                        County = c.String(),
+                        Latitude = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Longitude = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Business_Name = c.String(maxLength: 128),
+                        Business_LocationID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Businesses", t => new { t.Business_Name, t.Business_LocationID })
+                .Index(t => new { t.Business_Name, t.Business_LocationID });
+            
+            CreateTable(
+                "dbo.Businesses",
+                c => new
+                    {
+                        Name = c.String(nullable: false, maxLength: 128),
+                        LocationID = c.Int(nullable: false),
+                        ChatService = c.Boolean(nullable: false),
+                        P2PService = c.Boolean(nullable: false),
+                        IdentificationService = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Name, t.LocationID })
+                .ForeignKey("dbo.Locations", t => t.LocationID)
+                .Index(t => t.LocationID);
+            
+            CreateTable(
                 "dbo.Collaborators",
                 c => new
                     {
@@ -102,7 +152,7 @@ namespace IdeallyConnected.Data.Migrations
                     })
                 .PrimaryKey(t => new { t.UserA, t.UserB })
                 .ForeignKey("dbo.Users", t => t.UserA, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserB)
+                .ForeignKey("dbo.Users", t => t.UserB, cascadeDelete: true)
                 .Index(t => t.UserA)
                 .Index(t => t.UserB);
             
@@ -182,6 +232,10 @@ namespace IdeallyConnected.Data.Migrations
             DropForeignKey("dbo.DesignSkills", new[] { "ID", "Type" }, "dbo.Skills");
             DropForeignKey("dbo.Collaborators", "UserB", "dbo.Users");
             DropForeignKey("dbo.Collaborators", "UserA", "dbo.Users");
+            DropForeignKey("dbo.UserLocations", "UserID", "dbo.Users");
+            DropForeignKey("dbo.UserLocations", "LocationID", "dbo.Locations");
+            DropForeignKey("dbo.Locations", new[] { "Business_Name", "Business_LocationID" }, "dbo.Businesses");
+            DropForeignKey("dbo.Businesses", "LocationID", "dbo.Locations");
             DropForeignKey("dbo.SkillUserRelation", new[] { "SkillId", "Type" }, "dbo.Skills");
             DropForeignKey("dbo.SkillUserRelation", "UserId", "dbo.Users");
             DropForeignKey("dbo.UserRoles", "UserId", "dbo.Users");
@@ -196,6 +250,10 @@ namespace IdeallyConnected.Data.Migrations
             DropIndex("dbo.SkillUserRelation", new[] { "UserId" });
             DropIndex("dbo.Collaborators", new[] { "UserB" });
             DropIndex("dbo.Collaborators", new[] { "UserA" });
+            DropIndex("dbo.Businesses", new[] { "LocationID" });
+            DropIndex("dbo.Locations", new[] { "Business_Name", "Business_LocationID" });
+            DropIndex("dbo.UserLocations", new[] { "LocationID" });
+            DropIndex("dbo.UserLocations", new[] { "UserID" });
             DropIndex("dbo.UserLogins", new[] { "UserId" });
             DropIndex("dbo.UserClaims", new[] { "UserId" });
             DropIndex("dbo.Users", "UserNameIndex");
@@ -208,6 +266,9 @@ namespace IdeallyConnected.Data.Migrations
             DropTable("dbo.DesignSkills");
             DropTable("dbo.SkillUserRelation");
             DropTable("dbo.Collaborators");
+            DropTable("dbo.Businesses");
+            DropTable("dbo.Locations");
+            DropTable("dbo.UserLocations");
             DropTable("dbo.Skills");
             DropTable("dbo.UserLogins");
             DropTable("dbo.UserClaims");

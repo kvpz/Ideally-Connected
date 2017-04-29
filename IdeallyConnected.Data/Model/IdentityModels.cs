@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -33,6 +34,8 @@ namespace IdeallyConnected.Data.Models
         public string Biography { get; set; }
 
         public DateTime Created { get; set; }
+
+        public virtual ICollection<UserLocations> UserLocations { get; set; }
 
         public virtual ICollection<Skill> Skills { get; set; }
 
@@ -72,27 +75,58 @@ namespace IdeallyConnected.Data.Models
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
 
-            // Create ApplicationUser and Skill Relationship Schema
+            // Create User and Skill Relationship Schema
             modelBuilder.Entity<User>()
                 .HasMany<Skill>(s => s.Skills)
                 .WithMany(s => s.Users)
-                .Map(config => {
+                .Map(config => 
+                {
                     config.MapLeftKey("UserId");
                     config.MapRightKey("SkillId", "Type");
                     config.ToTable("SkillUserRelation");
                 });
 
-            // Create Collaborators Table 
+            // Create Collaborators Table with composite key of foreign keys.
             modelBuilder.Entity<Collaborators>()
                 .HasKey(c => new { c.UserA, c.UserB });
             modelBuilder.Entity<Collaborators>()
-                .HasRequired(u => u.User1)
+                .HasRequired<User>(u => u.User1)
                 .WithMany()
-                .HasForeignKey(c => c.UserA);
+                .HasForeignKey<string>(c => c.UserA)
+                .WillCascadeOnDelete(true);
             modelBuilder.Entity<Collaborators>()
-                .HasRequired(u => u.User2)
+                .HasRequired<User>(u => u.User2)
                 .WithMany()
-                .HasForeignKey(c => c.UserB)
+                .HasForeignKey<string>(c => c.UserB)
+                .WillCascadeOnDelete(true);
+
+            // Configure Location table
+            modelBuilder.Entity<Location>()
+                .ToTable("Locations")
+                .HasKey(location => location.ID);
+            modelBuilder.Entity<Location>()
+                .Property(p => p.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Location>()
+                .Property(p => p.Address).IsRequired();
+            modelBuilder.Entity<Location>()
+                .Property(p => p.City).IsRequired();
+            modelBuilder.Entity<Location>()
+                .Property(p => p.State).IsRequired();
+
+            // Relation table between users and the locations they visit with accompanying attributes. Users "leave a footprint"/ "drop an egg" at that location.            
+            modelBuilder.Entity<UserLocations>()
+                .ToTable("UserLocations")
+                .HasKey(userlocation => new { userlocation.UserID, userlocation.LocationID });
+
+            // Setup Businesses table with composite key. One business/ company name can have various locations.
+            modelBuilder.Entity<Business>()
+                .ToTable("Businesses");
+            modelBuilder.Entity<Business>()
+                .HasKey(business => new { business.Name, business.LocationID });
+            modelBuilder.Entity<Business>()
+                .HasRequired<Location>(business => business.Location)
+                .WithMany()
+                .HasForeignKey<int>(b => b.LocationID)
                 .WillCascadeOnDelete(false);
         }
     }

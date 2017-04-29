@@ -127,6 +127,7 @@
     <Compile Include="Model\Skills\Medical.cs" />
     <Compile Include="Model\Skills\Programming.cs" />
     <Compile Include="Model\Skills\Speaking.cs" />
+    <Compile Include="Model\UserLocations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
