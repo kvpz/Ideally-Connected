@@ -35,6 +35,7 @@ namespace IdeallyConnected.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        UserName = c.String(nullable: false, maxLength: 256),
                         FirstName = c.String(nullable: false, maxLength: 50),
                         LastName = c.String(nullable: false, maxLength: 50),
                         Biography = c.String(),
@@ -49,7 +50,6 @@ namespace IdeallyConnected.Data.Migrations
                         LockoutEndDateUtc = c.DateTime(),
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
-                        UserName = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex");
@@ -133,7 +133,7 @@ namespace IdeallyConnected.Data.Migrations
                         InitialCollaboration = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => new { t.UserA, t.UserB })
-                .ForeignKey("dbo.Users", t => t.UserA, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserA)
                 .ForeignKey("dbo.Users", t => t.UserB, cascadeDelete: true)
                 .Index(t => t.UserA)
                 .Index(t => t.UserB);
@@ -146,7 +146,6 @@ namespace IdeallyConnected.Data.Migrations
                         LocationID = c.Int(nullable: false),
                         ChatService = c.Boolean(nullable: false),
                         P2PService = c.Boolean(nullable: false),
-                        IdentificationService = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => new { t.Name, t.LocationID })
                 .ForeignKey("dbo.Locations", t => t.LocationID)

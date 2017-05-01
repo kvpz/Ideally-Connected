@@ -106,9 +106,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201703281613455_InitialCreate.cs" />
-    <Compile Include="Migrations\201703281613455_InitialCreate.Designer.cs">
-      <DependentUpon>201703281613455_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201704291926006_InitialCreate.cs" />
+    <Compile Include="Migrations\201704291926006_InitialCreate.Designer.cs">
+      <DependentUpon>201704291926006_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\AccountViewModels.cs" />
@@ -143,8 +143,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703281613455_InitialCreate.resx">
-      <DependentUpon>201703281613455_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704291926006_InitialCreate.resx">
+      <DependentUpon>201704291926006_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

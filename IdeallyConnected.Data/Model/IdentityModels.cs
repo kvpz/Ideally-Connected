@@ -43,7 +43,6 @@ namespace IdeallyConnected.Data.Models
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
             return userIdentity;
         }
     }
@@ -86,6 +85,13 @@ namespace IdeallyConnected.Data.Models
                     config.ToTable("SkillUserRelation");
                 });
 
+            modelBuilder.Entity<User>()
+                .Property(p => p.Id)
+                .HasColumnOrder(0);
+            modelBuilder.Entity<User>()
+                .Property(p => p.UserName)
+                .HasColumnOrder(1);
+
             // Create Collaborators Table with composite key of foreign keys.
             modelBuilder.Entity<Collaborators>()
                 .HasKey(c => new { c.UserA, c.UserB });
@@ -93,12 +99,12 @@ namespace IdeallyConnected.Data.Models
                 .HasRequired<User>(u => u.User1)
                 .WithMany()
                 .HasForeignKey<string>(c => c.UserA)
-                .WillCascadeOnDelete(true);
+                .WillCascadeOnDelete(false);
             modelBuilder.Entity<Collaborators>()
                 .HasRequired<User>(u => u.User2)
                 .WithMany()
-                .HasForeignKey<string>(c => c.UserB)
-                .WillCascadeOnDelete(true);
+                .HasForeignKey<string>(c => c.UserB);
+                //.WillCascadeOnDelete(true);
 
             // Configure Location table
             modelBuilder.Entity<Location>()

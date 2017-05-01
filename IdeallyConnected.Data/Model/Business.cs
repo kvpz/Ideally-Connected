@@ -23,6 +23,5 @@ namespace IdeallyConnected.Data.Models
 
         public bool ChatService { get; set; }
         public bool P2PService { get; set; }
-        public bool IdentificationService { get; set; }
     }
 }
