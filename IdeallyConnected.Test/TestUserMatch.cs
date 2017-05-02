@@ -8,6 +8,7 @@ namespace IdeallyConnected.Test
 {
     public class TestUserMatch
     {
+        /*
         [CheckThisMethod]
         public void ReturnRepeatedUsers()
         {
@@ -30,5 +31,6 @@ namespace IdeallyConnected.Test
             string sa = resultChecker.Count.ToString(), sb = result.Count.ToString();
             MyAssert.AreEqual(resultChecker, result, $"Repeated users were not caught.  { sa } - { sb }");
         }
+        */
     }
 }

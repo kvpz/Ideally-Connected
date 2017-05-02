@@ -9,8 +9,10 @@ using System.Data.Entity;
 
 namespace IdeallyConnected.Data.Models.Repositories
 {
-    public class Repository<T>
-        : IDisposable, IRepository<T> where T : class, new()
+    /*
+    Following Domain Driven Design, this 
+    */
+    public class Repository<T> : IDisposable, IRepository<T> where T : class, new()
     {                               
         private bool disposed = false;
         protected readonly ICDbContext dbContext;
@@ -38,7 +40,7 @@ namespace IdeallyConnected.Data.Models.Repositories
             DbSet.Remove(entity);
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             DbSet.Remove(DbSet.Find(id));
         }

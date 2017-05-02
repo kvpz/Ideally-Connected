@@ -21,6 +21,10 @@ namespace IdeallyConnected.Data.Models
             Skills = new HashSet<Skill>();
         }
 
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //public override string Id { get; set; }
+
         [Required]
         [MaxLength(50)]
         [RegularExpression(@"^[a-zA-Z\s]+$")]
@@ -49,8 +53,14 @@ namespace IdeallyConnected.Data.Models
 
     public class ICDbContext : IdentityDbContext<User>
     {
+        static ICDbContext()
+        {
+            Database.SetInitializer<ICDbContext>(null); // prevents calling configuration
+        }
+
         public ICDbContext() : this(ConfigurationManager.ConnectionStrings["IdeallyConnectedTestDb"].ConnectionString)
         {
+            
         }
 
         public ICDbContext(string connectionString) : base(connectionString, throwIfV1Schema: false)
@@ -64,6 +74,7 @@ namespace IdeallyConnected.Data.Models
             return new ICDbContext();
         }
 
+        // This runs upon first accessing the database in the local application.
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -87,6 +98,7 @@ namespace IdeallyConnected.Data.Models
 
             modelBuilder.Entity<User>()
                 .Property(p => p.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None)
                 .HasColumnOrder(0);
             modelBuilder.Entity<User>()
                 .Property(p => p.UserName)
@@ -104,14 +116,15 @@ namespace IdeallyConnected.Data.Models
                 .HasRequired<User>(u => u.User2)
                 .WithMany()
                 .HasForeignKey<string>(c => c.UserB);
-                //.WillCascadeOnDelete(true);
 
             // Configure Location table
             modelBuilder.Entity<Location>()
                 .ToTable("Locations")
                 .HasKey(location => location.ID);
             modelBuilder.Entity<Location>()
-                .Property(p => p.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                .Property(p => p.ID)
+                .HasColumnType("uniqueidentifier")
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<Location>()
                 .Property(p => p.Address).IsRequired();
             modelBuilder.Entity<Location>()
@@ -132,7 +145,7 @@ namespace IdeallyConnected.Data.Models
             modelBuilder.Entity<Business>()
                 .HasRequired<Location>(business => business.Location)
                 .WithMany()
-                .HasForeignKey<int>(b => b.LocationID)
+                .HasForeignKey<Guid>(b => b.LocationID)
                 .WillCascadeOnDelete(false);
         }
     }

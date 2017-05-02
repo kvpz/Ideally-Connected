@@ -9,14 +9,13 @@ namespace IdeallyConnected.Data.Models.Repositories
     public class UserRepository : Repository<User>
     {
         public UserRepository() { }
+
         public UserRepository(ICDbContext context) : base(context)
         {
         }
 
         public User GetByUserName(string name)
         {
-            //User result = DbSet.Where(n => n.UserName.Contains(name)).FirstOrDefault();
-            //User result = DbSet.Where(u => u.UserName == name).FirstOrDefault();
             User result = DbSet.First(u => u.UserName == name);
             return result;
         }
@@ -36,6 +35,20 @@ namespace IdeallyConnected.Data.Models.Repositories
         {
             base.Update(entity);
             SaveChanges();
+        }
+
+        /// <summary>
+        /// Get the users 'user' has collaborated with. 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public List<Collaborators> GetCollaborators(User user)
+        {
+            List<User> collabs = new List<User>();
+            List<Collaborators> collabSet = dbContext.Set<Collaborators>()
+                .Where(cf => cf.UserA == user.Id).ToList();
+
+            return collabSet;
         }
     }
 }

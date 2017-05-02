@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,16 +6,15 @@ using System.Threading.Tasks;
 using IdeallyConnected.Data.Models;
 using IdeallyConnected.Data.Models.Repositories;
 using Microsoft.AspNet.Identity.EntityFramework;
-using MUT = Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
+using Xunit;
 
 namespace IdeallyConnected.Test.Database
 {
     using System.Data.Entity;
     using System.Data.Entity.Validation;
-
-    [TestClass]
+    /*
     public class RepositoryTest
     {
         private static readonly string connectionString = "ICTestConnection";
@@ -31,8 +29,6 @@ namespace IdeallyConnected.Test.Database
             new User() { UserName = "BobbyJ", FirstName = "Bob", LastName = "Jones", Created = DateTime.Now }
         };
 
-        //[TestInitialize]
-        [ClassInitialize]
         public static void TestInitialize(TestContext testContext)
         {
             ICDbContext context = new ICDbContext(connectionString);
@@ -41,15 +37,12 @@ namespace IdeallyConnected.Test.Database
             repo = new Repository<User>(context);
         }
 
-        //[TestCleanup]
-        [ClassCleanup]
         public static void TestCleanup()
         {
             repo.Dispose();
             //Database.Delete(connectionString);
         }
 
-        [TestMethod]
         public void Should_Add_New_Entry()
         {
             User newUser = new User() { UserName = "NewUser", FirstName = "NewUserFirstName", LastName = "NewUserLastName", Biography = "NewUser's bio is interesting", Created = DateTime.Now };
@@ -57,11 +50,10 @@ namespace IdeallyConnected.Test.Database
 
             var result = repo.Add(newUser);
             repo.SaveChanges();
-            MUT.Assert.AreEqual(newUser, result);
+            Assert.Equal(newUser, result);
             //MUT.Assert.AreEqual(contextUser.Id, user.Id, "ContextUser and User are not equal. Addition failed.");
         }
 
-        [TestMethod]
         public void Should_Load_Existing_Data()
         {
             var existingData = repo.Where(d => d.UserName == testUsers[0].UserName).FirstOrDefault();
@@ -122,4 +114,5 @@ namespace IdeallyConnected.Test.Database
 
         
     }
+    */
 }

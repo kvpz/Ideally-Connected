@@ -16,7 +16,7 @@ namespace IdeallyConnected.Data.Models
         public string Name { get; set; }
 
         [Key, Column(Order = 1)]
-        public virtual int LocationID { get; set; }
+        public virtual Guid LocationID { get; set; }
 
         [ForeignKey("Location")]
         public virtual Location Location { get; set; }

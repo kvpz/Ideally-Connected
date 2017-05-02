@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace IdeallyConnected.Data.Models
 {
+    /*
     public class ICDataContextInitializer : DropCreateDatabaseAlways<ICDbContext>
     {
         public ICDataContextInitializer()
         {
             
-            System.Diagnostics.Debug.WriteLine("In AppDataContextInitializer constructor.", ConsoleColor.Red);
         }
 
         protected override void Seed(ICDbContext context)
@@ -28,4 +28,5 @@ namespace IdeallyConnected.Data.Models
             users.ForEach(u => context.Users.Add(u));
         }
     }
+    */
 }
