@@ -13,6 +13,44 @@ namespace IdeallyConnected.Test.Database
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Migrations;
 
+    public static class UsersTestData
+    {
+        public static List<User> ThreeUsers()
+        {
+            List<User> users = new List<User>(3);
+            User userA = new User()
+            {
+                Id = "1",
+                UserName = "user1",
+                FirstName = "UserOne",
+                LastName = "UserOne",
+                Created = DateTime.Now
+            };
+            User userB = new User()
+            {
+                Id = "2",
+                UserName = "user2",
+                FirstName = "UserTwo",
+                LastName = "UserTwo",
+                Created = DateTime.Now
+            };
+            User userC = new User()
+            {
+                Id = "3",
+                UserName = "user3",
+                FirstName = "UserThree",
+                LastName = "UserThree",
+                Created = DateTime.Now
+            };
+            users.Add(userA);
+            users.Add(userB);
+            users.Add(userC);
+
+            return users;
+        }
+
+    }
+
     /*
         Testing the UserRepository. 
     */
@@ -137,55 +175,6 @@ namespace IdeallyConnected.Test.Database
             user = userRepo.GetByUserName(user.UserName);
             userRepo.Delete(user.Id);
             userRepo.SaveChanges();
-        }
-
-        [Fact]
-        public void ReturnUsersThatCollaborateWithAUser()
-        {
-            //ICDbContext context = new ICDbContext(connectionString);
-            //userRepo = new UserRepository(new ICDbContext(connectionString));
-            DbSet<Collaborators> collabSet = _context.Set<Collaborators>();
-
-            // Create Users for testing.
-            User userA = new User()
-            {
-                Id = "1",
-                UserName = "user1",
-                FirstName = "UserOne",
-                LastName = "UserOne",
-                Created = DateTime.Now
-            };
-            userRepo.Add(userA);
-            User userB = new User()
-            {
-                Id = "2",
-                UserName = "user2",
-                FirstName = "UserTwo",
-                LastName = "UserTwo",
-                Created = DateTime.Now
-            };
-            userRepo.Add(userB);
-            User userC = new User()
-            {
-                Id = "3",
-                UserName = "user3",
-                FirstName = "UserThree",
-                LastName = "UserThree",
-                Created = DateTime.Now
-            };
-            userRepo.Add(userC);
-
-            Collaborators collab1 = new Collaborators() { User1 = userA, User2 = userB, UserA = userA.Id, UserB = userB.Id, InitialCollaboration = DateTime.Now };
-            Collaborators collab2 = new Collaborators() { User1 = userA, User2 = userC, UserA = userA.Id, UserB = userC.Id, InitialCollaboration = DateTime.Now };
-            collabSet.Add(collab1);
-            collabSet.Add(collab2); 
-            DbEntityEntry<Collaborators> de = _context.Entry<Collaborators>(collab1);
-            _context.SaveChanges();
-
-            List<Collaborators> collabs = collabSet.ToList();//userRepo.GetCollaborators(userA);
-            Assert.Equal(collabs[0], collab1);
-            Assert.Equal(collabs[1], collab2);
-            //collabSet.RemoveRange({ collab1 , collab2 });
         }
     }
 }
