@@ -27,6 +27,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.Data", "IdeallyConnected.Data\IdeallyConnected.Data.csproj", "{A723810C-50A6-4C1E-9664-6EBC81EFD918}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.WebAPI", "IdeallyConnected.API\IdeallyConnected.WebAPI.csproj", "{C89BF5C3-5667-46BF-8061-ED1335739DBE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FBE17334-AF4F-4E2C-8232-BAE8EA273DA0} = {FBE17334-AF4F-4E2C-8232-BAE8EA273DA0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeallyConnected.TestDriver", "IdeallyConnected.TestDriver\IdeallyConnected.TestDriver.csproj", "{E944DA93-AF74-47DC-ACE0-702B6C520200}"
 EndProject

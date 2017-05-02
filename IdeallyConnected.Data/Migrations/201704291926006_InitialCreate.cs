@@ -95,7 +95,7 @@ namespace IdeallyConnected.Data.Migrations
                 c => new
                     {
                         UserID = c.String(nullable: false, maxLength: 128),
-                        LocationID = c.Int(nullable: false),
+                        LocationID = c.Guid(nullable: false),
                         TotalVisitations = c.Int(nullable: false),
                         FirstVisited = c.DateTime(nullable: false),
                         LastVisited = c.DateTime(nullable: false),
@@ -110,7 +110,7 @@ namespace IdeallyConnected.Data.Migrations
                 "dbo.Locations",
                 c => new
                     {
-                        ID = c.Int(nullable: false, identity: true),
+                        ID = c.Guid(nullable: false, identity: true),
                         Address = c.String(nullable: false),
                         ZipCode = c.String(),
                         State = c.String(nullable: false),
@@ -143,7 +143,7 @@ namespace IdeallyConnected.Data.Migrations
                 c => new
                     {
                         Name = c.String(nullable: false, maxLength: 128),
-                        LocationID = c.Int(nullable: false),
+                        LocationID = c.Guid(nullable: false),
                         ChatService = c.Boolean(nullable: false),
                         P2PService = c.Boolean(nullable: false),
                     })

@@ -43,7 +43,7 @@ namespace IdeallyConnected
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new UserStore<User>(context.Get<ICDbContext>()));
+            ApplicationUserManager manager = new ApplicationUserManager(new UserStore<User>(context.Get<ICDbContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<User>(manager)
             {
@@ -81,12 +81,14 @@ namespace IdeallyConnected
             manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
             */
+
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider = 
                     new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
+
             return manager;
         }
     }
