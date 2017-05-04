@@ -21,10 +21,6 @@ namespace IdeallyConnected.Data.Models
             Skills = new HashSet<Skill>();
         }
 
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
-        //public override string Id { get; set; }
-
         [Required]
         [MaxLength(50)]
         [RegularExpression(@"^[a-zA-Z\s]+$")]
@@ -53,12 +49,14 @@ namespace IdeallyConnected.Data.Models
 
     public class ICDbContext : IdentityDbContext<User>
     {
+        public DbSet<Collaborators> Collaborators { get; set; }
+
         static ICDbContext()
         {
             Database.SetInitializer<ICDbContext>(null); // prevents calling configuration
         }
 
-        public ICDbContext() : this(ConfigurationManager.ConnectionStrings["IdeallyConnectedTestDb"].ConnectionString)
+        public ICDbContext() : this("Data Source=(localdb)\\ProjectsV13; Database=IdeallyConnectedTestDb; Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
         {
             
         }

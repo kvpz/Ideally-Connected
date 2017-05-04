@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Web;
 
@@ -33,7 +34,7 @@ namespace IdeallyConnected.Data.Models
         
         // Initial collaboration
         [DataType(DataType.DateTime)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime InitialCollaboration { get; set; }
     }
 }

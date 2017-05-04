@@ -13,42 +13,36 @@ namespace IdeallyConnected.Test.Database
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Migrations;
 
+    // Class containing hard-coded test data.
     public static class UsersTestData
     {
-        public static List<User> ThreeUsers()
+        public static readonly List<User> threeUsers = new List<User>()
         {
-            List<User> users = new List<User>(3);
-            User userA = new User()
+            new User()
             {
                 Id = "1",
                 UserName = "user1",
                 FirstName = "UserOne",
                 LastName = "UserOne",
                 Created = DateTime.Now
-            };
-            User userB = new User()
+            },
+            new User()
             {
                 Id = "2",
                 UserName = "user2",
                 FirstName = "UserTwo",
                 LastName = "UserTwo",
                 Created = DateTime.Now
-            };
-            User userC = new User()
+            },
+            new User()
             {
                 Id = "3",
                 UserName = "user3",
                 FirstName = "UserThree",
                 LastName = "UserThree",
                 Created = DateTime.Now
-            };
-            users.Add(userA);
-            users.Add(userB);
-            users.Add(userC);
-
-            return users;
-        }
-
+            }
+        };
     }
 
     /*

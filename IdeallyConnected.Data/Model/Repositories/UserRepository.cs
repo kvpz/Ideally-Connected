@@ -36,19 +36,5 @@ namespace IdeallyConnected.Data.Models.Repositories
             base.Update(entity);
             SaveChanges();
         }
-
-        /// <summary>
-        /// Get the users 'user' has collaborated with. 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public List<Collaborators> GetCollaborators(User user)
-        {
-            List<User> collabs = new List<User>();
-            List<Collaborators> collabSet = dbContext.Set<Collaborators>()
-                .Where(cf => cf.UserA == user.Id).ToList();
-
-            return collabSet;
-        }
     }
 }

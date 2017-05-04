@@ -10,7 +10,7 @@ using System.Data.Entity;
 namespace IdeallyConnected.Data.Models.Repositories
 {
     /*
-    Following Domain Driven Design, this 
+    Following Domain Driven Design, contain a context bounded to a model.
     */
     public class Repository<T> : IDisposable, IRepository<T> where T : class, new()
     {                               

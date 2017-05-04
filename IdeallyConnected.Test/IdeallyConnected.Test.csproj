@@ -135,6 +135,7 @@
     <Compile Include="Assert.cs" />
     <Compile Include="CheckThisMethod.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Database\CollaboratorsTest.cs" />
     <Compile Include="Database\DatabaseFixture.cs" />
     <Compile Include="Database\RepositoryTest.cs" />
     <Compile Include="Database\UserRepositoryDatabase.cs" />
@@ -151,6 +152,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="Scenarios\Scenarios.txt" />
   </ItemGroup>
   <ItemGroup>
