@@ -49,11 +49,13 @@ namespace IdeallyConnected.Data.Models
 
     public class ICDbContext : IdentityDbContext<User>
     {
-        public DbSet<Collaborators> Collaborators { get; set; }
+        //public DbSet<Collaborators> Collaborators { get; set; }
+        //public DbSet<Skill> Skills { get; set; }
+        //public DbSet<UserLocations> UserLocations { get; set; }
 
         static ICDbContext()
         {
-            Database.SetInitializer<ICDbContext>(null); // prevents calling configuration
+            //Database.SetInitializer<ICDbContext>(null); // prevents calling configuration
         }
 
         public ICDbContext() : this("Data Source=(localdb)\\ProjectsV13; Database=IdeallyConnectedTestDb; Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")

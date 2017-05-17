@@ -6,6 +6,10 @@ namespace IdeallyConnected
 {
     public partial class Startup
     {
+        /// <summary>
+        /// This is called after global.asax
+        /// </summary>
+        /// <param name="app"></param>
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
