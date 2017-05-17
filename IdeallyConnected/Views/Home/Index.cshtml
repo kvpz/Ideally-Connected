@@ -1,7 +1,6 @@
 ﻿@model IdeallyConnected.Data.Models.User
 @{
-    ViewBag.Title = "Home Page";
-    
+    ViewBag.Title = "Home";
 }
 @using IdeallyConnected.Components;
 @using IdeallyConnected.Data.Models;
@@ -26,11 +25,10 @@
 
     *@
 <div ng-controller="IndexViewModel as ctrl">
-    <h3>Space</h3>
+    <h3>IdeallyConnected Home - index</h3>
     <br />
     <hr />
     {{ ctrl.author }}
-    {{ helloScope }}
 </div>
 
 

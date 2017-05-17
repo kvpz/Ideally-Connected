@@ -17,7 +17,7 @@ namespace IdeallyConnected
         {
             // Ignore Http handlers
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            
             routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(

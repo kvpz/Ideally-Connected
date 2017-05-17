@@ -12,8 +12,7 @@ angular
     .controller('IndexViewController', ['$scope',
         function ($scope) {
             var self = this;
-            $scope.helloScope = "Hello from IndexViewController";
-            this.helloThis = "Hello from IndexViewController (this)";
+
         }]);
 
 angular
