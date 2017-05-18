@@ -49,9 +49,8 @@ namespace IdeallyConnected.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,9 +63,11 @@ namespace IdeallyConnected.Models
 
     public class RegisterViewModel
     {
+        [Required(ErrorMessage = "FirstName is required.")]
         [Display(Name = "Firstname")]
         public string FirstName { get; set; }
 
+        [Required(ErrorMessage = "LastName is required.")]
         [Display(Name = "Lastname")]
         public string LastName { get; set; }    
 

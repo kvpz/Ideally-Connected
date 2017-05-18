@@ -19,14 +19,13 @@ namespace IdeallyConnected.Data.Models
         public User() 
         {
             Skills = new HashSet<Skill>();
+            Created = DateTime.Now;
         }
 
-        [Required]
         [MaxLength(50)]
         [RegularExpression(@"^[a-zA-Z\s]+$")]
         public string FirstName { get; set; }
 
-        [Required]
         [MaxLength(50)]
         [RegularExpression(@"^[a-zA-Z\s]+$")]
         public string LastName { get; set; }
